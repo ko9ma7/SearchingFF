@@ -30,9 +30,11 @@ namespace SearchFIFASales
         string leagueUrl = "&n4legid=";
         string priceFirstUrl = "&n8pg1=";
         string priceSecondUrl = "&n8pg2=";
+        string seasonUrl = "&n1sesid=";
         string pageNoUrl = "&n4pageno=";
         Dictionary<string, string> dictLeague = new Dictionary<string, string>();
         Dictionary<string, DateTime> dictAuth = new Dictionary<string, DateTime>();
+        Dictionary<string, string> dictSeason = new Dictionary<string, string>();
         List<PlayerInfo> lstPlayers = new List<PlayerInfo>();
         string mainContent = "";
 
@@ -73,8 +75,8 @@ namespace SearchFIFASales
 
         void FormMain_Load(object sender, EventArgs e)
         {
-            Process[] p = Process.GetProcessesByName("notepad");
-            PrintWindow(p[0].Handle);
+            //Process[] p = Process.GetProcessesByName("notepad");
+            //PrintWindow(p[0].Handle);
             this.WindowState = FormWindowState.Maximized;
             string sql = string.Format(@"SELECT * FROM C_USER LIMIT 1");
             DataTable dt = MySqlHelper.ExecuteDataTable(sql);
@@ -110,12 +112,47 @@ namespace SearchFIFASales
             dictLeague.Add("이탈리아 세리에 A", "31");
             dictLeague.Add("프랑스 리게 1", "16");
 
+            
+            dictSeason.Add("\'15시즌", "12");
+            dictSeason.Add("\'14시즌", "14");
+            dictSeason.Add("\'11시즌", "14");
+            dictSeason.Add("\'10시즌", "10");
+            dictSeason.Add("\'09시즌", "9");
+            dictSeason.Add("\'08시즌", "8");
+            dictSeason.Add("\'07시즌", "7");
+            dictSeason.Add("\'06시즌", "6");
+            dictSeason.Add("\'08유럽대륙", "67");
+            dictSeason.Add("\'06유럽클럽", "63");
+            dictSeason.Add("\'10유럽클럽", "69");
+            dictSeason.Add("월드베스트", "91");
+            dictSeason.Add("한국전설", "97");
+            dictSeason.Add("2002전설", "95");
+            dictSeason.Add("U-23", "29");
+            dictSeason.Add("\'14WC", "77");
+            dictSeason.Add("\'06WC", "65");
+            dictSeason.Add("\'10WC", "47");
+            dictSeason.Add("\'16EC", "35");
+            dictSeason.Add("월드전설", "93");
+            dictSeason.Add("유럽리그전설", "27");
+            dictSeason.Add("SPECIAL", "57");
+            dictSeason.Add("\'14T", "53");
+            dictSeason.Add("맨유엠버서더", "55");
+            dictSeason.Add("중국리그", "85");
+
             foreach (string item in dictLeague.Keys)
             {
                 cboLeague.Items.Add(item);
             }
 
+
+            cboSeason.Items.Add("전체");
+            foreach (string item in dictSeason.Keys)
+            {
+                cboSeason.Items.Add(item);
+            }
+
             cboLeague.SelectedIndex = 0;
+            cboSeason.SelectedIndex = 0;
             cboCard.SelectedIndex = 0;
 
             #region 이벤트
@@ -135,17 +172,28 @@ namespace SearchFIFASales
             #region 데이터센터 파싱
         void MainProcess()
         {
-            string where = "n1o1=75";
+            string where = "n1o1=70";
             where += leagueUrl + dictLeague[cboLeague.Text];
             where += txtFirstPrice.Text != "" ? priceFirstUrl + txtFirstPrice.Text : "";
             where += txtSecondPrice.Text != "" ? priceSecondUrl + txtSecondPrice.Text : "";
+            where += cboSeason.Text != "전체" ? seasonUrl + dictSeason[cboSeason.Text] : "";
             mainContent = GetPage(mainUrl + dataCenterUrl + where);
 
             string[] tempLastPageArr = mainContent.Split(new string[] { "마지막 페이지" }, StringSplitOptions.None)[0].Split(new string[] { "<a href=\'" }, StringSplitOptions.None);
             int lastPageNo = 0;
 
             if (tempLastPageArr.Length < 15)
-                lastPageNo = Convert.ToInt16(tempLastPageArr[tempLastPageArr.Length - 3].Split(new string[] { "' class" }, StringSplitOptions.None)[0].Split(new string[] { "pageno=" }, StringSplitOptions.None)[1].Split('\'')[0]);
+            {
+                try
+                {
+                    lastPageNo = Convert.ToInt16(tempLastPageArr[tempLastPageArr.Length - 3].Split(new string[] { "' class" }, StringSplitOptions.None)[0].Split(new string[] { "pageno=" }, StringSplitOptions.None)[1].Split('\'')[0]);
+                }
+                catch (Exception)
+                {
+                    lastPageNo = 1;
+                }
+
+            }
             else
                 lastPageNo = Convert.ToInt16(tempLastPageArr[tempLastPageArr.Length - 1].Split(new string[] { "' class" }, StringSplitOptions.None)[0].Split(new string[] { "pageno=" }, StringSplitOptions.None)[1]);
 
@@ -172,7 +220,7 @@ namespace SearchFIFASales
             DataTable dt = new DataTable();
             dt.Columns.Add("Season");
             dt.Columns.Add("PName");
-            dt.Columns.Add("Multiply");
+            dt.Columns.Add("Multiply", typeof(Double));
             dt.Columns.Add("Detail");
 
 
@@ -185,6 +233,9 @@ namespace SearchFIFASales
                 dr["Detail"] = mainUrl + detailUrl + item.playerID;
                 dt.Rows.Add(dr);
             }
+            //DataView dv = dt.DefaultView;
+            //dv.Sort = "Multiply DESC";
+            //dt = dv.ToTable();
             dt.DefaultView.Sort = "Multiply DESC";
             dataGridView1.DataSource = dt;
             dataGridView1.Columns["Season"].Visible = false;

@@ -30,7 +30,8 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lbAuth = new System.Windows.Forms.Label();
+            this.cboSeason = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.btnSearch = new System.Windows.Forms.Button();
             this.txtMultiply = new System.Windows.Forms.TextBox();
             this.txtSecondPrice = new System.Windows.Forms.TextBox();
@@ -44,6 +45,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.lbAuth = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -73,6 +75,8 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.lbAuth);
+            this.panel1.Controls.Add(this.cboSeason);
+            this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.btnSearch);
             this.panel1.Controls.Add(this.txtMultiply);
             this.panel1.Controls.Add(this.txtSecondPrice);
@@ -90,17 +94,27 @@
             this.panel1.Size = new System.Drawing.Size(247, 410);
             this.panel1.TabIndex = 0;
             // 
-            // lbAuth
+            // cboSeason
             // 
-            this.lbAuth.AutoSize = true;
-            this.lbAuth.Location = new System.Drawing.Point(12, 195);
-            this.lbAuth.Name = "lbAuth";
-            this.lbAuth.Size = new System.Drawing.Size(0, 12);
-            this.lbAuth.TabIndex = 7;
+            this.cboSeason.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSeason.FormattingEnabled = true;
+            this.cboSeason.Location = new System.Drawing.Point(71, 41);
+            this.cboSeason.Name = "cboSeason";
+            this.cboSeason.Size = new System.Drawing.Size(158, 20);
+            this.cboSeason.TabIndex = 8;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(12, 44);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(53, 12);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "시즌선택";
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(154, 158);
+            this.btnSearch.Location = new System.Drawing.Point(154, 185);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 23);
             this.btnSearch.TabIndex = 6;
@@ -109,14 +123,14 @@
             // 
             // txtMultiply
             // 
-            this.txtMultiply.Location = new System.Drawing.Point(71, 97);
+            this.txtMultiply.Location = new System.Drawing.Point(71, 124);
             this.txtMultiply.Name = "txtMultiply";
             this.txtMultiply.Size = new System.Drawing.Size(158, 21);
             this.txtMultiply.TabIndex = 4;
             // 
             // txtSecondPrice
             // 
-            this.txtSecondPrice.Location = new System.Drawing.Point(71, 70);
+            this.txtSecondPrice.Location = new System.Drawing.Point(71, 97);
             this.txtSecondPrice.Name = "txtSecondPrice";
             this.txtSecondPrice.Size = new System.Drawing.Size(158, 21);
             this.txtSecondPrice.TabIndex = 3;
@@ -124,7 +138,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 101);
+            this.label4.Location = new System.Drawing.Point(12, 128);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 12);
             this.label4.TabIndex = 2;
@@ -132,7 +146,7 @@
             // 
             // txtFirstPrice
             // 
-            this.txtFirstPrice.Location = new System.Drawing.Point(71, 42);
+            this.txtFirstPrice.Location = new System.Drawing.Point(71, 69);
             this.txtFirstPrice.Name = "txtFirstPrice";
             this.txtFirstPrice.Size = new System.Drawing.Size(158, 21);
             this.txtFirstPrice.TabIndex = 2;
@@ -140,7 +154,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 75);
+            this.label2.Location = new System.Drawing.Point(8, 102);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(57, 12);
             this.label2.TabIndex = 2;
@@ -149,7 +163,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 47);
+            this.label3.Location = new System.Drawing.Point(8, 74);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(57, 12);
             this.label3.TabIndex = 2;
@@ -164,7 +178,7 @@
             "4",
             "5",
             "6"});
-            this.cboCard.Location = new System.Drawing.Point(71, 124);
+            this.cboCard.Location = new System.Drawing.Point(71, 151);
             this.cboCard.Name = "cboCard";
             this.cboCard.Size = new System.Drawing.Size(158, 20);
             this.cboCard.TabIndex = 5;
@@ -172,7 +186,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 127);
+            this.label5.Location = new System.Drawing.Point(12, 154);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 0;
@@ -215,6 +229,14 @@
             this.dataGridView1.Size = new System.Drawing.Size(637, 410);
             this.dataGridView1.TabIndex = 0;
             // 
+            // lbAuth
+            // 
+            this.lbAuth.AutoSize = true;
+            this.lbAuth.Location = new System.Drawing.Point(12, 229);
+            this.lbAuth.Name = "lbAuth";
+            this.lbAuth.Size = new System.Drawing.Size(0, 12);
+            this.lbAuth.TabIndex = 9;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -252,6 +274,8 @@
         private System.Windows.Forms.ComboBox cboCard;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.ComboBox cboSeason;
+        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lbAuth;
     }
 }
