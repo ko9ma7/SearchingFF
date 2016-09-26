@@ -30,6 +30,9 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cboCard = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.lbAuth = new System.Windows.Forms.Label();
             this.cboSeason = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.btnSearch = new System.Windows.Forms.Button();
@@ -39,13 +42,12 @@
             this.txtFirstPrice = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.cboCard = new System.Windows.Forms.ComboBox();
+            this.cboCompareCard = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.cboLeague = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.lbAuth = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -74,6 +76,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.cboCard);
+            this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.lbAuth);
             this.panel1.Controls.Add(this.cboSeason);
             this.panel1.Controls.Add(this.label6);
@@ -84,7 +88,7 @@
             this.panel1.Controls.Add(this.txtFirstPrice);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.cboCard);
+            this.panel1.Controls.Add(this.cboCompareCard);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.cboLeague);
             this.panel1.Controls.Add(this.label1);
@@ -93,6 +97,36 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(247, 410);
             this.panel1.TabIndex = 0;
+            // 
+            // cboCard
+            // 
+            this.cboCard.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboCard.FormattingEnabled = true;
+            this.cboCard.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3"});
+            this.cboCard.Location = new System.Drawing.Point(71, 151);
+            this.cboCard.Name = "cboCard";
+            this.cboCard.Size = new System.Drawing.Size(158, 20);
+            this.cboCard.TabIndex = 11;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 154);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(53, 12);
+            this.label7.TabIndex = 10;
+            this.label7.Text = "기준카드";
+            // 
+            // lbAuth
+            // 
+            this.lbAuth.AutoSize = true;
+            this.lbAuth.Location = new System.Drawing.Point(12, 229);
+            this.lbAuth.Name = "lbAuth";
+            this.lbAuth.Size = new System.Drawing.Size(0, 12);
+            this.lbAuth.TabIndex = 9;
             // 
             // cboSeason
             // 
@@ -114,7 +148,7 @@
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(154, 185);
+            this.btnSearch.Location = new System.Drawing.Point(154, 213);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 23);
             this.btnSearch.TabIndex = 6;
@@ -169,24 +203,24 @@
             this.label3.TabIndex = 2;
             this.label3.Text = "EP최소값";
             // 
-            // cboCard
+            // cboCompareCard
             // 
-            this.cboCard.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboCard.FormattingEnabled = true;
-            this.cboCard.Items.AddRange(new object[] {
+            this.cboCompareCard.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboCompareCard.FormattingEnabled = true;
+            this.cboCompareCard.Items.AddRange(new object[] {
             "3",
             "4",
             "5",
             "6"});
-            this.cboCard.Location = new System.Drawing.Point(71, 151);
-            this.cboCard.Name = "cboCard";
-            this.cboCard.Size = new System.Drawing.Size(158, 20);
-            this.cboCard.TabIndex = 5;
+            this.cboCompareCard.Location = new System.Drawing.Point(71, 179);
+            this.cboCompareCard.Name = "cboCompareCard";
+            this.cboCompareCard.Size = new System.Drawing.Size(158, 20);
+            this.cboCompareCard.TabIndex = 5;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 154);
+            this.label5.Location = new System.Drawing.Point(12, 182);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 0;
@@ -229,14 +263,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(637, 410);
             this.dataGridView1.TabIndex = 0;
             // 
-            // lbAuth
-            // 
-            this.lbAuth.AutoSize = true;
-            this.lbAuth.Location = new System.Drawing.Point(12, 229);
-            this.lbAuth.Name = "lbAuth";
-            this.lbAuth.Size = new System.Drawing.Size(0, 12);
-            this.lbAuth.TabIndex = 9;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -271,12 +297,14 @@
         private System.Windows.Forms.TextBox txtMultiply;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.ComboBox cboCard;
+        private System.Windows.Forms.ComboBox cboCompareCard;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ComboBox cboSeason;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lbAuth;
+        private System.Windows.Forms.ComboBox cboCard;
+        private System.Windows.Forms.Label label7;
     }
 }
 

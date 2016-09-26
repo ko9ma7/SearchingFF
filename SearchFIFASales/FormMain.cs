@@ -153,6 +153,7 @@ namespace SearchFIFASales
 
             cboLeague.SelectedIndex = 0;
             cboSeason.SelectedIndex = 0;
+            cboCompareCard.SelectedIndex = 0;
             cboCard.SelectedIndex = 0;
 
             #region 이벤트
@@ -162,6 +163,13 @@ namespace SearchFIFASales
                     Console.WriteLine(DateTime.Now.ToString("HHmmss"));
                     MainProcess();
                     Console.WriteLine(DateTime.Now.ToString("HHmmss"));
+
+                    string query = string.Format(@"INSERT INTO c_search_log (
+                                                   C_USER_ID
+                                                ) VALUES (
+                                                   '{0}'  -- C_USER_ID - IN varchar(100)
+                                                );", authDT.Rows[0]["C_USER_ID"].ToString());
+                    DataTable dt = MySqlHelper.ExecuteDataTable(query);
                 };
             #endregion
         }
@@ -280,8 +288,8 @@ namespace SearchFIFASales
                 {
                     string detailContent = GetPage(mainUrl + detailUrl + pi.playerID);
 
-                    double price = Convert.ToDouble(detailContent.Split(new string[] { "<span class=\"price\">" }, StringSplitOptions.None)[1].Split(new string[] { " EP" }, StringSplitOptions.None)[0].Replace(",", ""));
-                    double comparePrice = Convert.ToDouble(detailContent.Split(new string[] { "<span class=\"price\">" }, StringSplitOptions.None)[Convert.ToInt16(cboCard.Text)].Split(new string[] { " EP" }, StringSplitOptions.None)[0].Replace(",", ""));
+                    double price = Convert.ToDouble(detailContent.Split(new string[] { "<span class=\"price\">" }, StringSplitOptions.None)[Convert.ToInt16(cboCard.Text)].Split(new string[] { " EP" }, StringSplitOptions.None)[0].Replace(",", ""));
+                    double comparePrice = Convert.ToDouble(detailContent.Split(new string[] { "<span class=\"price\">" }, StringSplitOptions.None)[Convert.ToInt16(cboCompareCard.Text)].Split(new string[] { " EP" }, StringSplitOptions.None)[0].Replace(",", ""));
 
                     pi.playerMultiply = Convert.ToDouble((comparePrice / price).ToString(".##"));
 
