@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Management;
@@ -18,6 +19,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Module.Data;
+using AForge.Imaging;
 
 namespace SearchFIFASales
 {
@@ -37,7 +40,7 @@ namespace SearchFIFASales
         Dictionary<string, string> dictSeason = new Dictionary<string, string>();
         List<PlayerInfo> lstPlayers = new List<PlayerInfo>();
         string mainContent = "";
-
+        DataTable authDT = new DataTable();
 
 
         private CookieContainer _cookie;
@@ -90,7 +93,7 @@ namespace SearchFIFASales
             lbAuth.Text = "";
 
             string sql = string.Format(@"SELECT * FROM C_USER_AUTH WHERE C_USER_HWID = '{0}'", SimpleUID);
-            DataTable authDT = MySqlHelper.ExecuteDataTable(sql);
+            authDT = MySqlHelper.ExecuteDataTable(sql);
             foreach (DataRow dr in authDT.Rows)
             {
                 dictAuth.Add(dr["C_USER_HWID"].ToString(), Convert.ToDateTime(dr["EXPIRE_DATE"].ToString()));
@@ -160,16 +163,54 @@ namespace SearchFIFASales
             btnSearch.Click += (object sender, EventArgs e) =>
                 {
                     lstPlayers.Clear();
-                    Console.WriteLine(DateTime.Now.ToString("HHmmss"));
-                    MainProcess();
-                    Console.WriteLine(DateTime.Now.ToString("HHmmss"));
+                    new Thread(() => MainProcess()).Start();
+                };
 
-                    string query = string.Format(@"INSERT INTO c_search_log (
-                                                   C_USER_ID
-                                                ) VALUES (
-                                                   '{0}'  -- C_USER_ID - IN varchar(100)
-                                                );", authDT.Rows[0]["C_USER_ID"].ToString());
-                    DataTable dt = MySqlHelper.ExecuteDataTable(query);
+            btnCapture.Click += (object sender, EventArgs e) =>
+                {
+                    GetScreen().Save("C:\\피파이미지\\test.png");
+                };
+
+            btnFind.Click += (object sender, EventArgs e) =>
+                {
+                    OpenFileDialog dialog = new OpenFileDialog();
+                    DialogResult result = dialog.ShowDialog();
+
+                    if (result == System.Windows.Forms.DialogResult.OK)
+                    {
+
+                        string path = dialog.FileName;
+                        Bitmap small = ConvertFormat(Bitmap.FromFile(path), PixelFormat.Format24bppRgb);
+                        Bitmap big = ConvertFormat(GetScreen(), PixelFormat.Format24bppRgb);
+
+                        // create template matching algorithm's instance
+                        // (set similarity threshold to 92.5%)
+
+                        ExhaustiveTemplateMatching tm = new ExhaustiveTemplateMatching(0.991f);
+                        // find all matchings with specified above similarity
+
+                        TemplateMatch[] matchings = tm.ProcessImage(big, small);
+                        // highlight found matchings
+
+                        BitmapData data = big.LockBits(
+                            new Rectangle(0, 0, big.Width, big.Height),
+                            ImageLockMode.ReadWrite, big.PixelFormat);
+                        foreach (TemplateMatch m in matchings)
+                        {
+
+                            Drawing.Rectangle(data, m.Rectangle, Color.White);
+
+                            MessageBox.Show(m.Rectangle.Location.ToString());
+                            // do something else with matching
+                        }
+                        big.UnlockBits(data);
+                        //List<Point> lstp = ImageSearch.GetSubPositions(big, small);
+                        //foreach (Point p in lstp)
+                        //{
+                        //    Console.WriteLine(p);
+                        //}
+                    }
+                    
                 };
             #endregion
         }
@@ -180,105 +221,115 @@ namespace SearchFIFASales
             #region 데이터센터 파싱
         void MainProcess()
         {
-            string where = "n1o1=70";
-            where += leagueUrl + dictLeague[cboLeague.Text];
-            where += txtFirstPrice.Text != "" ? priceFirstUrl + txtFirstPrice.Text : "";
-            where += txtSecondPrice.Text != "" ? priceSecondUrl + txtSecondPrice.Text : "";
-            where += cboSeason.Text != "전체" ? seasonUrl + dictSeason[cboSeason.Text] : "";
-            mainContent = GetPage(mainUrl + dataCenterUrl + where);
-
-            string[] tempLastPageArr = mainContent.Split(new string[] { "마지막 페이지" }, StringSplitOptions.None)[0].Split(new string[] { "<a href=\'" }, StringSplitOptions.None);
-            int lastPageNo = 0;
-
-            if (tempLastPageArr.Length < 15)
-            {
-                try
+            this.Invoke(new MethodInvoker(delegate()
                 {
-                    lastPageNo = Convert.ToInt16(tempLastPageArr[tempLastPageArr.Length - 3].Split(new string[] { "' class" }, StringSplitOptions.None)[0].Split(new string[] { "pageno=" }, StringSplitOptions.None)[1].Split('\'')[0]);
-                }
-                catch (Exception)
-                {
-                    lastPageNo = 1;
-                }
+                    string where = "n1o1=70";
+                    where += leagueUrl + dictLeague[cboLeague.Text];
+                    where += txtFirstPrice.Text != "" ? priceFirstUrl + txtFirstPrice.Text : "";
+                    where += txtSecondPrice.Text != "" ? priceSecondUrl + txtSecondPrice.Text : "";
+                    where += cboSeason.Text != "전체" ? seasonUrl + dictSeason[cboSeason.Text] : "";
+                    mainContent = GetPage(mainUrl + dataCenterUrl + where);
 
-            }
-            else
-                lastPageNo = Convert.ToInt16(tempLastPageArr[tempLastPageArr.Length - 1].Split(new string[] { "' class" }, StringSplitOptions.None)[0].Split(new string[] { "pageno=" }, StringSplitOptions.None)[1]);
+                    string[] tempLastPageArr = mainContent.Split(new string[] { "마지막 페이지" }, StringSplitOptions.None)[0].Split(new string[] { "<a href=\'" }, StringSplitOptions.None);
+                    int lastPageNo = 0;
 
-            for (int i = 1; i < lastPageNo + 1; i++)
-            {
-                string content = GetPage((mainUrl + dataCenterUrl + where + pageNoUrl + i));
-                string[] playerArr = content.Split(new string[] { "<td class=\"vs\">" }, StringSplitOptions.None);
-
-                for (int j = 1; j < playerArr.Length; j++)
-                {
-                    string[] info = playerArr[j].Split(new string[] { "addPlayerVs(" }, StringSplitOptions.None)[1].Split(';')[0].Replace("\'", "").Split(',');
-                    PlayerInfo pi = new PlayerInfo();
-                    pi.playerIcon = info[0];
-                    pi.playerID = info[1];
-                    pi.playerName = info[2];
-
-                    //new Thread(() => DetailAnalysis(pi)).Start();
-                    DetailAnalysis(pi);
-                }
-            }
-
-            dataGridView1.Columns.Clear();
-
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Season");
-            dt.Columns.Add("PName");
-            dt.Columns.Add("Multiply", typeof(Double));
-            dt.Columns.Add("Detail");
-
-
-            foreach (PlayerInfo item in lstPlayers)
-            {
-                DataRow dr = dt.NewRow();
-                dr["Season"] = item.playerIcon;
-                dr["PName"] = item.playerName;
-                dr["Multiply"] = item.playerMultiply;
-                dr["Detail"] = mainUrl + detailUrl + item.playerID;
-                dt.Rows.Add(dr);
-            }
-            //DataView dv = dt.DefaultView;
-            //dv.Sort = "Multiply DESC";
-            //dt = dv.ToTable();
-            dt.DefaultView.Sort = "Multiply DESC";
-            dataGridView1.DataSource = dt;
-            dataGridView1.Columns["Season"].Visible = false;
-            DataGridViewImageColumn iconColumn = new DataGridViewImageColumn();
-            iconColumn.Name = "img";
-            iconColumn.HeaderText = "시즌";
-            iconColumn.ValuesAreIcons = true;
-            dataGridView1.Columns.Insert(0, iconColumn);
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-
-            foreach (DataGridViewColumn item in dataGridView1.Columns)
-            {
-                item.SortMode = DataGridViewColumnSortMode.NotSortable;
-            }
-            try
-            {
-                foreach (DataGridViewRow item in dataGridView1.Rows)
-                {
-                    if (item.Cells["Season"].Value != "")
+                    if (tempLastPageArr.Length < 15)
                     {
-                        ResourceManager rm = Resources.ResourceManager;
-                        Icon rowIcon = Icon.FromHandle(((Bitmap)rm.GetObject("_" + item.Cells["Season"].Value)).GetHicon());
-                        item.Cells["img"].Value = rowIcon;
+                        try
+                        {
+                            lastPageNo = Convert.ToInt16(tempLastPageArr[tempLastPageArr.Length - 3].Split(new string[] { "' class" }, StringSplitOptions.None)[0].Split(new string[] { "pageno=" }, StringSplitOptions.None)[1].Split('\'')[0]);
+                        }
+                        catch (Exception)
+                        {
+                            lastPageNo = 1;
+                        }
+
+                    }
+                    else
+                        lastPageNo = Convert.ToInt16(tempLastPageArr[tempLastPageArr.Length - 1].Split(new string[] { "' class" }, StringSplitOptions.None)[0].Split(new string[] { "pageno=" }, StringSplitOptions.None)[1]);
+
+                    for (int i = 1; i < lastPageNo + 1; i++)
+                    {
+                        string content = GetPage((mainUrl + dataCenterUrl + where + pageNoUrl + i));
+                        string[] playerArr = content.Split(new string[] { "<td class=\"vs\">" }, StringSplitOptions.None);
+
+                        for (int j = 1; j < playerArr.Length; j++)
+                        {
+                            string[] info = playerArr[j].Split(new string[] { "addPlayerVs(" }, StringSplitOptions.None)[1].Split(';')[0].Replace("\'", "").Split(',');
+                            PlayerInfo pi = new PlayerInfo();
+                            pi.playerIcon = info[0];
+                            pi.playerID = info[1];
+                            pi.playerName = info[2];
+
+                            //new Thread(() => DetailAnalysis(pi)).Start();
+                            DetailAnalysis(pi);
+                        }
                     }
 
-                }
-            }
-            catch (Exception)
-            {
+                    dataGridView1.Columns.Clear();
 
-            }
-            this.Activate();
-            this.Focus();
-            //this.WindowState = FormWindowState.Normal;
-            MessageBox.Show("Search Complete");
+                    DataTable dt = new DataTable();
+                    dt.Columns.Add("Season");
+                    dt.Columns.Add("PName");
+                    dt.Columns.Add("Multiply", typeof(Double));
+                    dt.Columns.Add("Detail");
+
+
+                    foreach (PlayerInfo item in lstPlayers)
+                    {
+                        DataRow dr = dt.NewRow();
+                        dr["Season"] = item.playerIcon;
+                        dr["PName"] = item.playerName;
+                        dr["Multiply"] = item.playerMultiply;
+                        dr["Detail"] = mainUrl + detailUrl + item.playerID;
+                        dt.Rows.Add(dr);
+                    }
+                    //DataView dv = dt.DefaultView;
+                    //dv.Sort = "Multiply DESC";
+                    //dt = dv.ToTable();
+                    dt.DefaultView.Sort = "Multiply DESC";
+                    dataGridView1.DataSource = dt;
+                    dataGridView1.Columns["Season"].Visible = false;
+                    DataGridViewImageColumn iconColumn = new DataGridViewImageColumn();
+                    iconColumn.Name = "img";
+                    iconColumn.HeaderText = "시즌";
+                    iconColumn.ValuesAreIcons = true;
+                    dataGridView1.Columns.Insert(0, iconColumn);
+                    dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+                    foreach (DataGridViewColumn item in dataGridView1.Columns)
+                    {
+                        item.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    }
+                    try
+                    {
+                        foreach (DataGridViewRow item in dataGridView1.Rows)
+                        {
+                            if (item.Cells["Season"].Value != "")
+                            {
+                                ResourceManager rm = Resources.ResourceManager;
+                                Icon rowIcon = Icon.FromHandle(((Bitmap)rm.GetObject("_" + item.Cells["Season"].Value)).GetHicon());
+                                item.Cells["img"].Value = rowIcon;
+                            }
+
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                    this.Activate();
+                    this.Focus();
+                    //this.WindowState = FormWindowState.Normal;
+                    MessageBox.Show("Search Complete");
+
+                    string query = string.Format(@"INSERT INTO c_search_log (
+                                                   C_USER_ID
+                                                ) VALUES (
+                                                   '{0}'  -- C_USER_ID - IN varchar(100)
+                                                );", authDT.Rows[0]["C_USER_ID"].ToString());
+                    MySqlHelper.ExecuteNonQuery(query);
+                }));
         }
         void DetailAnalysis(PlayerInfo pi)
         {
@@ -387,53 +438,171 @@ namespace SearchFIFASales
 
 
             #region 강장매크로
-        [DllImport("user32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool PrintWindow(IntPtr hwnd, IntPtr hDC, uint nFlags);
-
-        [DllImport("gdi32.dll")]
-        static extern IntPtr CreateRectRgn(int nLeftRect, int nTopRect, int nRightRect,
-            int nBottomRect);
-
-        [DllImport("user32.dll")]
-        static extern int GetWindowRgn(IntPtr hWnd, IntPtr hRgn);
-        //Region Flags - The return value specifies the type of the region that the function obtains. It can be one of the following values.
-        const int ERROR = 0;
-        const int NULLREGION = 1;
-        const int SIMPLEREGION = 2;
-        const int COMPLEXREGION = 3;
-        public static void PrintWindow(IntPtr hwnd)
+        private Bitmap ConvertFormat(System.Drawing.Image image, PixelFormat format)
         {
-            Rectangle rc = Rectangle.Empty;
-            Graphics gfxWin = Graphics.FromHwnd(hwnd);
-            rc = Rectangle.Round(gfxWin.VisibleClipBounds);
+            Bitmap copy = new Bitmap(image.Width, image.Height, format);
+            using (Graphics gr = Graphics.FromImage(copy))
+            {
+                gr.DrawImage(image, new Rectangle(0, 0, copy.Width, copy.Height));
+            }
+            return copy;
+        }
 
-            Bitmap bmp = new Bitmap(
-                rc.Width, rc.Height,
-                System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+        private Bitmap GetScreen()
+        {
+            return PrintWindow("fifazf");
+        }
+        [DllImport("user32.dll")]
+        public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+        [DllImport("user32.dll")]
+        public static extern bool PrintWindow(IntPtr hWnd, IntPtr hdcBlt, int nFlags);
 
-            
+        public static Bitmap PrintWindow(string procName)
+        {
+            Process proc;
+            proc = Process.GetProcessesByName(procName)[0];
+            IntPtr hwnd = proc.MainWindowHandle;
+            RECT rc;
+            GetWindowRect(hwnd, out rc);
+
+            Bitmap bmp = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
             Graphics gfxBmp = Graphics.FromImage(bmp);
             IntPtr hdcBitmap = gfxBmp.GetHdc();
-            bool succeeded = PrintWindow(hwnd, hdcBitmap, 2);
+
+            PrintWindow(hwnd, hdcBitmap, 0);
+
             gfxBmp.ReleaseHdc(hdcBitmap);
-            if (!succeeded)
-            {
-                gfxBmp.FillRectangle(
-                    new SolidBrush(Color.Gray),
-                    new Rectangle(Point.Empty, bmp.Size));
-            }
-            IntPtr hRgn = CreateRectRgn(0, 0, 0, 0);
-            GetWindowRgn(hwnd, hRgn);
-            Region region = Region.FromHrgn(hRgn);
-            if (!region.IsEmpty(gfxBmp))
-            {
-                gfxBmp.ExcludeClip(region);
-                gfxBmp.Clear(Color.Transparent);
-            }
             gfxBmp.Dispose();
-            bmp.Save(Environment.CurrentDirectory + "\\test.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
+
+            return bmp;
         }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct RECT
+        {
+            private int _Left;
+            private int _Top;
+            private int _Right;
+            private int _Bottom;
+
+            public RECT(RECT Rectangle)
+                : this(Rectangle.Left, Rectangle.Top, Rectangle.Right, Rectangle.Bottom)
+            {
+            }
+            public RECT(int Left, int Top, int Right, int Bottom)
+            {
+                _Left = Left;
+                _Top = Top;
+                _Right = Right;
+                _Bottom = Bottom;
+            }
+
+            public int X
+            {
+                get { return _Left; }
+                set { _Left = value; }
+            }
+            public int Y
+            {
+                get { return _Top; }
+                set { _Top = value; }
+            }
+            public int Left
+            {
+                get { return _Left; }
+                set { _Left = value; }
+            }
+            public int Top
+            {
+                get { return _Top; }
+                set { _Top = value; }
+            }
+            public int Right
+            {
+                get { return _Right; }
+                set { _Right = value; }
+            }
+            public int Bottom
+            {
+                get { return _Bottom; }
+                set { _Bottom = value; }
+            }
+            public int Height
+            {
+                get { return _Bottom - _Top; }
+                set { _Bottom = value + _Top; }
+            }
+            public int Width
+            {
+                get { return _Right - _Left; }
+                set { _Right = value + _Left; }
+            }
+            public Point Location
+            {
+                get { return new Point(Left, Top); }
+                set
+                {
+                    _Left = value.X;
+                    _Top = value.Y;
+                }
+            }
+            public Size Size
+            {
+                get { return new Size(Width, Height); }
+                set
+                {
+                    _Right = value.Width + _Left;
+                    _Bottom = value.Height + _Top;
+                }
+            }
+
+            public static implicit operator Rectangle(RECT Rectangle)
+            {
+                return new Rectangle(Rectangle.Left, Rectangle.Top, Rectangle.Width, Rectangle.Height);
+            }
+            public static implicit operator RECT(Rectangle Rectangle)
+            {
+                return new RECT(Rectangle.Left, Rectangle.Top, Rectangle.Right, Rectangle.Bottom);
+            }
+            public static bool operator ==(RECT Rectangle1, RECT Rectangle2)
+            {
+                return Rectangle1.Equals(Rectangle2);
+            }
+            public static bool operator !=(RECT Rectangle1, RECT Rectangle2)
+            {
+                return !Rectangle1.Equals(Rectangle2);
+            }
+
+            public override string ToString()
+            {
+                return "{Left: " + _Left + "; " + "Top: " + _Top + "; Right: " + _Right + "; Bottom: " + _Bottom + "}";
+            }
+
+            public override int GetHashCode()
+            {
+                return ToString().GetHashCode();
+            }
+
+            public bool Equals(RECT Rectangle)
+            {
+                return Rectangle.Left == _Left && Rectangle.Top == _Top && Rectangle.Right == _Right && Rectangle.Bottom == _Bottom;
+            }
+
+            public override bool Equals(object Object)
+            {
+                if (Object is RECT)
+                {
+                    return Equals((RECT)Object);
+                }
+                else if (Object is Rectangle)
+                {
+                    return Equals(new RECT((Rectangle)Object));
+                }
+
+                return false;
+            }
+        }
+
         #endregion
         #endregion
     }
