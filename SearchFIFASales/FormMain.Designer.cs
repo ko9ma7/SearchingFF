@@ -53,10 +53,12 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.cboWindows = new System.Windows.Forms.ComboBox();
             this.btnFind = new System.Windows.Forms.Button();
             this.btnCapture = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.txtLog = new System.Windows.Forms.RichTextBox();
+            this.image = new System.Windows.Forms.PictureBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -73,6 +75,7 @@
             this.splitContainer2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.image)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -333,6 +336,7 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.cboWindows);
             this.panel3.Controls.Add(this.btnFind);
             this.panel3.Controls.Add(this.btnCapture);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -340,6 +344,14 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(243, 378);
             this.panel3.TabIndex = 0;
+            // 
+            // cboWindows
+            // 
+            this.cboWindows.FormattingEnabled = true;
+            this.cboWindows.Location = new System.Drawing.Point(29, 36);
+            this.cboWindows.Name = "cboWindows";
+            this.cboWindows.Size = new System.Drawing.Size(121, 20);
+            this.cboWindows.TabIndex = 2;
             // 
             // btnFind
             // 
@@ -361,6 +373,7 @@
             // 
             // panel4
             // 
+            this.panel4.Controls.Add(this.image);
             this.panel4.Controls.Add(this.txtLog);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(0, 0);
@@ -376,6 +389,14 @@
             this.txtLog.Size = new System.Drawing.Size(627, 378);
             this.txtLog.TabIndex = 0;
             this.txtLog.Text = "";
+            // 
+            // image
+            // 
+            this.image.Location = new System.Drawing.Point(3, 3);
+            this.image.Name = "image";
+            this.image.Size = new System.Drawing.Size(624, 378);
+            this.image.TabIndex = 3;
+            this.image.TabStop = false;
             // 
             // FormMain
             // 
@@ -402,6 +423,7 @@
             this.splitContainer2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.image)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -437,6 +459,8 @@
         private System.Windows.Forms.Button btnCapture;
         private System.Windows.Forms.Button btnFind;
         private System.Windows.Forms.RichTextBox txtLog;
+        private System.Windows.Forms.ComboBox cboWindows;
+        private System.Windows.Forms.PictureBox image;
 
     }
 }
