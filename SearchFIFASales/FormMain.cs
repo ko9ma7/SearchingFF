@@ -19,8 +19,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Module.Data;
 using AForge.Imaging;
+using Module.Handling;
 
 namespace SearchFIFASales
 {
@@ -42,6 +42,8 @@ namespace SearchFIFASales
         string mainContent = "";
         DataTable authDT = new DataTable();
 
+        Dictionary<string, Module.Handling.Imaging.ImageRange> dictRange = new Dictionary<string, Imaging.ImageRange>();
+
 
         private CookieContainer _cookie;
         public CookieContainer Cookie
@@ -54,7 +56,7 @@ namespace SearchFIFASales
             {
             }
         }
-        
+
         private string _uID;
         private string _uIDW;
         private bool _includeWindows = false;
@@ -83,7 +85,9 @@ namespace SearchFIFASales
             this.WindowState = FormWindowState.Maximized;
             string sql = string.Format(@"SELECT * FROM C_USER LIMIT 1");
             DataTable dt = MySqlHelper.ExecuteDataTable(sql);
+            InitMacro();
             Init();
+            
             //MainProcess();
         }
 
@@ -115,7 +119,7 @@ namespace SearchFIFASales
             dictLeague.Add("이탈리아 세리에 A", "31");
             dictLeague.Add("프랑스 리게 1", "16");
 
-            
+
             dictSeason.Add("\'15시즌", "12");
             dictSeason.Add("\'14시즌", "14");
             dictSeason.Add("\'11시즌", "14");
@@ -161,175 +165,167 @@ namespace SearchFIFASales
 
             #region 이벤트
             btnSearch.Click += (object sender, EventArgs e) =>
-                {
-                    lstPlayers.Clear();
-                    new Thread(() => MainProcess()).Start();
-                };
+            {
+                lstPlayers.Clear();
+                new Thread(() => MainProcess()).Start();
+            };
 
             btnCapture.Click += (object sender, EventArgs e) =>
-                {
-                    GetScreen().Save("C:\\피파이미지\\test.png");
-                };
+            {
+                Imaging.GetScreen().Save("C:\\test.png");
+                //Imaging.CropImage(Imaging.GetScreen(), new Point(400, 550), 150, 150).Save("C:\\test.png");
+                //MessageCtr.SendKey(new Point(112, 191));
+            };
 
             btnFind.Click += (object sender, EventArgs e) =>
-                {
-                    OpenFileDialog dialog = new OpenFileDialog();
-                    DialogResult result = dialog.ShowDialog();
+            {
+                //OpenFileDialog dialog = new OpenFileDialog();
+                //DialogResult result = dialog.ShowDialog();
 
-                    if (result == System.Windows.Forms.DialogResult.OK)
-                    {
+                //if (result == System.Windows.Forms.DialogResult.OK)
+                //{
 
-                        string path = dialog.FileName;
-                        Bitmap small = ConvertFormat(Bitmap.FromFile(path), PixelFormat.Format24bppRgb);
-                        Bitmap big = ConvertFormat(GetScreen(), PixelFormat.Format24bppRgb);
+                    //string path = dialog.FileName;
+                    //Bitmap small = (Bitmap)Bitmap.FromFile(path);
+                    //Bitmap big = (Bitmap)Imaging.GetScreen();
 
-                        // create template matching algorithm's instance
-                        // (set similarity threshold to 92.5%)
-
-                        ExhaustiveTemplateMatching tm = new ExhaustiveTemplateMatching(0.991f);
-                        // find all matchings with specified above similarity
-
-                        TemplateMatch[] matchings = tm.ProcessImage(big, small);
-                        // highlight found matchings
-
-                        BitmapData data = big.LockBits(
-                            new Rectangle(0, 0, big.Width, big.Height),
-                            ImageLockMode.ReadWrite, big.PixelFormat);
-                        foreach (TemplateMatch m in matchings)
-                        {
-
-                            Drawing.Rectangle(data, m.Rectangle, Color.White);
-
-                            MessageBox.Show(m.Rectangle.Location.ToString());
-                            // do something else with matching
-                        }
-                        big.UnlockBits(data);
-                        //List<Point> lstp = ImageSearch.GetSubPositions(big, small);
-                        //foreach (Point p in lstp)
-                        //{
-                        //    Console.WriteLine(p);
-                        //}
-                    }
+                    //Module.Handling.Imaging.ImageRange range = dictRange["이적시장_즐겨찾기"];
                     
-                };
+                    
+                    //MessageBox.Show(p.ToString());
+                    new Thread(() => TradeMacro()).Start();
+                //}
+
+            };
             #endregion
+        }
+
+        void InitMacro()
+        {
+            Module.Handling.Imaging.ImageRange range = new Imaging.ImageRange(400, 525);
+            dictRange.Add("이적시장_버튼", range);
+
+            range = new Imaging.ImageRange(211 - 50, 125 - 50);
+            dictRange.Add("이적시장_즐겨찾기_버튼", range);
+
+
         }
         #endregion
 
         #region 함수
 
-            #region 데이터센터 파싱
+        #region 데이터센터 파싱
         void MainProcess()
         {
             this.Invoke(new MethodInvoker(delegate()
+            {
+                string where = "n1o1=70";
+                where += leagueUrl + dictLeague[cboLeague.Text];
+                where += txtFirstPrice.Text != "" ? priceFirstUrl + txtFirstPrice.Text : "";
+                where += txtSecondPrice.Text != "" ? priceSecondUrl + txtSecondPrice.Text : "";
+                where += cboSeason.Text != "전체" ? seasonUrl + dictSeason[cboSeason.Text] : "";
+                mainContent = GetPage(mainUrl + dataCenterUrl + where);
+
+                string[] tempLastPageArr = mainContent.Split(new string[] { "마지막 페이지" }, StringSplitOptions.None)[0].Split(new string[] { "<a href=\'" }, StringSplitOptions.None);
+                int lastPageNo = 0;
+
+                if (tempLastPageArr.Length < 15)
                 {
-                    string where = "n1o1=70";
-                    where += leagueUrl + dictLeague[cboLeague.Text];
-                    where += txtFirstPrice.Text != "" ? priceFirstUrl + txtFirstPrice.Text : "";
-                    where += txtSecondPrice.Text != "" ? priceSecondUrl + txtSecondPrice.Text : "";
-                    where += cboSeason.Text != "전체" ? seasonUrl + dictSeason[cboSeason.Text] : "";
-                    mainContent = GetPage(mainUrl + dataCenterUrl + where);
-
-                    string[] tempLastPageArr = mainContent.Split(new string[] { "마지막 페이지" }, StringSplitOptions.None)[0].Split(new string[] { "<a href=\'" }, StringSplitOptions.None);
-                    int lastPageNo = 0;
-
-                    if (tempLastPageArr.Length < 15)
-                    {
-                        try
-                        {
-                            lastPageNo = Convert.ToInt16(tempLastPageArr[tempLastPageArr.Length - 3].Split(new string[] { "' class" }, StringSplitOptions.None)[0].Split(new string[] { "pageno=" }, StringSplitOptions.None)[1].Split('\'')[0]);
-                        }
-                        catch (Exception)
-                        {
-                            lastPageNo = 1;
-                        }
-
-                    }
-                    else
-                        lastPageNo = Convert.ToInt16(tempLastPageArr[tempLastPageArr.Length - 1].Split(new string[] { "' class" }, StringSplitOptions.None)[0].Split(new string[] { "pageno=" }, StringSplitOptions.None)[1]);
-
-                    for (int i = 1; i < lastPageNo + 1; i++)
-                    {
-                        string content = GetPage((mainUrl + dataCenterUrl + where + pageNoUrl + i));
-                        string[] playerArr = content.Split(new string[] { "<td class=\"vs\">" }, StringSplitOptions.None);
-
-                        for (int j = 1; j < playerArr.Length; j++)
-                        {
-                            string[] info = playerArr[j].Split(new string[] { "addPlayerVs(" }, StringSplitOptions.None)[1].Split(';')[0].Replace("\'", "").Split(',');
-                            PlayerInfo pi = new PlayerInfo();
-                            pi.playerIcon = info[0];
-                            pi.playerID = info[1];
-                            pi.playerName = info[2];
-
-                            //new Thread(() => DetailAnalysis(pi)).Start();
-                            DetailAnalysis(pi);
-                        }
-                    }
-
-                    dataGridView1.Columns.Clear();
-
-                    DataTable dt = new DataTable();
-                    dt.Columns.Add("Season");
-                    dt.Columns.Add("PName");
-                    dt.Columns.Add("Multiply", typeof(Double));
-                    dt.Columns.Add("Detail");
-
-
-                    foreach (PlayerInfo item in lstPlayers)
-                    {
-                        DataRow dr = dt.NewRow();
-                        dr["Season"] = item.playerIcon;
-                        dr["PName"] = item.playerName;
-                        dr["Multiply"] = item.playerMultiply;
-                        dr["Detail"] = mainUrl + detailUrl + item.playerID;
-                        dt.Rows.Add(dr);
-                    }
-                    //DataView dv = dt.DefaultView;
-                    //dv.Sort = "Multiply DESC";
-                    //dt = dv.ToTable();
-                    dt.DefaultView.Sort = "Multiply DESC";
-                    dataGridView1.DataSource = dt;
-                    dataGridView1.Columns["Season"].Visible = false;
-                    DataGridViewImageColumn iconColumn = new DataGridViewImageColumn();
-                    iconColumn.Name = "img";
-                    iconColumn.HeaderText = "시즌";
-                    iconColumn.ValuesAreIcons = true;
-                    dataGridView1.Columns.Insert(0, iconColumn);
-                    dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-
-                    foreach (DataGridViewColumn item in dataGridView1.Columns)
-                    {
-                        item.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    }
                     try
                     {
-                        foreach (DataGridViewRow item in dataGridView1.Rows)
-                        {
-                            if (item.Cells["Season"].Value != "")
-                            {
-                                ResourceManager rm = Resources.ResourceManager;
-                                Icon rowIcon = Icon.FromHandle(((Bitmap)rm.GetObject("_" + item.Cells["Season"].Value)).GetHicon());
-                                item.Cells["img"].Value = rowIcon;
-                            }
-
-                        }
+                        lastPageNo = Convert.ToInt16(tempLastPageArr[tempLastPageArr.Length - 3].Split(new string[] { "' class" }, StringSplitOptions.None)[0].Split(new string[] { "pageno=" }, StringSplitOptions.None)[1].Split('\'')[0]);
                     }
                     catch (Exception)
                     {
+                        lastPageNo = 1;
+                    }
+
+                }
+                else
+                    lastPageNo = Convert.ToInt16(tempLastPageArr[tempLastPageArr.Length - 1].Split(new string[] { "' class" }, StringSplitOptions.None)[0].Split(new string[] { "pageno=" }, StringSplitOptions.None)[1]);
+
+                for (int i = 1; i < lastPageNo + 1; i++)
+                {
+                    string content = GetPage((mainUrl + dataCenterUrl + where + pageNoUrl + i));
+                    string[] playerArr = content.Split(new string[] { "<td class=\"vs\">" }, StringSplitOptions.None);
+
+                    for (int j = 1; j < playerArr.Length; j++)
+                    {
+                        string[] info = playerArr[j].Split(new string[] { "addPlayerVs(" }, StringSplitOptions.None)[1].Split(';')[0].Replace("\'", "").Split(',');
+                        PlayerInfo pi = new PlayerInfo();
+                        pi.playerIcon = info[0];
+                        pi.playerID = info[1];
+                        pi.playerName = info[2];
+
+                        //new Thread(() => DetailAnalysis(pi)).Start();
+                        DetailAnalysis(pi);
+                    }
+                }
+
+                dataGridView1.Columns.Clear();
+
+                DataTable dt = new DataTable();
+                dt.Columns.Add("Season");
+                dt.Columns.Add("PName");
+                dt.Columns.Add("Multiply", typeof(Double));
+                dt.Columns.Add("Detail");
+
+
+                foreach (PlayerInfo item in lstPlayers)
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["Season"] = item.playerIcon;
+                    dr["PName"] = item.playerName;
+                    dr["Multiply"] = item.playerMultiply;
+                    dr["Detail"] = mainUrl + detailUrl + item.playerID;
+                    dt.Rows.Add(dr);
+                }
+                //DataView dv = dt.DefaultView;
+                //dv.Sort = "Multiply DESC";
+                //dt = dv.ToTable();
+                dt.DefaultView.Sort = "Multiply DESC";
+                dataGridView1.DataSource = dt;
+                dataGridView1.Columns["Season"].Visible = false;
+                DataGridViewImageColumn iconColumn = new DataGridViewImageColumn();
+                iconColumn.Name = "img";
+                iconColumn.HeaderText = "시즌";
+                iconColumn.ValuesAreIcons = true;
+                dataGridView1.Columns.Insert(0, iconColumn);
+                dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+                foreach (DataGridViewColumn item in dataGridView1.Columns)
+                {
+                    item.SortMode = DataGridViewColumnSortMode.NotSortable;
+                }
+                try
+                {
+                    foreach (DataGridViewRow item in dataGridView1.Rows)
+                    {
+                        if (item.Cells["Season"].Value != "")
+                        {
+                            ResourceManager rm = Resources.ResourceManager;
+                            Icon rowIcon = Icon.FromHandle(((Bitmap)rm.GetObject("_" + item.Cells["Season"].Value)).GetHicon());
+                            item.Cells["img"].Value = rowIcon;
+                        }
 
                     }
-                    this.Activate();
-                    this.Focus();
-                    //this.WindowState = FormWindowState.Normal;
-                    MessageBox.Show("Search Complete");
+                }
+                catch (Exception)
+                {
 
-                    string query = string.Format(@"INSERT INTO c_search_log (
+                }
+                this.Activate();
+                this.Focus();
+                //this.WindowState = FormWindowState.Normal;
+                MessageBox.Show("Search Complete");
+
+                string query = string.Format(@"INSERT INTO c_search_log (
                                                    C_USER_ID
                                                 ) VALUES (
                                                    '{0}'  -- C_USER_ID - IN varchar(100)
                                                 );", authDT.Rows[0]["C_USER_ID"].ToString());
-                    MySqlHelper.ExecuteNonQuery(query);
-                }));
+                MySqlHelper.ExecuteNonQuery(query);
+            }));
         }
         void DetailAnalysis(PlayerInfo pi)
         {
@@ -415,7 +411,7 @@ namespace SearchFIFASales
         }
         #endregion
 
-            #region DB Query
+        #region DB Query
         DateTime GetServerTime()
         {
             string sql = string.Format(@"SELECT NOW();");
@@ -424,7 +420,7 @@ namespace SearchFIFASales
         }
         #endregion
 
-            #region HWID
+        #region HWID
 
         private void GetUniqueID()
         {
@@ -437,171 +433,65 @@ namespace SearchFIFASales
         #endregion
 
 
-            #region 강장매크로
-        private Bitmap ConvertFormat(System.Drawing.Image image, PixelFormat format)
+        #region 매크로
+        void TradeMacro()
         {
-            Bitmap copy = new Bitmap(image.Width, image.Height, format);
-            using (Graphics gr = Graphics.FromImage(copy))
-            {
-                gr.DrawImage(image, new Rectangle(0, 0, copy.Width, copy.Height));
-            }
-            return copy;
+            GoTrade();
+            GoFavorite();
+            TradeMacro();
         }
 
-        private Bitmap GetScreen()
+
+        void UpdateStatus(string msg)
         {
-            return PrintWindow("fifazf");
+            this.Invoke(new MethodInvoker(delegate()
+                {
+                    txtLog.AppendText("[" + GetServerTime().ToString("MM-dd HH:mm:ss") + "] " + msg);
+                    txtLog.AppendText("\r\n");
+                }));
         }
-        [DllImport("user32.dll")]
-        public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
-        [DllImport("user32.dll")]
-        public static extern bool PrintWindow(IntPtr hWnd, IntPtr hdcBlt, int nFlags);
-
-        public static Bitmap PrintWindow(string procName)
+        Point ImgMatch(Bitmap big, Bitmap small, Module.Handling.Imaging.ImageRange range)
         {
-            Process proc;
-            proc = Process.GetProcessesByName(procName)[0];
-            IntPtr hwnd = proc.MainWindowHandle;
-            RECT rc;
-            GetWindowRect(hwnd, out rc);
+            Point p = Imaging.ImageMatching(big, small, range.loc, range.width, range.height);
 
-            Bitmap bmp = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
-            Graphics gfxBmp = Graphics.FromImage(bmp);
-            IntPtr hdcBitmap = gfxBmp.GetHdc();
-
-            PrintWindow(hwnd, hdcBitmap, 0);
-
-            gfxBmp.ReleaseHdc(hdcBitmap);
-            gfxBmp.Dispose();
-
-            return bmp;
+            return p;
         }
 
-        [StructLayout(LayoutKind.Sequential)]
-        public struct RECT
+        void SendKey(Point targetPoint, Module.Handling.Imaging.ImageRange range)
         {
-            private int _Left;
-            private int _Top;
-            private int _Right;
-            private int _Bottom;
+            MessageCtr.SendKey(new Point(targetPoint.X + range.loc.X, targetPoint.Y + range.loc.Y));
+            Thread.Sleep(200);
+        }
 
-            public RECT(RECT Rectangle)
-                : this(Rectangle.Left, Rectangle.Top, Rectangle.Right, Rectangle.Bottom)
-            {
-            }
-            public RECT(int Left, int Top, int Right, int Bottom)
-            {
-                _Left = Left;
-                _Top = Top;
-                _Right = Right;
-                _Bottom = Bottom;
-            }
+        #region 강화장사
 
-            public int X
+        void GoTrade()
+        {
+            Bitmap big = (Bitmap)Imaging.GetScreen();
+            Bitmap small = global::SearchFIFASales.Properties.Resources.이적시장_버튼;
+            Module.Handling.Imaging.ImageRange range = dictRange["이적시장_버튼"];
+            Point targetPoint = ImgMatch(big, small, range);
+            if (targetPoint != new Point(0, 0))
             {
-                get { return _Left; }
-                set { _Left = value; }
-            }
-            public int Y
-            {
-                get { return _Top; }
-                set { _Top = value; }
-            }
-            public int Left
-            {
-                get { return _Left; }
-                set { _Left = value; }
-            }
-            public int Top
-            {
-                get { return _Top; }
-                set { _Top = value; }
-            }
-            public int Right
-            {
-                get { return _Right; }
-                set { _Right = value; }
-            }
-            public int Bottom
-            {
-                get { return _Bottom; }
-                set { _Bottom = value; }
-            }
-            public int Height
-            {
-                get { return _Bottom - _Top; }
-                set { _Bottom = value + _Top; }
-            }
-            public int Width
-            {
-                get { return _Right - _Left; }
-                set { _Right = value + _Left; }
-            }
-            public Point Location
-            {
-                get { return new Point(Left, Top); }
-                set
-                {
-                    _Left = value.X;
-                    _Top = value.Y;
-                }
-            }
-            public Size Size
-            {
-                get { return new Size(Width, Height); }
-                set
-                {
-                    _Right = value.Width + _Left;
-                    _Bottom = value.Height + _Top;
-                }
-            }
-
-            public static implicit operator Rectangle(RECT Rectangle)
-            {
-                return new Rectangle(Rectangle.Left, Rectangle.Top, Rectangle.Width, Rectangle.Height);
-            }
-            public static implicit operator RECT(Rectangle Rectangle)
-            {
-                return new RECT(Rectangle.Left, Rectangle.Top, Rectangle.Right, Rectangle.Bottom);
-            }
-            public static bool operator ==(RECT Rectangle1, RECT Rectangle2)
-            {
-                return Rectangle1.Equals(Rectangle2);
-            }
-            public static bool operator !=(RECT Rectangle1, RECT Rectangle2)
-            {
-                return !Rectangle1.Equals(Rectangle2);
-            }
-
-            public override string ToString()
-            {
-                return "{Left: " + _Left + "; " + "Top: " + _Top + "; Right: " + _Right + "; Bottom: " + _Bottom + "}";
-            }
-
-            public override int GetHashCode()
-            {
-                return ToString().GetHashCode();
-            }
-
-            public bool Equals(RECT Rectangle)
-            {
-                return Rectangle.Left == _Left && Rectangle.Top == _Top && Rectangle.Right == _Right && Rectangle.Bottom == _Bottom;
-            }
-
-            public override bool Equals(object Object)
-            {
-                if (Object is RECT)
-                {
-                    return Equals((RECT)Object);
-                }
-                else if (Object is Rectangle)
-                {
-                    return Equals(new RECT((Rectangle)Object));
-                }
-
-                return false;
+                SendKey(targetPoint, range);
+                UpdateStatus("이적시장으로 이동");
             }
         }
+
+        void GoFavorite()
+        {
+            Bitmap big = (Bitmap)Imaging.GetScreen();
+            Bitmap small = global::SearchFIFASales.Properties.Resources.이적시장_즐겨찾기_버튼;
+            Module.Handling.Imaging.ImageRange range = dictRange["이적시장_즐겨찾기_버튼"];
+            Point targetPoint = ImgMatch(big, small, range);
+            if (targetPoint != new Point(0, 0))
+            {
+                SendKey(targetPoint, range);
+                UpdateStatus("이적시장_즐겨찾기로 이동");
+            }
+        }
+        #endregion
+
 
         #endregion
         #endregion

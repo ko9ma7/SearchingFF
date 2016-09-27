@@ -53,9 +53,10 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.btnCapture = new System.Windows.Forms.Button();
             this.btnFind = new System.Windows.Forms.Button();
+            this.btnCapture = new System.Windows.Forms.Button();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.txtLog = new System.Windows.Forms.RichTextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -71,6 +72,7 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -339,13 +341,14 @@
             this.panel3.Size = new System.Drawing.Size(243, 378);
             this.panel3.TabIndex = 0;
             // 
-            // panel4
+            // btnFind
             // 
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(0, 0);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(627, 378);
-            this.panel4.TabIndex = 0;
+            this.btnFind.Location = new System.Drawing.Point(75, 344);
+            this.btnFind.Name = "btnFind";
+            this.btnFind.Size = new System.Drawing.Size(75, 23);
+            this.btnFind.TabIndex = 1;
+            this.btnFind.Text = "찾기";
+            this.btnFind.UseVisualStyleBackColor = true;
             // 
             // btnCapture
             // 
@@ -356,14 +359,23 @@
             this.btnCapture.Text = "캡쳐";
             this.btnCapture.UseVisualStyleBackColor = true;
             // 
-            // btnFind
+            // panel4
             // 
-            this.btnFind.Location = new System.Drawing.Point(75, 344);
-            this.btnFind.Name = "btnFind";
-            this.btnFind.Size = new System.Drawing.Size(75, 23);
-            this.btnFind.TabIndex = 1;
-            this.btnFind.Text = "찾기";
-            this.btnFind.UseVisualStyleBackColor = true;
+            this.panel4.Controls.Add(this.txtLog);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(0, 0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(627, 378);
+            this.panel4.TabIndex = 0;
+            // 
+            // txtLog
+            // 
+            this.txtLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtLog.Location = new System.Drawing.Point(0, 0);
+            this.txtLog.Name = "txtLog";
+            this.txtLog.Size = new System.Drawing.Size(627, 378);
+            this.txtLog.TabIndex = 0;
+            this.txtLog.Text = "";
             // 
             // FormMain
             // 
@@ -389,6 +401,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -423,6 +436,7 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Button btnCapture;
         private System.Windows.Forms.Button btnFind;
+        private System.Windows.Forms.RichTextBox txtLog;
 
     }
 }
