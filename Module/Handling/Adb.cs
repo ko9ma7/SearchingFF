@@ -16,7 +16,7 @@ namespace Module.Handling
         private Regex regexColorReplace = new Regex("([\\w\\d]{2})([\\w\\d]{2})", RegexOptions.Compiled);
         private Regex regexPositionX = new Regex("(?<=ABS_MT_POSITION_X).+", RegexOptions.Compiled);
         private Regex regexPositionY = new Regex("(?<=ABS_MT_POSITION_Y).+", RegexOptions.Compiled);
-        private Size displaySize = new Size(700, 420);
+        private Size displaySize = new Size(480, 800);
 
         public string adbPath
         {
@@ -48,6 +48,7 @@ namespace Module.Handling
         {
             adbProcess.StartInfo.UseShellExecute = false;
             adbProcess.StartInfo.RedirectStandardOutput = true;
+            adbProcess.StartInfo.RedirectStandardInput = true;
             adbProcess.StartInfo.CreateNoWindow = true;
         }
 
@@ -78,6 +79,7 @@ namespace Module.Handling
             {
                 adbProcess.StartInfo.Arguments = "devices";
                 adbProcess.Start();
+                adbProcess.WaitForExit();
                 MatchCollection matchCollection = Regex.Matches(adbProcess.StandardOutput.ReadToEnd(), ".+(?=device\\s)");
                 string[] strArray = new string[matchCollection.Count];
                 for (int index = 0; index < matchCollection.Count; ++index)
@@ -95,6 +97,8 @@ namespace Module.Handling
             {
                 adbProcess.StartInfo.Arguments = string.Format("-s {0} shell dumpsys window", _device);
                 adbProcess.Start();
+                //adbProcess.StandardInput.WriteLine(string.Format("-s {0} shell dumpsys window", _device));
+                //adbProcess.StandardInput.Close();
                 Match match = Regex.Match(adbProcess.StandardOutput.ReadToEnd(), "mUnrestrictedScreen=.+?([\\d]+)x([\\d]+)");
                 int num1 = int.Parse(match.Groups[1].Value);
                 int num2 = int.Parse(match.Groups[2].Value);
@@ -111,6 +115,8 @@ namespace Module.Handling
             {
                 adbProcess.StartInfo.Arguments = string.Format("-s {0} shell screencap", _device);
                 adbProcess.Start();
+                //adbProcess.StandardInput.WriteLine(string.Format("-s {0} shell screencap", _device));
+                //adbProcess.StandardInput.Close();
                 byte[] data;
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
