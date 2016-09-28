@@ -21,7 +21,7 @@ namespace Module.Handling
 
         public static void SendKey(Point p)
         {
-            IntPtr hwnd = Imaging.GetHWND("fifazf");
+            IntPtr hwnd = Imaging.GetHWND("Nox");
             int lparam = p.X & 0xFFFF | (p.Y & 0xFFFF) << 16;
             SendMessage(hwnd, (int)PostMessageParam.WM_LBUTTONDOWN, 0, lparam);
             Thread.Sleep(200);

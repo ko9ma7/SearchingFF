@@ -36,16 +36,16 @@ namespace Module.Handling
 
         public static Bitmap Print(IntPtr hwnd)
         {
-            //RECT rc;
-            //RECT clientRc;
-            //GetClientRect(hwnd, out clientRc);
-            //GetWindowRect(hwnd, out rc);
+            RECT rc;
+            RECT clientRc;
+            GetClientRect(hwnd, out clientRc);
+            GetWindowRect(hwnd, out rc);
 
-            //int borderSize = (rc.Width - clientRc.Width) / 2;
-            //int titlebarSize = (rc.Height - clientRc.Height) - borderSize;
+            int borderSize = (rc.Width - clientRc.Width) / 2;
+            int titlebarSize = (rc.Height - clientRc.Height) - borderSize;
 
 
-            Bitmap bmp = new Bitmap(NativeMethods.GetAbsoluteClientRect(hwnd).Width, NativeMethods.GetAbsoluteClientRect(hwnd).Height, PixelFormat.Format24bppRgb);
+            Bitmap bmp = new Bitmap(rc.Width, rc.Height, PixelFormat.Format24bppRgb);
             Graphics gfxBmp = Graphics.FromImage(bmp);
             IntPtr hdcBitmap = gfxBmp.GetHdc();
 
@@ -62,8 +62,8 @@ namespace Module.Handling
 
             //gfxBmp.Dispose();
 
-            //return CropImage(bmp, new Point(borderSize, titlebarSize), rc.Width - borderSize, rc.Height - titlebarSize);
-            return bmp;
+            return CropImage(bmp, new Point(borderSize, titlebarSize), NativeMethods.GetAbsoluteClientRect(hwnd).Width, NativeMethods.GetAbsoluteClientRect(hwnd).Height);
+            //return bmp;
         }
 
         public static Point ImageMatching(Bitmap big, Bitmap small, Point cropPoint = new Point(), int width = 0, int height = 0)
@@ -74,12 +74,12 @@ namespace Module.Handling
             big = width == 0 && height == 0 ? Imaging.ConvertFormat(big, PixelFormat.Format24bppRgb) : Imaging.ConvertFormat(CropImage(big, cropPoint, width, height), PixelFormat.Format24bppRgb);
             //big = 
 
-            ExhaustiveTemplateMatching tm = new ExhaustiveTemplateMatching(0.98f);
+            ExhaustiveTemplateMatching tm = new ExhaustiveTemplateMatching(0.95f);
             // find all matchings with specified above similarity
 
             TemplateMatch[] matchings = tm.ProcessImage(big, small);
             // highlight found matchings
-
+            big.Save("C:\\test2.png");
             BitmapData data = big.LockBits(
                 new Rectangle(0, 0, big.Width, big.Height),
                 ImageLockMode.ReadWrite, big.PixelFormat);
@@ -88,6 +88,14 @@ namespace Module.Handling
 
             return matchings.Length > 0 ? matchings[0].Rectangle.Location : new Point();
         }
+
+        public static Point ImgMatch(Bitmap big, Bitmap small, ImageRange range)
+        {
+            Point p = Imaging.ImageMatching(big, small, range.loc, range.width, range.height);
+
+            return p;
+        }
+
         private static Bitmap ConvertFormat(System.Drawing.Image image, PixelFormat format)
         {
             Bitmap copy = new Bitmap(image.Width, image.Height, format);
@@ -342,6 +350,13 @@ namespace Module.Handling
                 loc = new Point(x, y);
                 width = 150;
                 height = 150;
+            }
+
+            public ImageRange(int x, int y, int widthh, int heightt)
+            {
+                loc = new Point(x, y);
+                width = widthh;
+                height = heightt;
             }
         }
     }

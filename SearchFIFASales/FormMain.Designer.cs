@@ -57,8 +57,10 @@
             this.btnFind = new System.Windows.Forms.Button();
             this.btnCapture = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.txtLog = new System.Windows.Forms.RichTextBox();
             this.image = new System.Windows.Forms.PictureBox();
+            this.txtLog = new System.Windows.Forms.RichTextBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.mobileMacroPanel1 = new Module.MobileMacro.MobileMacroPanel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -76,10 +78,12 @@
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.image)).BeginInit();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -381,6 +385,14 @@
             this.panel4.Size = new System.Drawing.Size(627, 378);
             this.panel4.TabIndex = 0;
             // 
+            // image
+            // 
+            this.image.Location = new System.Drawing.Point(3, 3);
+            this.image.Name = "image";
+            this.image.Size = new System.Drawing.Size(624, 378);
+            this.image.TabIndex = 3;
+            this.image.TabStop = false;
+            // 
             // txtLog
             // 
             this.txtLog.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -390,13 +402,25 @@
             this.txtLog.TabIndex = 0;
             this.txtLog.Text = "";
             // 
-            // image
+            // tabPage3
             // 
-            this.image.Location = new System.Drawing.Point(3, 3);
-            this.image.Name = "image";
-            this.image.Size = new System.Drawing.Size(624, 378);
-            this.image.TabIndex = 3;
-            this.image.TabStop = false;
+            this.tabPage3.Controls.Add(this.mobileMacroPanel1);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(880, 384);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "tabPage3";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // mobileMacroPanel1
+            // 
+            this.mobileMacroPanel1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.mobileMacroPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mobileMacroPanel1.Location = new System.Drawing.Point(3, 3);
+            this.mobileMacroPanel1.Name = "mobileMacroPanel1";
+            this.mobileMacroPanel1.Size = new System.Drawing.Size(874, 378);
+            this.mobileMacroPanel1.TabIndex = 0;
             // 
             // FormMain
             // 
@@ -424,6 +448,7 @@
             this.panel3.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.image)).EndInit();
+            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -461,6 +486,8 @@
         private System.Windows.Forms.RichTextBox txtLog;
         private System.Windows.Forms.ComboBox cboWindows;
         private System.Windows.Forms.PictureBox image;
+        private System.Windows.Forms.TabPage tabPage3;
+        private Module.MobileMacro.MobileMacroPanel mobileMacroPanel1;
 
     }
 }

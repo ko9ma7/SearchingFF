@@ -467,12 +467,6 @@ namespace SearchFIFASales
                     txtLog.AppendText("\r\n");
                 }));
         }
-        Point ImgMatch(Bitmap big, Bitmap small, Module.Handling.Imaging.ImageRange range)
-        {
-            Point p = Imaging.ImageMatching(big, small, range.loc, range.width, range.height);
-
-            return p;
-        }
 
         void SendKey(Point targetPoint, Module.Handling.Imaging.ImageRange range)
         {
@@ -488,7 +482,7 @@ namespace SearchFIFASales
             //Imaging.GetScreen().Save("C:\\test.png");
             Bitmap small = global::SearchFIFASales.Properties.Resources.이적시장_버튼;
             Module.Handling.Imaging.ImageRange range = dictRange["이적시장_버튼"];
-            Point targetPoint = ImgMatch(big, small, range);
+            Point targetPoint = Imaging.ImgMatch(big, small, range);
             if (targetPoint != new Point(0, 0))
             {
                 SendKey(targetPoint, range);
@@ -501,7 +495,7 @@ namespace SearchFIFASales
             Bitmap big = (Bitmap)Imaging.GetScreen();
             Bitmap small = global::SearchFIFASales.Properties.Resources.이적시장_즐겨찾기_버튼;
             Module.Handling.Imaging.ImageRange range = dictRange["이적시장_즐겨찾기_버튼"];
-            Point targetPoint = ImgMatch(big, small, range);
+            Point targetPoint = Imaging.ImgMatch(big, small, range);
             if (targetPoint != new Point(0, 0))
             {
                 SendKey(targetPoint, range);
