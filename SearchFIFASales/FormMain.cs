@@ -1,5 +1,4 @@
-﻿using MCF.Classes.Data;
-using Module;
+﻿using Module;
 using SearchFIFASales.Properties;
 using System;
 using System.Collections.Generic;
@@ -17,10 +16,10 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using AForge.Imaging;
 using Module.Handling;
+using MCF.Classes.Data;
 
 namespace SearchFIFASales
 {

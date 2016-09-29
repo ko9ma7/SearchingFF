@@ -5,13 +5,15 @@ using System.Drawing;
 using System.Data;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Module.Handling;
 using System.Threading;
 using System.IO;
 using System.Diagnostics;
 using Module.Properties;
+using Patagames.Ocr;
+using Patagames.Ocr.Enums;
+
 
 namespace Module.MobileMacro
 {
@@ -22,9 +24,6 @@ namespace Module.MobileMacro
         Dictionary<string, Module.Handling.Imaging.ImageRange> dictRange = new Dictionary<string, Imaging.ImageRange>();
 
 
-        #region 이미지
-        Bitmap Mobile_shop_button = global::Module.Properties.Resources.Mobile_shop_button;
-        #endregion
         public MobileMacroPanel()
         {
             InitializeComponent();
@@ -37,19 +36,20 @@ namespace Module.MobileMacro
             mAdb.adbPath = SearchADBFilename();
             btnFind.Click += btnFind_Click;
             btnRefresh.Click += btnRefresh_Click;
-            btnMonitoring.Click += btnMonitoring_Click;
+            btnStart.Click += btnStart_Click;
 
             btnRefresh_Click(null, null);
 
             if (cboADBList.Items.Count > 0)
                 cboADBList.SelectedIndex = 0;
 
-            btnMonitoring.PerformClick();
+            //btnStart.PerformClick();
         }
 
         void InitImage()
         {
-            dictRange.Add("Mobile_shop_button", new Imaging.ImageRange(0, 700, 480, 100));
+            dictRange.Add("Mobile_shop_button", new Imaging.ImageRange(0, 700, 480, 200));
+            dictRange.Add("Mobile_player_scout_empty", new Imaging.ImageRange(0, 690, 480, 210));
         }
         #region 이벤트
         void btnRefresh_Click(object sender, EventArgs e)
@@ -75,27 +75,38 @@ namespace Module.MobileMacro
             Cursor = Cursors.Default;
         }
 
-        void btnMonitoring_Click(object sender, EventArgs e)
+        void btnStart_Click(object sender, EventArgs e)
         {
-            if (btnMonitoring.Text.Equals("시작"))
+            if (btnStart.Text.Equals("시작"))
             {
                 if (cboADBList.SelectedIndex < 0)
                     return;
 
                 btnRefresh.Enabled = false;
                 cboADBList.Enabled = false;
+                chkReceive.Enabled = false;
+                chkSell.Enabled = false;
+                chkTrade.Enabled = false;
+                txtSell.Enabled = false;
+                txtTrade.Enabled = false;
+                
 
-                btnMonitoring.Text = "중지";
+                btnStart.Text = "중지";
                 mAdb.device = cboADBList.Text;
-                t = new Thread(Monitoring);
+                t = new Thread(Macro);
                 t.Start();
             }
             else
             {
                 btnRefresh.Enabled = true;
                 cboADBList.Enabled = true;
-
-                btnMonitoring.Text = "시작";
+                chkReceive.Enabled = true;
+                chkSell.Enabled = true;
+                chkTrade.Enabled = true;
+                txtSell.Enabled = true;
+                txtTrade.Enabled = true;
+                
+                btnStart.Text = "시작";
                 t.Abort();
             }
         }
@@ -103,25 +114,95 @@ namespace Module.MobileMacro
         void btnFind_Click(object sender, EventArgs e)
         {
             //mAdb.bmp.Save("C:\\test.png");
-            //mAdb.Touch(145, 155);
+            //mAdb.Touch(150, 480);
             
-            Point p = ImageMatch("Mobile_shop_button");
-            mAdb.Touch(p.X, p.Y + dictRange["Mobile_shop_button"].loc.Y);
-            //p = new Point(p.X, p.Y);
-            //Handling.MessageCtr.SendKey(p);
-            Monitoring();
+            //Point p = ImageMatch("Mobile_shop_button");
+            //mAdb.Touch(p.X, p.Y + dictRange["Mobile_shop_button"].loc.Y);
+            ////p = new Point(p.X, p.Y);
+            ////Handling.MessageCtr.SendKey(p);
+            //Monitoring();
+
+            //Imaging.GetScreen().Save("C:\\test123.png");
+            //Handling.MessageCtr.SendKey(new Point(156, 511));
+
+            
         }
         #endregion
 
-        #region 사용자함수
-        private void Monitoring()
+        #region 매크로 영역
+        Point NullPoint = new Point(0, 0);
+        private void PlayerScoutEmpty(Bitmap big)
         {
-            //while (true)
-            //{
-                mAdb.Capture();
-                image.Image = mAdb.bmp;
-            //}
+            if (ImageMatch(big, "Mobile_player_scout_empty") != NullPoint)
+            {
+                Point p = ImageMatch(big, "Mobile_shop_button");
+                big.Save("C:\\testest.png");
+                if (p != NullPoint)
+                {
+                    mAdb.Touch(p.X, p.Y + dictRange["Mobile_shop_button"].loc.Y);
+                    //Console.WriteLine(Stopwatch.);
+
+                }
+            }
         }
+        #endregion
+        #region 사용자함수
+        private void Macro()
+        {
+            Bitmap big = Imaging.GetScreen();
+
+            //big.Save("C:\\test.png");
+            image.Image = big;
+            PlayerScoutEmpty(big);
+            //GetOCR(big, new Point(170, 436), 201, 36);
+            
+            //OcrEngine ocr = new OcrEngine();
+            //ocr.Image = ImageStream.FromFile("C:\\test.png");
+            
+            //Tesseract ocr = new Tesseract();
+            //ocr.SetVariable("tessedit_char_whitelist", "0123456789");
+            //ocr.Init(@"C:\\temp", "kor", true);
+            //List<Word> result = ocr.DoOCR(big, Rectangle.Empty);
+            //foreach (Word item in result)
+            //{
+            //    Console.WriteLine(item.Confidence);
+            //    Console.WriteLine(item.Text);
+            //}
+
+
+            //if (ocr.Process())
+            //{
+            //    Console.WriteLine(ocr.Text);
+            //}
+            //Thread.Sleep(200);
+
+        }
+
+        private string GetOCR(Bitmap big, Point p, int width, int height)
+        {
+            big = Imaging.CropImage(big, p, width, height);
+            OcrApi.PathToEngine = @"C:\tesseract.dll";
+            var api = OcrApi.Create();
+            Languages[] lang = { Languages.English, Languages.Korean };
+            api.Init(lang);
+            string plainText = api.GetTextFromImage(big);
+            Console.WriteLine(plainText);
+            this.Invoke(new MethodInvoker(delegate() { txtLog.AppendText(plainText + Environment.NewLine); }));
+
+            return plainText;
+        }
+
+        //private void Monitoring()
+        //{
+        //    while (true)
+        //    {
+        //        //mAdb.Capture();
+        //        //image.Image = mAdb.bmp;
+        //        image.Image = Imaging.GetScreen();
+        //        Thread.Sleep(200);
+        //    }
+            
+        //}
 
         private string SearchADBFilename()
         {
@@ -164,13 +245,9 @@ namespace Module.MobileMacro
             return null;
         }
 
-        private Point ImageMatch(string destName)
+        private Point ImageMatch(Bitmap big, string destName)
         {
-            Monitoring();
-            ((Bitmap)Resources.ResourceManager.GetObject(destName)).Save("C:\\test1.png");
-            Rectangle r = new Rectangle(0, 0, mAdb.bmp.Width, mAdb.bmp.Height);
-            Bitmap big = new Bitmap(r.Width, r.Height);
-            big = mAdb.bmp.Clone(r, big.PixelFormat);
+            //((Bitmap)Resources.ResourceManager.GetObject(destName)).Save("C:\\test1.png");
             return Imaging.ImgMatch(big, (Bitmap)Resources.ResourceManager.GetObject(destName), dictRange[destName]);
         }
         #endregion
