@@ -63,6 +63,26 @@ namespace Module.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap Mobile_market_menu {
+            get {
+                object obj = ResourceManager.GetObject("Mobile_market_menu", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap Mobile_market_sellbutton {
+            get {
+                object obj = ResourceManager.GetObject("Mobile_market_sellbutton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap Mobile_player_scout_empty {
             get {
                 object obj = ResourceManager.GetObject("Mobile_player_scout_empty", resourceCulture);
@@ -73,9 +93,129 @@ namespace Module.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap Mobile_scout_button {
+            get {
+                object obj = ResourceManager.GetObject("Mobile_scout_button", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap Mobile_scout_normal {
+            get {
+                object obj = ResourceManager.GetObject("Mobile_scout_normal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap Mobile_scout_playerfull {
+            get {
+                object obj = ResourceManager.GetObject("Mobile_scout_playerfull", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap Mobile_scout_scoutbutton {
+            get {
+                object obj = ResourceManager.GetObject("Mobile_scout_scoutbutton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap Mobile_shop_button {
             get {
                 object obj = ResourceManager.GetObject("Mobile_shop_button", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap Mobile_shop_scoutitem {
+            get {
+                object obj = ResourceManager.GetObject("Mobile_shop_scoutitem", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap Mobile_shop_scoutitem_buyitem {
+            get {
+                object obj = ResourceManager.GetObject("Mobile_shop_scoutitem_buyitem", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap Mobile_shop_scoutitem_completebuyitem {
+            get {
+                object obj = ResourceManager.GetObject("Mobile_shop_scoutitem_completebuyitem", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap Mobile_shop_scoutitem_exitbuyitem {
+            get {
+                object obj = ResourceManager.GetObject("Mobile_shop_scoutitem_exitbuyitem", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap Mobile_shop_scoutitem_price {
+            get {
+                object obj = ResourceManager.GetObject("Mobile_shop_scoutitem_price", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap Mobile_shop_scoutitem_selectcount {
+            get {
+                object obj = ResourceManager.GetObject("Mobile_shop_scoutitem_selectcount", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap Mobile_shop_scoutitem_submitcount {
+            get {
+                object obj = ResourceManager.GetObject("Mobile_shop_scoutitem_submitcount", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap Mobile_shop_scoutitem_submitprice {
+            get {
+                object obj = ResourceManager.GetObject("Mobile_shop_scoutitem_submitprice", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -481,7 +481,7 @@ namespace SearchFIFASales
             //Imaging.GetScreen().Save("C:\\test.png");
             Bitmap small = global::SearchFIFASales.Properties.Resources.이적시장_버튼;
             Module.Handling.Imaging.ImageRange range = dictRange["이적시장_버튼"];
-            Point targetPoint = Imaging.ImgMatch(big, small, range);
+            Point targetPoint = Imaging.ImgMatch(big, small);
             if (targetPoint != new Point(0, 0))
             {
                 SendKey(targetPoint, range);
@@ -494,7 +494,7 @@ namespace SearchFIFASales
             Bitmap big = (Bitmap)Imaging.GetScreen();
             Bitmap small = global::SearchFIFASales.Properties.Resources.이적시장_즐겨찾기_버튼;
             Module.Handling.Imaging.ImageRange range = dictRange["이적시장_즐겨찾기_버튼"];
-            Point targetPoint = Imaging.ImgMatch(big, small, range);
+            Point targetPoint = Imaging.ImgMatch(big, small);
             if (targetPoint != new Point(0, 0))
             {
                 SendKey(targetPoint, range);

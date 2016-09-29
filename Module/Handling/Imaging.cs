@@ -95,13 +95,13 @@ namespace Module.Handling
             return matchings.Length > 0 ? matchings[0].Rectangle.Location : new Point();
         }
 
-        public static Rectangle searchBitmap(Bitmap smallBmp, Bitmap bigBmp, double tolerance, Point cropPoint = new Point(), int width = 0, int height = 0)
+        public static Rectangle searchBitmap(Bitmap smallBmp, Bitmap bigBmp, double tolerance)
         {
             //smallBmp = Imaging.ConvertFormat(smallBmp, PixelFormat.Format24bppRgb);
             //bigBmp = width == 0 && height == 0 ? Imaging.ConvertFormat(bigBmp, PixelFormat.Format24bppRgb) : Imaging.ConvertFormat(CropImage(bigBmp, cropPoint, width, height), PixelFormat.Format24bppRgb);
 
-            smallBmp.Save("C:\\small.png");
-            bigBmp.Save("C:\\big.png");
+            //smallBmp.Save("C:\\small.png");
+            //bigBmp.Save("C:\\big.png");
             BitmapData smallData =
               smallBmp.LockBits(new Rectangle(0, 0, smallBmp.Width, smallBmp.Height),
                        System.Drawing.Imaging.ImageLockMode.ReadOnly,
@@ -200,12 +200,12 @@ namespace Module.Handling
             return location;
         }
 
-        public static Point ImgMatch(Bitmap big, Bitmap small, ImageRange range)
+        public static Point ImgMatch(Bitmap big, Bitmap small)
         {
             //Point p = Imaging.ImageMatching(big, small, range.loc, range.width, range.height);
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            Rectangle rc = Imaging.searchBitmap(small, big, 0, range.loc, range.width, range.height);
+            Rectangle rc = Imaging.searchBitmap(small, big, 0.2);
             sw.Stop();
             Console.WriteLine(sw.Elapsed);
             return rc.Location;

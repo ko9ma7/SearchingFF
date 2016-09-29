@@ -21,7 +21,6 @@ namespace Module.MobileMacro
     {
         Thread t;
         Adb mAdb = new Adb();
-        Dictionary<string, Module.Handling.Imaging.ImageRange> dictRange = new Dictionary<string, Imaging.ImageRange>();
 
 
         public MobileMacroPanel()
@@ -32,7 +31,6 @@ namespace Module.MobileMacro
 
         void MobileMacroPanel_Load(object sender, EventArgs e)
         {
-            InitImage();
             mAdb.adbPath = SearchADBFilename();
             btnFind.Click += btnFind_Click;
             btnRefresh.Click += btnRefresh_Click;
@@ -46,11 +44,6 @@ namespace Module.MobileMacro
             //btnStart.PerformClick();
         }
 
-        void InitImage()
-        {
-            dictRange.Add("Mobile_shop_button", new Imaging.ImageRange(0, 700, 480, 200));
-            dictRange.Add("Mobile_player_scout_empty", new Imaging.ImageRange(0, 690, 480, 210));
-        }
         #region 이벤트
         void btnRefresh_Click(object sender, EventArgs e)
         {
@@ -131,29 +124,143 @@ namespace Module.MobileMacro
 
         #region 매크로 영역
         Point NullPoint = new Point(0, 0);
-        private void PlayerScoutEmpty(Bitmap big)
+        private void PlayerScoutEmpty()
         {
+            Bitmap big = Imaging.GetScreen();
+            //big.Save(Environment.CurrentDirectory + "\\test.png");
             if (ImageMatch(big, "Mobile_player_scout_empty") != NullPoint)
             {
                 Point p = ImageMatch(big, "Mobile_shop_button");
-                big.Save("C:\\testest.png");
                 if (p != NullPoint)
                 {
-                    mAdb.Touch(p.X, p.Y + dictRange["Mobile_shop_button"].loc.Y);
-                    //Console.WriteLine(Stopwatch.);
+                    mAdb.Touch(p.X, p.Y);
+                    Thread.Sleep(500);
+                    mAdb.Touch(240, 560);
+                    Thread.Sleep(500);
+                    mAdb.Swipe(250, 650, 250, 150);
+                    Thread.Sleep(400);
+                    mAdb.Swipe(250, 650, 250, 150);
+                    Thread.Sleep(400);
+                    mAdb.Swipe(250, 650, 250, 150);
+                    Thread.Sleep(400);
+                    mAdb.Swipe(250, 650, 250, 150);
+                    Thread.Sleep(400);
+                    mAdb.Swipe(250, 650, 250, 150);
+                    Thread.Sleep(400);
+                    mAdb.Swipe(250, 650, 250, 150);
+                    Thread.Sleep(400);
+                    mAdb.Swipe(250, 650, 250, 150);
+                    Thread.Sleep(400);
 
+                    p = ImageMatch(Imaging.GetScreen(), "Mobile_shop_scoutitem");
+                    if (p != NullPoint)
+                    {
+                        for (int i = 0; i < 10; i++)
+                        {
+                            mAdb.Touch(23, 515);
+                            Thread.Sleep(300);
+
+                            //p = ImageMatch(Imaging.GetScreen(), "Mobile_shop_scoutitem_price");
+                            mAdb.Touch(200, 195);
+                            mAdb.Touch(200, 195);
+                            Thread.Sleep(200);
+                            //p = ImageMatch(Imaging.GetScreen(), "Mobile_shop_scoutitem_selectcount");
+                            mAdb.Touch(145, 344);
+                            mAdb.Touch(145, 344);
+                            Thread.Sleep(200);
+                            //p = ImageMatch(Imaging.GetScreen(), "Mobile_shop_scoutitem_submitcount");
+                            mAdb.Touch(246, 588);
+                            Thread.Sleep(300);
+                            //p = ImageMatch(Imaging.GetScreen(), "Mobile_shop_scoutitem_buyitem");
+                            mAdb.Touch(242, 674);
+                            Thread.Sleep(300);
+                            //p = ImageMatch(Imaging.GetScreen(), "Mobile_shop_scoutitem_buyitem");
+                            mAdb.Touch(242, 674);
+                            Thread.Sleep(300);
+                            //p = ImageMatch(Imaging.GetScreen(), "Mobile_shop_scoutitem_exitbuyitem");
+                            mAdb.Touch(243, 667);
+                            Thread.Sleep(300);
+
+                        }
+                        p = ImageMatch(Imaging.GetScreen(), "Mobile_shop_button");
+                        mAdb.Touch(p.X, p.Y);
+                        Thread.Sleep(200);
+                        p = ImageMatch(Imaging.GetScreen(), "Mobile_scout_button");
+                        mAdb.Touch(p.X, p.Y);
+                        Thread.Sleep(300);
+                        p = ImageMatch(Imaging.GetScreen(), "Mobile_scout_normal");
+                        mAdb.Touch(p.X, p.Y);
+                        Thread.Sleep(200);
+                    }
                 }
             }
+            else if (ImageMatch(big, "Mobile_scout_playerfull") != NullPoint)
+            {
+                mAdb.Touch(125, 494); // 닫기 클릭
+                Thread.Sleep(200);
+                mAdb.Touch(180, 780); // 이적시장 클릭
+                Thread.Sleep(200);
+                mAdb.Touch(220, 685); // 판매 클릭
+                Thread.Sleep(2000);
+
+                mAdb.Touch(287, 146);
+                Thread.Sleep(500);
+                mAdb.Touch(370, 312);
+                Thread.Sleep(500);
+                mAdb.Touch(262, 586);
+                Thread.Sleep(6000);
+
+                mAdb.Touch(152, 145);
+                Thread.Sleep(800);
+                int recheckCount = 0;
+                for (int i = 0; i < 200; i++)
+                {
+                    mAdb.Touch(100, 390);
+                    Thread.Sleep(1000);
+
+                    Point p = ImageMatch(Imaging.GetScreen(), "Mobile_market_sellbutton");
+                    if (p != NullPoint)
+                    {
+                        recheckCount = 0;
+                        mAdb.Touch(p.X, p.Y); //첫번째 판매
+                        Thread.Sleep(1000);
+                        mAdb.Touch(330, 705); //두번째 클릭
+                        Thread.Sleep(2000);
+                        mAdb.Touch(176, 704); //판매 완료 후 확인 클릭
+                        Thread.Sleep(500);
+                    }
+                    else if (recheckCount < 3)
+                    {
+                        recheckCount++;
+                    }
+                    else
+                        break;
+                }
+
+                Point p2 = ImageMatch(Imaging.GetScreen(), "Mobile_shop_button");
+                mAdb.Touch(p2.X, p2.Y);
+                Thread.Sleep(200);
+                p2 = ImageMatch(Imaging.GetScreen(), "Mobile_scout_button");
+                mAdb.Touch(p2.X, p2.Y);
+                Thread.Sleep(300);
+                p2 = ImageMatch(Imaging.GetScreen(), "Mobile_scout_normal");
+                mAdb.Touch(p2.X, p2.Y);
+                Thread.Sleep(200);
+            }
+            else
+            {
+                mAdb.Touch(135, 701);
+                Thread.Sleep(5200);
+            }
+            PlayerScoutEmpty();
         }
         #endregion
         #region 사용자함수
         private void Macro()
         {
-            Bitmap big = Imaging.GetScreen();
-
             //big.Save("C:\\test.png");
-            image.Image = big;
-            PlayerScoutEmpty(big);
+            //image.Image = big;
+            PlayerScoutEmpty();
             //GetOCR(big, new Point(170, 436), 201, 36);
             
             //OcrEngine ocr = new OcrEngine();
@@ -248,7 +355,7 @@ namespace Module.MobileMacro
         private Point ImageMatch(Bitmap big, string destName)
         {
             //((Bitmap)Resources.ResourceManager.GetObject(destName)).Save("C:\\test1.png");
-            return Imaging.ImgMatch(big, (Bitmap)Resources.ResourceManager.GetObject(destName), dictRange[destName]);
+            return Imaging.ImgMatch(big, (Bitmap)Resources.ResourceManager.GetObject(destName));
         }
         #endregion
     }

@@ -54,10 +54,17 @@ namespace Module.Handling
 
         public void Touch(int x, int y)
         {
-            string comm = string.Format("-s {0} shell input tap {1} {2}", _device, x, y);
+            string comm = string.Format("-s {0} shell input tap {1} {2}", _device, x + 20, y - 20);
             Command(comm);
         }
 
+        public void Swipe(int x, int y, int x2, int y2)
+        {
+            string comm = string.Format("-s {0} shell input swipe {1} {2} {3} {4}", _device, x, y, x2, y2);
+            Command(comm);
+
+
+        }
         public void Command(string argument)
         {
             try

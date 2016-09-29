@@ -111,6 +111,48 @@
   <ItemGroup>
     <None Include="Resources\Mobile_shop_button.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mobile_scout_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mobile_scout_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mobile_shop_scoutitem.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mobile_shop_scoutitem_buyitem.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mobile_shop_scoutitem_completebuyitem.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mobile_shop_scoutitem_exitbuyitem.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mobile_shop_scoutitem_price.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mobile_shop_scoutitem_selectcount.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mobile_shop_scoutitem_submitcount.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mobile_shop_scoutitem_submitprice.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mobile_scout_scoutbutton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mobile_scout_playerfull.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mobile_market_menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mobile_market_sellbutton.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
