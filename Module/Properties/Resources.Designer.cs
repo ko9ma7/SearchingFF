@@ -63,9 +63,9 @@ namespace Module.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Mobile_market_menu {
+        internal static System.Drawing.Bitmap 모바일_메인화면 {
             get {
-                object obj = ResourceManager.GetObject("Mobile_market_menu", resourceCulture);
+                object obj = ResourceManager.GetObject("모바일_메인화면", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace Module.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Mobile_market_sellbutton {
+        internal static System.Drawing.Bitmap 모바일_상점 {
             get {
-                object obj = ResourceManager.GetObject("Mobile_market_sellbutton", resourceCulture);
+                object obj = ResourceManager.GetObject("모바일_상점", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace Module.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Mobile_player_scout_empty {
+        internal static System.Drawing.Bitmap 모바일_상점_구입완료 {
             get {
-                object obj = ResourceManager.GetObject("Mobile_player_scout_empty", resourceCulture);
+                object obj = ResourceManager.GetObject("모바일_상점_구입완료", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace Module.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Mobile_scout_button {
+        internal static System.Drawing.Bitmap 모바일_상점_이용권 {
             get {
-                object obj = ResourceManager.GetObject("Mobile_scout_button", resourceCulture);
+                object obj = ResourceManager.GetObject("모바일_상점_이용권", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace Module.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Mobile_scout_normal {
+        internal static System.Drawing.Bitmap 모바일_선수영입 {
             get {
-                object obj = ResourceManager.GetObject("Mobile_scout_normal", resourceCulture);
+                object obj = ResourceManager.GetObject("모바일_선수영입", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +113,9 @@ namespace Module.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Mobile_scout_playerfull {
+        internal static System.Drawing.Bitmap 모바일_선수영입_공간필요 {
             get {
-                object obj = ResourceManager.GetObject("Mobile_scout_playerfull", resourceCulture);
+                object obj = ResourceManager.GetObject("모바일_선수영입_공간필요", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +123,9 @@ namespace Module.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Mobile_scout_scoutbutton {
+        internal static System.Drawing.Bitmap 모바일_선수영입_이용권소진 {
             get {
-                object obj = ResourceManager.GetObject("Mobile_scout_scoutbutton", resourceCulture);
+                object obj = ResourceManager.GetObject("모바일_선수영입_이용권소진", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +133,9 @@ namespace Module.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Mobile_shop_button {
+        internal static System.Drawing.Bitmap 모바일_이적시장 {
             get {
-                object obj = ResourceManager.GetObject("Mobile_shop_button", resourceCulture);
+                object obj = ResourceManager.GetObject("모바일_이적시장", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,9 +143,9 @@ namespace Module.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Mobile_shop_scoutitem {
+        internal static System.Drawing.Bitmap 모바일_이적시장_판매 {
             get {
-                object obj = ResourceManager.GetObject("Mobile_shop_scoutitem", resourceCulture);
+                object obj = ResourceManager.GetObject("모바일_이적시장_판매", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,9 +153,9 @@ namespace Module.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Mobile_shop_scoutitem_buyitem {
+        internal static System.Drawing.Bitmap 모바일_이적시장_판매대기 {
             get {
-                object obj = ResourceManager.GetObject("Mobile_shop_scoutitem_buyitem", resourceCulture);
+                object obj = ResourceManager.GetObject("모바일_이적시장_판매대기", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,9 +163,9 @@ namespace Module.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Mobile_shop_scoutitem_completebuyitem {
+        internal static System.Drawing.Bitmap 모바일_이적시장_판매등록 {
             get {
-                object obj = ResourceManager.GetObject("Mobile_shop_scoutitem_completebuyitem", resourceCulture);
+                object obj = ResourceManager.GetObject("모바일_이적시장_판매등록", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,9 +173,9 @@ namespace Module.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Mobile_shop_scoutitem_exitbuyitem {
+        internal static System.Drawing.Bitmap 모바일_트레이드 {
             get {
-                object obj = ResourceManager.GetObject("Mobile_shop_scoutitem_exitbuyitem", resourceCulture);
+                object obj = ResourceManager.GetObject("모바일_트레이드", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -183,9 +183,9 @@ namespace Module.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Mobile_shop_scoutitem_price {
+        internal static System.Drawing.Bitmap 모바일_트레이드_선수트레이드 {
             get {
-                object obj = ResourceManager.GetObject("Mobile_shop_scoutitem_price", resourceCulture);
+                object obj = ResourceManager.GetObject("모바일_트레이드_선수트레이드", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -193,9 +193,9 @@ namespace Module.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Mobile_shop_scoutitem_selectcount {
+        internal static System.Drawing.Bitmap 모바일_트레이드_트레이드결과 {
             get {
-                object obj = ResourceManager.GetObject("Mobile_shop_scoutitem_selectcount", resourceCulture);
+                object obj = ResourceManager.GetObject("모바일_트레이드_트레이드결과", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -203,9 +203,9 @@ namespace Module.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Mobile_shop_scoutitem_submitcount {
+        internal static System.Drawing.Bitmap 모바일_트레이드_트레이드실행 {
             get {
-                object obj = ResourceManager.GetObject("Mobile_shop_scoutitem_submitcount", resourceCulture);
+                object obj = ResourceManager.GetObject("모바일_트레이드_트레이드실행", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -213,9 +213,9 @@ namespace Module.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Mobile_shop_scoutitem_submitprice {
+        internal static System.Drawing.Bitmap 모바일_트레이드_확인하기 {
             get {
-                object obj = ResourceManager.GetObject("Mobile_shop_scoutitem_submitprice", resourceCulture);
+                object obj = ResourceManager.GetObject("모바일_트레이드_확인하기", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

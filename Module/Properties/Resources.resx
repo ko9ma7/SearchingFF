@@ -118,52 +118,52 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Mobile_market_menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Mobile_market_menu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="모바일_메인화면" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\모바일_메인화면.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Mobile_market_sellbutton" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Mobile_market_sellbutton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="모바일_상점" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\모바일_상점.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Mobile_player_scout_empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Mobile_player_scout_empty.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="모바일_상점_구입완료" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\모바일_상점_구입완료.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Mobile_scout_button" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Mobile_scout_button.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="모바일_상점_이용권" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\모바일_상점_이용권.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Mobile_scout_normal" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Mobile_scout_normal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="모바일_선수영입" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\모바일_선수영입.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Mobile_scout_playerfull" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Mobile_scout_playerfull.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="모바일_선수영입_공간필요" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\모바일_선수영입_공간필요.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Mobile_scout_scoutbutton" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Mobile_scout_scoutbutton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="모바일_선수영입_이용권소진" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\모바일_선수영입_이용권소진.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Mobile_shop_button" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Mobile_shop_button.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="모바일_이적시장" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\모바일_이적시장.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Mobile_shop_scoutitem" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Mobile_shop_scoutitem.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="모바일_이적시장_판매" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\모바일_이적시장_판매.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Mobile_shop_scoutitem_buyitem" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Mobile_shop_scoutitem_buyitem.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="모바일_이적시장_판매대기" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\모바일_이적시장_판매대기.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Mobile_shop_scoutitem_completebuyitem" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Mobile_shop_scoutitem_completebuyitem.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="모바일_이적시장_판매등록" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\모바일_이적시장_판매등록.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Mobile_shop_scoutitem_exitbuyitem" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Mobile_shop_scoutitem_exitbuyitem.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="모바일_트레이드" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\모바일_트레이드.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Mobile_shop_scoutitem_price" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Mobile_shop_scoutitem_price.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="모바일_트레이드_선수트레이드" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\모바일_트레이드_선수트레이드.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Mobile_shop_scoutitem_selectcount" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Mobile_shop_scoutitem_selectcount.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="모바일_트레이드_트레이드결과" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\모바일_트레이드_트레이드결과.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Mobile_shop_scoutitem_submitcount" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Mobile_shop_scoutitem_submitcount.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="모바일_트레이드_트레이드실행" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\모바일_트레이드_트레이드실행.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Mobile_shop_scoutitem_submitprice" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Mobile_shop_scoutitem_submitprice.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="모바일_트레이드_확인하기" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\모바일_트레이드_확인하기.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

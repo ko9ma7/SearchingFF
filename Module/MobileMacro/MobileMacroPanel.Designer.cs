@@ -30,26 +30,25 @@
         {
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.chkReceive = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtSell = new System.Windows.Forms.TextBox();
+            this.chkSell = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtTrade = new System.Windows.Forms.TextBox();
+            this.chkTrade = new System.Windows.Forms.CheckBox();
             this.btnRefresh = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cboADBList = new System.Windows.Forms.ComboBox();
             this.btnFind = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.chkTrade = new System.Windows.Forms.CheckBox();
-            this.txtTrade = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.chkSell = new System.Windows.Forms.CheckBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txtSell = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.chkReceive = new System.Windows.Forms.CheckBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.txtLog = new System.Windows.Forms.RichTextBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.image = new System.Windows.Forms.PictureBox();
+            this.btnCapture = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -57,8 +56,6 @@
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.image)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer2
@@ -81,6 +78,7 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.btnCapture);
             this.panel3.Controls.Add(this.chkReceive);
             this.panel3.Controls.Add(this.label6);
             this.panel3.Controls.Add(this.label5);
@@ -102,6 +100,86 @@
             this.panel3.Size = new System.Drawing.Size(293, 378);
             this.panel3.TabIndex = 0;
             // 
+            // chkReceive
+            // 
+            this.chkReceive.AutoSize = true;
+            this.chkReceive.Location = new System.Drawing.Point(66, 104);
+            this.chkReceive.Name = "chkReceive";
+            this.chkReceive.Size = new System.Drawing.Size(48, 16);
+            this.chkReceive.TabIndex = 13;
+            this.chkReceive.Text = "사용";
+            this.chkReceive.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(7, 106);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(53, 12);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "대금수령";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(247, 75);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(29, 12);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "이상";
+            // 
+            // txtSell
+            // 
+            this.txtSell.Location = new System.Drawing.Point(114, 70);
+            this.txtSell.Name = "txtSell";
+            this.txtSell.Size = new System.Drawing.Size(127, 21);
+            this.txtSell.TabIndex = 10;
+            // 
+            // chkSell
+            // 
+            this.chkSell.AutoSize = true;
+            this.chkSell.Location = new System.Drawing.Point(66, 73);
+            this.chkSell.Name = "chkSell";
+            this.chkSell.Size = new System.Drawing.Size(48, 16);
+            this.chkSell.TabIndex = 9;
+            this.chkSell.Text = "사용";
+            this.chkSell.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(7, 75);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 12);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "판매등록";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(247, 43);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(29, 12);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "이하";
+            // 
+            // txtTrade
+            // 
+            this.txtTrade.Location = new System.Drawing.Point(114, 39);
+            this.txtTrade.Name = "txtTrade";
+            this.txtTrade.Size = new System.Drawing.Size(127, 21);
+            this.txtTrade.TabIndex = 6;
+            // 
+            // chkTrade
+            // 
+            this.chkTrade.AutoSize = true;
+            this.chkTrade.Location = new System.Drawing.Point(66, 42);
+            this.chkTrade.Name = "chkTrade";
+            this.chkTrade.Size = new System.Drawing.Size(48, 16);
+            this.chkTrade.TabIndex = 5;
+            this.chkTrade.Text = "사용";
+            this.chkTrade.UseVisualStyleBackColor = true;
+            // 
             // btnRefresh
             // 
             this.btnRefresh.Location = new System.Drawing.Point(211, 7);
@@ -110,6 +188,15 @@
             this.btnRefresh.TabIndex = 4;
             this.btnRefresh.Text = "새로고침";
             this.btnRefresh.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(7, 44);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(53, 12);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "트레이드";
             // 
             // label1
             // 
@@ -150,109 +237,19 @@
             // panel4
             // 
             this.panel4.Controls.Add(this.panel2);
-            this.panel4.Controls.Add(this.panel1);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(577, 378);
             this.panel4.TabIndex = 0;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 44);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 12);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "트레이드";
-            // 
-            // chkTrade
-            // 
-            this.chkTrade.AutoSize = true;
-            this.chkTrade.Location = new System.Drawing.Point(66, 42);
-            this.chkTrade.Name = "chkTrade";
-            this.chkTrade.Size = new System.Drawing.Size(48, 16);
-            this.chkTrade.TabIndex = 5;
-            this.chkTrade.Text = "사용";
-            this.chkTrade.UseVisualStyleBackColor = true;
-            // 
-            // txtTrade
-            // 
-            this.txtTrade.Location = new System.Drawing.Point(114, 39);
-            this.txtTrade.Name = "txtTrade";
-            this.txtTrade.Size = new System.Drawing.Size(127, 21);
-            this.txtTrade.TabIndex = 6;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(247, 43);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(29, 12);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "이하";
-            // 
-            // chkSell
-            // 
-            this.chkSell.AutoSize = true;
-            this.chkSell.Location = new System.Drawing.Point(66, 73);
-            this.chkSell.Name = "chkSell";
-            this.chkSell.Size = new System.Drawing.Size(48, 16);
-            this.chkSell.TabIndex = 9;
-            this.chkSell.Text = "사용";
-            this.chkSell.UseVisualStyleBackColor = true;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(7, 75);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 12);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "판매등록";
-            // 
-            // txtSell
-            // 
-            this.txtSell.Location = new System.Drawing.Point(114, 70);
-            this.txtSell.Name = "txtSell";
-            this.txtSell.Size = new System.Drawing.Size(127, 21);
-            this.txtSell.TabIndex = 10;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(247, 75);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(29, 12);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "이상";
-            // 
-            // chkReceive
-            // 
-            this.chkReceive.AutoSize = true;
-            this.chkReceive.Location = new System.Drawing.Point(66, 104);
-            this.chkReceive.Name = "chkReceive";
-            this.chkReceive.Size = new System.Drawing.Size(48, 16);
-            this.chkReceive.TabIndex = 13;
-            this.chkReceive.Text = "사용";
-            this.chkReceive.UseVisualStyleBackColor = true;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(7, 106);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(53, 12);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "대금수령";
-            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.txtLog);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(289, 0);
+            this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(288, 378);
+            this.panel2.Size = new System.Drawing.Size(577, 378);
             this.panel2.TabIndex = 5;
             // 
             // txtLog
@@ -261,27 +258,18 @@
             this.txtLog.Enabled = false;
             this.txtLog.Location = new System.Drawing.Point(0, 0);
             this.txtLog.Name = "txtLog";
-            this.txtLog.Size = new System.Drawing.Size(288, 378);
+            this.txtLog.Size = new System.Drawing.Size(577, 378);
             this.txtLog.TabIndex = 1;
             this.txtLog.Text = "";
             // 
-            // panel1
+            // btnCapture
             // 
-            this.panel1.Controls.Add(this.image);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(289, 378);
-            this.panel1.TabIndex = 4;
-            // 
-            // image
-            // 
-            this.image.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.image.Location = new System.Drawing.Point(0, 0);
-            this.image.Name = "image";
-            this.image.Size = new System.Drawing.Size(289, 378);
-            this.image.TabIndex = 3;
-            this.image.TabStop = false;
+            this.btnCapture.Location = new System.Drawing.Point(211, 315);
+            this.btnCapture.Name = "btnCapture";
+            this.btnCapture.Size = new System.Drawing.Size(75, 23);
+            this.btnCapture.TabIndex = 14;
+            this.btnCapture.Text = "캡쳐";
+            this.btnCapture.UseVisualStyleBackColor = true;
             // 
             // MobileMacroPanel
             // 
@@ -298,8 +286,6 @@
             this.panel3.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.image)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -326,7 +312,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.RichTextBox txtLog;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.PictureBox image;
+        private System.Windows.Forms.Button btnCapture;
     }
 }

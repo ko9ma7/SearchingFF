@@ -52,15 +52,15 @@ namespace Module.Handling
             adbProcess.StartInfo.CreateNoWindow = true;
         }
 
-        public void Touch(int x, int y)
+        public void Touch(Point p)
         {
-            string comm = string.Format("-s {0} shell input tap {1} {2}", _device, x + 20, y - 20);
+            string comm = string.Format("-s {0} shell input tap {1} {2}", _device, p.X, p.Y);
             Command(comm);
         }
 
-        public void Swipe(int x, int y, int x2, int y2)
+        public void Swipe(Point p1, Point p2)
         {
-            string comm = string.Format("-s {0} shell input swipe {1} {2} {3} {4}", _device, x, y, x2, y2);
+            string comm = string.Format("-s {0} shell input swipe {1} {2} {3} {4}", _device, p1.X, p1.Y, p2.X, p2.Y);
             Command(comm);
 
 

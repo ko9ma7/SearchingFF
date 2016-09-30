@@ -15,6 +15,7 @@ namespace Module.Handling
         public static Bitmap GetScreen()
         {
             //return Print(GetHWND("fifazf"));
+            //return Print(GetHWND("Nox"));
             return Print(GetHWND("Nox"));
         }
 
@@ -95,8 +96,11 @@ namespace Module.Handling
             return matchings.Length > 0 ? matchings[0].Rectangle.Location : new Point();
         }
 
-        public static Rectangle searchBitmap(Bitmap smallBmp, Bitmap bigBmp, double tolerance)
+        public static Rectangle searchBitmap(Bitmap smallBmp, Bitmap bigBmp, double tolerance, Point cropPoint = new Point(), int width = 0, int height = 0)
         {
+            if (cropPoint != new Point())
+                bigBmp = CropImage(bigBmp, cropPoint, width, height);
+            
             //smallBmp = Imaging.ConvertFormat(smallBmp, PixelFormat.Format24bppRgb);
             //bigBmp = width == 0 && height == 0 ? Imaging.ConvertFormat(bigBmp, PixelFormat.Format24bppRgb) : Imaging.ConvertFormat(CropImage(bigBmp, cropPoint, width, height), PixelFormat.Format24bppRgb);
 
@@ -200,18 +204,18 @@ namespace Module.Handling
             return location;
         }
 
-        public static Point ImgMatch(Bitmap big, Bitmap small)
+        public static Point ImgMatch(Bitmap big, Bitmap small, ImageRange range)
         {
             //Point p = Imaging.ImageMatching(big, small, range.loc, range.width, range.height);
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            Rectangle rc = Imaging.searchBitmap(small, big, 0.2);
-            sw.Stop();
-            Console.WriteLine(sw.Elapsed);
+            //Stopwatch sw = new Stopwatch();
+            //sw.Start();
+            Rectangle rc = Imaging.searchBitmap(small, big, 0.2, range.loc, range.width, range.height);
+            //sw.Stop();
+            //Console.WriteLine(sw.Elapsed);
             return rc.Location;
         }
 
-        private static Bitmap ConvertFormat(System.Drawing.Image image, PixelFormat format)
+        public static Bitmap ConvertFormat(System.Drawing.Image image, PixelFormat format)
         {
             Bitmap copy = new Bitmap(image.Width, image.Height, format);
             using (Graphics gr = Graphics.FromImage(copy))
