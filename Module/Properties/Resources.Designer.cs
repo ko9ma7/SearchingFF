@@ -153,6 +153,16 @@ namespace Module.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap 모바일_이적시장_등록초과 {
+            get {
+                object obj = ResourceManager.GetObject("모바일_이적시장_등록초과", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap 모바일_이적시장_모두받기 {
             get {
                 object obj = ResourceManager.GetObject("모바일_이적시장_모두받기", resourceCulture);

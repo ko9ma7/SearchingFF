@@ -268,7 +268,19 @@ namespace Module.MobileMacro
                 big = Imaging.bit;
                 if (ImageMatch(big, "모바일_이적시장_판매"))
                 {
-                    Touch("모바일_이적시장_판매_클릭", 600);
+                    Touch("모바일_이적시장_판매_클릭", 700);
+                    Imaging.GetScreen();
+                    big = Imaging.bit;
+                    if (ImageMatch(big, "모바일_이적시장_등록초과"))
+                    {
+                        Touch("모바일_이적시장_등록초과확인_클릭");
+                        Touch("모바일_이적시장_취소_클릭");
+                        UStatus("이적시장 등록초과");
+                        Touch("모바일_상점_클릭");
+                        UStatus("상점메뉴 이동");
+                        Touch("모바일_선수영입_클릭");
+                        UStatus("선수영입메뉴 이동");
+                    }
                 }
                 else
                 {
@@ -446,6 +458,8 @@ namespace Module.MobileMacro
             dictRange.Add("모바일_이적시장_판매", range);
             range = new Imaging.ImageRange(147, 75, 313, 48);
             dictRange.Add("모바일_이적시장_판매등록", range);
+            range = new Imaging.ImageRange(175, 315, 154, 67);
+            dictRange.Add("모바일_이적시장_등록초과", range);
             range = new Imaging.ImageRange(25, 675, 433, 81);
             dictRange.Add("모바일_이적시장_판매대기", range);
             range = new Imaging.ImageRange(150, 395, 294, 44);
@@ -500,7 +514,7 @@ namespace Module.MobileMacro
             dictPoint.Add("모바일_이적시장_판매2_클릭", new Point(310, 675));
             dictPoint.Add("모바일_이적시장_판매확인_클릭", new Point(210, 675));
             dictPoint.Add("모바일_이적시장_취소_클릭", new Point(110, 675));
-            
+            dictPoint.Add("모바일_이적시장_등록초과확인_클릭", new Point(235, 470));
 
             
             dictPoint.Add("모바일_상점_스와이프1", new Point(265, 640));
