@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{AF31F4
 		Images\모바일_선수영입_공간필요.png = Images\모바일_선수영입_공간필요.png
 		Images\모바일_선수영입_이용권소진.png = Images\모바일_선수영입_이용권소진.png
 		Images\모바일_이적시장.png = Images\모바일_이적시장.png
+		Images\모바일_이적시장_모두받기.png = Images\모바일_이적시장_모두받기.png
+		Images\모바일_이적시장_모두받기_받기.png = Images\모바일_이적시장_모두받기_받기.png
 		Images\모바일_이적시장_판매.png = Images\모바일_이적시장_판매.png
 		Images\모바일_이적시장_판매대기.png = Images\모바일_이적시장_판매대기.png
 		Images\모바일_이적시장_판매등록.png = Images\모바일_이적시장_판매등록.png
@@ -50,5 +52,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

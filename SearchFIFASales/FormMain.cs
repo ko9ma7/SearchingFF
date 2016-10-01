@@ -171,7 +171,7 @@ namespace SearchFIFASales
 
             btnCapture.Click += (object sender, EventArgs e) =>
             {
-                Imaging.GetScreen().Save(Environment.CurrentDirectory + "\\test.png");
+                //Imaging.GetScreen().Save(Environment.CurrentDirectory + "\\test.png");
                 //Imaging.CropImage(Imaging.GetScreen(), new Point(400, 550), 150, 150).Save("C:\\test.png");
                 //MessageCtr.SendKey(new Point(112, 191));
             };
@@ -477,7 +477,8 @@ namespace SearchFIFASales
 
         void GoTrade()
         {
-            Bitmap big = Imaging.GetScreen();
+            Imaging.GetScreen();
+            Bitmap big = Imaging.bit;
             //Imaging.GetScreen().Save("C:\\test.png");
             Bitmap small = global::SearchFIFASales.Properties.Resources.이적시장_버튼;
             Module.Handling.Imaging.ImageRange range = dictRange["이적시장_버튼"];
@@ -491,7 +492,8 @@ namespace SearchFIFASales
 
         void GoFavorite()
         {
-            Bitmap big = Imaging.GetScreen();
+            Imaging.GetScreen();
+            Bitmap big = Imaging.bit;
             Bitmap small = global::SearchFIFASales.Properties.Resources.이적시장_즐겨찾기_버튼;
             Module.Handling.Imaging.ImageRange range = dictRange["이적시장_즐겨찾기_버튼"];
             Point targetPoint = Imaging.ImgMatch(big, small, range);

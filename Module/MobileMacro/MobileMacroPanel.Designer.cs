@@ -30,6 +30,9 @@
         {
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.btnCapture = new System.Windows.Forms.Button();
             this.chkReceive = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -48,7 +51,6 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.txtLog = new System.Windows.Forms.RichTextBox();
-            this.btnCapture = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -78,6 +80,8 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.label8);
+            this.panel3.Controls.Add(this.label7);
             this.panel3.Controls.Add(this.btnCapture);
             this.panel3.Controls.Add(this.chkReceive);
             this.panel3.Controls.Add(this.label6);
@@ -99,6 +103,33 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(293, 378);
             this.panel3.TabIndex = 0;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(20, 268);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(38, 12);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "label8";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(20, 286);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(38, 12);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "label7";
+            // 
+            // btnCapture
+            // 
+            this.btnCapture.Location = new System.Drawing.Point(211, 315);
+            this.btnCapture.Name = "btnCapture";
+            this.btnCapture.Size = new System.Drawing.Size(75, 23);
+            this.btnCapture.TabIndex = 14;
+            this.btnCapture.Text = "캡쳐";
+            this.btnCapture.UseVisualStyleBackColor = true;
             // 
             // chkReceive
             // 
@@ -255,21 +286,12 @@
             // txtLog
             // 
             this.txtLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtLog.Enabled = false;
             this.txtLog.Location = new System.Drawing.Point(0, 0);
             this.txtLog.Name = "txtLog";
+            this.txtLog.ReadOnly = true;
             this.txtLog.Size = new System.Drawing.Size(577, 378);
             this.txtLog.TabIndex = 1;
             this.txtLog.Text = "";
-            // 
-            // btnCapture
-            // 
-            this.btnCapture.Location = new System.Drawing.Point(211, 315);
-            this.btnCapture.Name = "btnCapture";
-            this.btnCapture.Size = new System.Drawing.Size(75, 23);
-            this.btnCapture.TabIndex = 14;
-            this.btnCapture.Text = "캡쳐";
-            this.btnCapture.UseVisualStyleBackColor = true;
             // 
             // MobileMacroPanel
             // 
@@ -313,5 +335,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.RichTextBox txtLog;
         private System.Windows.Forms.Button btnCapture;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
     }
 }

@@ -32,6 +32,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AForge, Version=2.2.5.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
@@ -200,6 +201,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\모바일_트레이드_트레이드실행.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\모바일_이적시장_모두받기_받기.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\모바일_이적시장_모두받기.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
