@@ -43,37 +43,45 @@ namespace Module.Handling
 
         public static Bitmap Print(IntPtr hwnd)
         {
-            if (hwnd == IntPtr.Zero)
-                return null;
-
-            RECT rc;
-            RECT clientRc;
-            GetClientRect(hwnd, out clientRc);
-            GetWindowRect(hwnd, out rc);
-
-            int borderSize = (rc.Width - clientRc.Width) / 2;
-            int titlebarSize = (rc.Height - clientRc.Height) - borderSize;
-
-
-            Bitmap bmp = new Bitmap(rc.Width, rc.Height, PixelFormat.Format24bppRgb);
-            Graphics gfxBmp = Graphics.FromImage(bmp);
-            IntPtr hdcBitmap = gfxBmp.GetHdc();
-
-            bool flag = PrintWindow(hwnd, hdcBitmap, 0);
-            gfxBmp.ReleaseHdc(hdcBitmap);
-            if (!flag)
+            try
             {
-                //Print(hwnd);
+                if (hwnd == IntPtr.Zero)
+                    return null;
+
+                RECT rc;
+                RECT clientRc;
+                GetClientRect(hwnd, out clientRc);
+                GetWindowRect(hwnd, out rc);
+
+                int borderSize = (rc.Width - clientRc.Width) / 2;
+                int titlebarSize = (rc.Height - clientRc.Height) - borderSize;
+
+
+                Bitmap bmp = new Bitmap(rc.Width, rc.Height, PixelFormat.Format24bppRgb);
+                Graphics gfxBmp = Graphics.FromImage(bmp);
+                IntPtr hdcBitmap = gfxBmp.GetHdc();
+
+                bool flag = PrintWindow(hwnd, hdcBitmap, 0);
+                gfxBmp.ReleaseHdc(hdcBitmap);
+                if (!flag)
+                {
+                    //Print(hwnd);
+                }
+                //else
+                //{
+
+                //}
+
+                //gfxBmp.Dispose();
+
+                return CropImage(bmp, new Point(borderSize, titlebarSize), NativeMethods.GetAbsoluteClientRect(hwnd).Width, NativeMethods.GetAbsoluteClientRect(hwnd).Height);
+                //return bmp;
             }
-            //else
-            //{
+            catch (Exception)
+            {
+                return new Bitmap(0 , 0);
+            }
 
-            //}
-
-            //gfxBmp.Dispose();
-
-            return CropImage(bmp, new Point(borderSize, titlebarSize), NativeMethods.GetAbsoluteClientRect(hwnd).Width, NativeMethods.GetAbsoluteClientRect(hwnd).Height);
-            //return bmp;
         }
 
         public static Point ImageMatching(Bitmap big, Bitmap small, Point cropPoint = new Point(), int width = 0, int height = 0)

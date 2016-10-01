@@ -34,6 +34,7 @@ namespace Module.MobileMacro
         Int64 totalProfit = 0;
         Stopwatch sw = new Stopwatch();
         OcrApi api;
+        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         public MobileMacroPanel()
         {
             InitializeComponent();
@@ -58,13 +59,7 @@ namespace Module.MobileMacro
         }
 
         private void Macro()
-        {
-            this.Invoke(new MethodInvoker(delegate() 
-                {
-                    label8.Text = sw.Elapsed.ToString("hh\\:mm\\:ss");
-                    label7.Text = totalProfit.ToString();
-                }));
-            
+        {            
             Imaging.GetScreen();
             Bitmap big = Imaging.bit;
             if (ImageMatch(big, "모바일_메인화면"))
@@ -258,15 +253,16 @@ namespace Module.MobileMacro
                 }
                 finally
                 {
-                    Touch("모바일_이적시장_모두받기_받기_클릭", 3000);
+                    Touch("모바일_이적시장_모두받기_받기_클릭", 5000);
                     UStatus(string.Format("판매대금 수령 완료"));
-                    Touch("모바일_이적시장_판매등록화면_클릭", 800);
-                    UStatus("판매 시작");
                     profit = 0;
+                    UStatus("판매 시작");
                 }
             }
             else if (ImageMatch(big, "모바일_이적시장"))
             {
+
+                Touch("모바일_이적시장_판매등록화면_클릭");
                 Touch("모바일_이적시장_첫선수_클릭");
                 Imaging.GetScreen();
                 big = Imaging.bit;
@@ -332,6 +328,16 @@ namespace Module.MobileMacro
                 {
                     Touch("모바일_상점_이용권구매_클릭");
                     UStatus("이용권 구매 시작");
+                    Imaging.GetScreen();
+                    big = Imaging.bit;
+                    if (ImageMatch(big, "모바일_상점_이용권"))
+                    {
+                        Touch("모바일_상점_구매수_클릭", 600);
+                        Touch("모바일_상점_구매수설정_클릭", 1000);
+                        Touch("모바일_상점_구매수설정확인_클릭", 600);
+                        Touch("모바일_상점_구입_클릭", 0);
+                        Touch("모바일_상점_구입_클릭", 0);
+                    }
                 }
                 else
                 {
@@ -342,19 +348,14 @@ namespace Module.MobileMacro
                     UStatus("선수영입메뉴 이동");
                 }
             }
-            else if (ImageMatch(big, "모바일_상점_이용권"))
-            {
-                Touch("모바일_상점_구매수_클릭");
-                Touch("모바일_상점_구매수설정_클릭", 600);
-                Touch("모바일_상점_구매수설정확인_클릭", 600);
-                Touch("모바일_상점_구입_클릭");
-            }
             else if (ImageMatch(big, "모바일_상점_구입완료"))
             {
                 Touch("모바일_상점_구입확인_클릭");
                 buyCount++;
                 UStatus("영입이용권 " + buyCount + "/10 구매완료");
+                totalProfit -= 500000;
             }
+
 
             //GetOCR(big, new Point(170, 436), 201, 36);
             //mAdb.Touch(dictPoint["모바일_선수영입_영입_클릭"]);
@@ -373,6 +374,10 @@ namespace Module.MobileMacro
             Languages[] lang = { Languages.English };
             api.Init(lang, null, OcrEngineMode.OEM_CUBE_ONLY);
             api.SetVariable("tessedit_char_whitelist", "0123456789");
+
+
+            timer.Interval = 1000;
+            timer.Tick += timer_Tick;
 
             ResourceSet set = global::Module.Properties.Resources.ResourceManager.GetResourceSet(CultureInfo.CurrentCulture, true, true);
             foreach (DictionaryEntry  item in set)
@@ -510,8 +515,16 @@ namespace Module.MobileMacro
             dictPoint.Add("모바일_상점_구입확인_클릭", new Point(275, 650));
         }
 
-
         #region 이벤트
+        void timer_Tick(object sender, EventArgs e)
+        {
+            //this.Invoke(new MethodInvoker(delegate()
+            //{
+                label8.Text = sw.Elapsed.ToString("hh\\:mm\\:ss");
+                label7.Text = totalProfit.ToString();
+            //}));
+        }
+
         void btnCapture_Click(object sender, EventArgs e)
         {
             Imaging.GetScreen();
@@ -563,9 +576,10 @@ namespace Module.MobileMacro
                 Imaging.GetHWND();
                 btnStart.Text = "중지";
                 mAdb.device = cboADBList.Text;
-                t = new Thread(Macro);
+                t = new Thread(Macro, Int32.MaxValue);
                 t.Start();
                 sw.Start();
+                timer.Start();
             }
             else
             {
@@ -580,6 +594,7 @@ namespace Module.MobileMacro
                 btnStart.Text = "시작";
                 t.Abort();
                 sw.Stop();
+                timer.Stop();
             }
         }
 
@@ -659,7 +674,11 @@ namespace Module.MobileMacro
                     .Replace("B", "8")
                     .Replace("G", "6")
                     .Replace("W", "0")
-                    .Replace("i", "1");
+                    .Replace("i", "1")
+                    .Replace("n", "1")
+                    .Replace("/?", "9")
+                    .Replace("d", "0")
+                    .Replace("f1", "8");
 
             return str;
         }
