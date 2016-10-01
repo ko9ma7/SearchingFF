@@ -33,6 +33,7 @@ namespace Module.MobileMacro
         Int64 profit = 0;
         Int64 totalProfit = 0;
         Stopwatch sw = new Stopwatch();
+        OcrApi api;
         public MobileMacroPanel()
         {
             InitializeComponent();
@@ -75,19 +76,23 @@ namespace Module.MobileMacro
             }
             else if (ImageMatch(big, "모바일_선수영입"))
             {
-                if (ImageMatch(big, "모바일_선수영입_이용권소진"))
+                if (ImageMatch(big, "모바일_선수영입_일반선수"))
                 {
-                    Touch("모바일_상점_클릭");
-                    UStatus("상점메뉴 이동");
-                    Touch("모바일_단품_클릭");
-                    UStatus("단품메뉴 이동");
+                    if (ImageMatch(big, "모바일_선수영입_이용권소진"))
+                    {
+                        Touch("모바일_상점_클릭");
+                        UStatus("상점메뉴 이동");
+                        Touch("모바일_단품_클릭");
+                        UStatus("단품메뉴 이동");
+                    }
+                    else
+                    {
+                        Touch("모바일_선수영입_영입_클릭", 4500);
+                        //UStatus("선수영입 완료");
+                    }
                 }
                 else
-                {
                     Touch("모바일_선수영입_일반선수_클릭");
-                    Touch("모바일_선수영입_영입_클릭", 4500);
-                    //UStatus("선수영입 완료");
-                }
             }
             else if (ImageMatch(big, "모바일_선수영입_공간필요"))
             {
@@ -340,8 +345,8 @@ namespace Module.MobileMacro
             else if (ImageMatch(big, "모바일_상점_이용권"))
             {
                 Touch("모바일_상점_구매수_클릭");
-                Touch("모바일_상점_구매수설정_클릭");
-                Touch("모바일_상점_구매수설정확인_클릭");
+                Touch("모바일_상점_구매수설정_클릭", 600);
+                Touch("모바일_상점_구매수설정확인_클릭", 600);
                 Touch("모바일_상점_구입_클릭");
             }
             else if (ImageMatch(big, "모바일_상점_구입완료"))
@@ -363,6 +368,12 @@ namespace Module.MobileMacro
 
         void Init()
         {
+            OcrApi.PathToEngine = Environment.CurrentDirectory + @"\tesseract.dll";
+            api = OcrApi.Create();
+            Languages[] lang = { Languages.English };
+            api.Init(lang, null, OcrEngineMode.OEM_CUBE_ONLY);
+            api.SetVariable("tessedit_char_whitelist", "0123456789");
+
             ResourceSet set = global::Module.Properties.Resources.ResourceManager.GetResourceSet(CultureInfo.CurrentCulture, true, true);
             foreach (DictionaryEntry  item in set)
             {
@@ -380,6 +391,8 @@ namespace Module.MobileMacro
             dictRange.Add("모바일_상점_이용권", range);
             range = new Imaging.ImageRange(35, 125, 411, 51);
             dictRange.Add("모바일_상점_구입완료", range);
+            range = new Imaging.ImageRange(207, 127, 277, 69);
+            dictRange.Add("모바일_선수영입_일반선수", range);
             range = new Imaging.ImageRange(30, 320, 455, 75);
             dictRange.Add("모바일_선수영입_공간필요", range);
             range = new Imaging.ImageRange(0, 690, 484, 67);
@@ -684,18 +697,14 @@ namespace Module.MobileMacro
                 big = Imaging.MakeGrayscale3(big);
             else
                 big = grayscale(big);
-            OcrApi.PathToEngine = Environment.CurrentDirectory + @"\tesseract.dll";
-            var api = OcrApi.Create();
-            Languages[] lang = { Languages.English };
-            api.Init(lang, null, OcrEngineMode.OEM_CUBE_ONLY);
-            api.SetVariable("tessedit_char_whitelist", "0123456789");
+
             string plainText = api.GetTextFromImage(big);
-            //Console.WriteLine(plainText);
-            //this.Invoke(new MethodInvoker(delegate() { txtLog.AppendText(plainText + Environment.NewLine); }));
-            api.Dispose();
-            api = null;
-            System.GC.Collect(0, GCCollectionMode.Forced);
-            System.GC.WaitForPendingFinalizers();
+            ////Console.WriteLine(plainText);
+            ////this.Invoke(new MethodInvoker(delegate() { txtLog.AppendText(plainText + Environment.NewLine); }));
+            //api.Dispose();
+            //api = null;
+            //System.GC.Collect(0, GCCollectionMode.Forced);
+            //System.GC.WaitForPendingFinalizers();
             return plainText;
         }
 
