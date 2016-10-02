@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.mobileMacroPanel1 = new Module.MobileMacro.MobileMacroPanel();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -50,18 +52,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.cboWindows = new System.Windows.Forms.ComboBox();
-            this.btnFind = new System.Windows.Forms.Button();
-            this.btnCapture = new System.Windows.Forms.Button();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.image = new System.Windows.Forms.PictureBox();
-            this.txtLog = new System.Windows.Forms.RichTextBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.mobileMacroPanel1 = new Module.MobileMacro.MobileMacroPanel();
             this.tabControl1.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -70,28 +62,38 @@
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
-            this.splitContainer2.Panel1.SuspendLayout();
-            this.splitContainer2.Panel2.SuspendLayout();
-            this.splitContainer2.SuspendLayout();
-            this.panel3.SuspendLayout();
-            this.panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.image)).BeginInit();
-            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(888, 410);
             this.tabControl1.TabIndex = 0;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.mobileMacroPanel1);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(880, 384);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "선수영입매크로";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // mobileMacroPanel1
+            // 
+            this.mobileMacroPanel1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.mobileMacroPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mobileMacroPanel1.Location = new System.Drawing.Point(3, 3);
+            this.mobileMacroPanel1.Name = "mobileMacroPanel1";
+            this.mobileMacroPanel1.Size = new System.Drawing.Size(874, 378);
+            this.mobileMacroPanel1.TabIndex = 0;
             // 
             // tabPage1
             // 
@@ -101,7 +103,7 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(880, 384);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.Text = "강장매물검색기";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // splitContainer1
@@ -310,118 +312,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(627, 378);
             this.dataGridView1.TabIndex = 0;
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.splitContainer2);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(880, 384);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // splitContainer2
-            // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer2.Name = "splitContainer2";
-            // 
-            // splitContainer2.Panel1
-            // 
-            this.splitContainer2.Panel1.Controls.Add(this.panel3);
-            // 
-            // splitContainer2.Panel2
-            // 
-            this.splitContainer2.Panel2.Controls.Add(this.panel4);
-            this.splitContainer2.Size = new System.Drawing.Size(874, 378);
-            this.splitContainer2.SplitterDistance = 243;
-            this.splitContainer2.TabIndex = 2;
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.cboWindows);
-            this.panel3.Controls.Add(this.btnFind);
-            this.panel3.Controls.Add(this.btnCapture);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(243, 378);
-            this.panel3.TabIndex = 0;
-            // 
-            // cboWindows
-            // 
-            this.cboWindows.FormattingEnabled = true;
-            this.cboWindows.Location = new System.Drawing.Point(29, 36);
-            this.cboWindows.Name = "cboWindows";
-            this.cboWindows.Size = new System.Drawing.Size(121, 20);
-            this.cboWindows.TabIndex = 2;
-            // 
-            // btnFind
-            // 
-            this.btnFind.Location = new System.Drawing.Point(75, 344);
-            this.btnFind.Name = "btnFind";
-            this.btnFind.Size = new System.Drawing.Size(75, 23);
-            this.btnFind.TabIndex = 1;
-            this.btnFind.Text = "찾기";
-            this.btnFind.UseVisualStyleBackColor = true;
-            // 
-            // btnCapture
-            // 
-            this.btnCapture.Location = new System.Drawing.Point(156, 344);
-            this.btnCapture.Name = "btnCapture";
-            this.btnCapture.Size = new System.Drawing.Size(75, 23);
-            this.btnCapture.TabIndex = 0;
-            this.btnCapture.Text = "캡쳐";
-            this.btnCapture.UseVisualStyleBackColor = true;
-            // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.image);
-            this.panel4.Controls.Add(this.txtLog);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(0, 0);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(627, 378);
-            this.panel4.TabIndex = 0;
-            // 
-            // image
-            // 
-            this.image.Location = new System.Drawing.Point(3, 3);
-            this.image.Name = "image";
-            this.image.Size = new System.Drawing.Size(624, 378);
-            this.image.TabIndex = 3;
-            this.image.TabStop = false;
-            // 
-            // txtLog
-            // 
-            this.txtLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtLog.Location = new System.Drawing.Point(0, 0);
-            this.txtLog.Name = "txtLog";
-            this.txtLog.Size = new System.Drawing.Size(627, 378);
-            this.txtLog.TabIndex = 0;
-            this.txtLog.Text = "";
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.mobileMacroPanel1);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(880, 384);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "tabPage3";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // mobileMacroPanel1
-            // 
-            this.mobileMacroPanel1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.mobileMacroPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mobileMacroPanel1.Location = new System.Drawing.Point(3, 3);
-            this.mobileMacroPanel1.Name = "mobileMacroPanel1";
-            this.mobileMacroPanel1.Size = new System.Drawing.Size(874, 378);
-            this.mobileMacroPanel1.TabIndex = 0;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -431,6 +321,7 @@
             this.Name = "FormMain";
             this.Text = "강장 매물 검색기 (카카오톡 : searchfifa)";
             this.tabControl1.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -440,15 +331,6 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.tabPage2.ResumeLayout(false);
-            this.splitContainer2.Panel1.ResumeLayout(false);
-            this.splitContainer2.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
-            this.splitContainer2.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
-            this.panel4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.image)).EndInit();
-            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -477,15 +359,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Button btnCapture;
-        private System.Windows.Forms.Button btnFind;
-        private System.Windows.Forms.RichTextBox txtLog;
-        private System.Windows.Forms.ComboBox cboWindows;
-        private System.Windows.Forms.PictureBox image;
         private System.Windows.Forms.TabPage tabPage3;
         private Module.MobileMacro.MobileMacroPanel mobileMacroPanel1;
 

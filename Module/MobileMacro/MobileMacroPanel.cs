@@ -33,7 +33,6 @@ namespace Module.MobileMacro
         Int64 profit = 0;
         Int64 totalProfit = 0;
         Stopwatch sw = new Stopwatch();
-        OcrApi api;
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         public MobileMacroPanel()
         {
@@ -66,28 +65,29 @@ namespace Module.MobileMacro
             {
                 Touch("모바일_상점_클릭");
                 UStatus("상점메뉴 이동");
-                Touch("모바일_선수영입_클릭");
+                Touch("모바일_선수영입_클릭",2000);
                 UStatus("선수영입메뉴 이동");
             }
             else if (ImageMatch(big, "모바일_선수영입"))
             {
-                if (ImageMatch(big, "모바일_선수영입_일반선수"))
+                if (ImageMatch(big, "모바일_선수영입_이용권소진"))
                 {
-                    if (ImageMatch(big, "모바일_선수영입_이용권소진"))
-                    {
-                        Touch("모바일_상점_클릭");
-                        UStatus("상점메뉴 이동");
-                        Touch("모바일_단품_클릭");
-                        UStatus("단품메뉴 이동");
-                    }
-                    else
-                    {
-                        Touch("모바일_선수영입_영입_클릭", 4500);
-                        //UStatus("선수영입 완료");
-                    }
+                    Touch("모바일_상점_클릭");
+                    UStatus("상점메뉴 이동");
+                    Touch("모바일_단품_클릭");
+                    UStatus("단품메뉴 이동");
                 }
                 else
-                    Touch("모바일_선수영입_일반선수_클릭");
+                {
+                    if (ImageMatch(big, "모바일_선수영입_프리미엄선수"))
+                    {
+                        Touch("모바일_선수영입_일반선수_클릭");
+                    }
+                    else
+                        Touch("모바일_선수영입_영입_클릭", 4500);
+                    //UStatus("선수영입 완료");
+                }
+
             }
             else if (ImageMatch(big, "모바일_선수영입_공간필요"))
             {
@@ -102,20 +102,31 @@ namespace Module.MobileMacro
             else if (ImageMatch(big, "모바일_트레이드"))
             {
                 Touch("모바일_트레이드_초기화_클릭");
-                for (int i = 1; i < 9; i++)
+                bool flag = false;
+                for (int i = 8; i > 0; i--)
                 {
-                    string ocr = GetOCR(big, dictRange["모바일_트레이드_재료선수" + i.ToString()]);
+                    string ocr = "";
+                    if (!flag)
+                        ocr = GetOCR(big, dictRange["모바일_트레이드_재료선수" + i.ToString()], false);
                     try
                     {
-                        Int64 price = 0;
-                        Int64.TryParse(ParseOCR(ocr), out price);
 
-                        if (price < 10000)
+                        if (flag)
                         {
                             Touch("모바일_트레이드_재료선수" + i.ToString() + "_클릭");
                         }
                         else
-                            break;
+                        {
+                            Int64 price = 0;
+                            Int64.TryParse(ParseOCR(ocr), out price);
+                            Int32 defaultP = 20000;
+                            Int32.TryParse(txtTrade.Text, out defaultP);
+                            if (price < defaultP && price != 0)
+                            {
+                                Touch("모바일_트레이드_재료선수" + i.ToString() + "_클릭");
+                                flag = true;
+                            }
+                        }
                     }
                     catch (Exception)
                     {
@@ -134,7 +145,9 @@ namespace Module.MobileMacro
                     Touch("모바일_이적시장_클릭");
                     UStatus("이적시장메뉴 이동");
                     Touch("모바일_판매_클릭", 3000);
-                    Touch("모바일_이적시장_판매목록_클릭", 600);
+
+                    if (chkReceive.Checked)
+                        Touch("모바일_이적시장_판매목록_클릭", 600);
                 }
             }
             else if (ImageMatch(big, "모바일_트레이드_확인하기"))
@@ -143,7 +156,7 @@ namespace Module.MobileMacro
             }
             else if (ImageMatch(big, "모바일_트레이드_선수트레이드"))
             {
-                
+
                 string one1 = ParseOCR(GetOCR(big, dictRange["모바일_트레이드_선수1가격_1"], false));
                 string one2 = ParseOCR(GetOCR(big, dictRange["모바일_트레이드_선수1가격_2"], false));
                 string two1 = ParseOCR(GetOCR(big, dictRange["모바일_트레이드_선수2가격_1"], false));
@@ -268,26 +281,14 @@ namespace Module.MobileMacro
                 big = Imaging.bit;
                 if (ImageMatch(big, "모바일_이적시장_판매"))
                 {
-                    Touch("모바일_이적시장_판매_클릭", 700);
-                    Imaging.GetScreen();
-                    big = Imaging.bit;
-                    if (ImageMatch(big, "모바일_이적시장_등록초과"))
-                    {
-                        Touch("모바일_이적시장_등록초과확인_클릭");
-                        Touch("모바일_이적시장_취소_클릭");
-                        UStatus("이적시장 등록초과");
-                        Touch("모바일_상점_클릭");
-                        UStatus("상점메뉴 이동");
-                        Touch("모바일_선수영입_클릭");
-                        UStatus("선수영입메뉴 이동");
-                    }
+                    Touch("모바일_이적시장_판매_클릭", 600);
                 }
                 else
                 {
                     UStatus("모든 선수 판매 등록 완료.");
                     Touch("모바일_상점_클릭");
                     UStatus("상점메뉴 이동");
-                    Touch("모바일_선수영입_클릭");
+                    Touch("모바일_선수영입_클릭",2000);
                     UStatus("선수영입메뉴 이동");
                 }
             }
@@ -308,57 +309,104 @@ namespace Module.MobileMacro
                             UStatus("10,000EP 이하의 선수로 판별. 판매 취소");
                             Touch("모바일_상점_클릭");
                             UStatus("상점메뉴 이동");
-                            Touch("모바일_선수영입_클릭");
+                            Touch("모바일_선수영입_클릭",2000);
                             UStatus("선수영입메뉴 이동");
                         }
                         else
                         {
                             Touch("모바일_이적시장_판매2_클릭");
+                            Imaging.GetScreen();
+                            big = Imaging.bit;
+                            if (ImageMatch(big, "모바일_이적시장_등록초과"))
+                            {
+                                Touch("모바일_이적시장_등록초과확인_클릭");
+                                Touch("모바일_이적시장_취소_클릭");
+                                UStatus("이적시장 등록초과");
+                                Touch("모바일_상점_클릭");
+                                UStatus("상점메뉴 이동");
+                                Touch("모바일_선수영입_클릭",2000);
+                                UStatus("선수영입메뉴 이동");
+                            }
                             Touch("모바일_이적시장_판매확인_클릭");
                         }
                     }
                     else
                     {
                         Touch("모바일_이적시장_판매2_클릭");
+                        Imaging.GetScreen();
+                        big = Imaging.bit;
+                        if (ImageMatch(big, "모바일_이적시장_등록초과"))
+                        {
+                            Touch("모바일_이적시장_등록초과확인_클릭");
+                            Touch("모바일_이적시장_취소_클릭");
+                            UStatus("이적시장 등록초과");
+                            Touch("모바일_상점_클릭");
+                            UStatus("상점메뉴 이동");
+                            Touch("모바일_선수영입_클릭",2000);
+                            UStatus("선수영입메뉴 이동");
+                        }
                         Touch("모바일_이적시장_판매확인_클릭");
                     }
                 }
                 catch (Exception)
                 {
                     Touch("모바일_이적시장_판매2_클릭");
+                    Imaging.GetScreen();
+                    big = Imaging.bit;
+                    if (ImageMatch(big, "모바일_이적시장_등록초과"))
+                    {
+                        Touch("모바일_이적시장_등록초과확인_클릭");
+                        Touch("모바일_이적시장_취소_클릭");
+                        UStatus("이적시장 등록초과");
+                        Touch("모바일_상점_클릭");
+                        UStatus("상점메뉴 이동");
+                        Touch("모바일_선수영입_클릭",2000);
+                        UStatus("선수영입메뉴 이동");
+                    }
                     Touch("모바일_이적시장_판매확인_클릭");
                 }
             }
             else if (ImageMatch(big, "모바일_상점"))
             {
-                Swipe("모바일_상점_스와이프1", "모바일_상점_스와이프2");
-                Swipe("모바일_상점_스와이프1", "모바일_상점_스와이프2");
-                Swipe("모바일_상점_스와이프1", "모바일_상점_스와이프2");
-                Swipe("모바일_상점_스와이프1", "모바일_상점_스와이프2");
-                Swipe("모바일_상점_스와이프1", "모바일_상점_스와이프2");
                 if (buyCount < 10)
                 {
-                    Touch("모바일_상점_이용권구매_클릭");
-                    UStatus("이용권 구매 시작");
-                    Imaging.GetScreen();
-                    big = Imaging.bit;
-                    if (ImageMatch(big, "모바일_상점_이용권"))
+                    if (buyCount == 0)
                     {
-                        Touch("모바일_상점_구매수_클릭", 600);
-                        Touch("모바일_상점_구매수설정_클릭", 1000);
-                        Touch("모바일_상점_구매수설정확인_클릭", 600);
-                        Touch("모바일_상점_구입_클릭", 0);
-                        Touch("모바일_상점_구입_클릭", 0);
+                        Swipe("모바일_상점_스와이프1", "모바일_상점_스와이프2");
+                        Swipe("모바일_상점_스와이프1", "모바일_상점_스와이프2");
+                        Swipe("모바일_상점_스와이프1", "모바일_상점_스와이프2");
+                        Swipe("모바일_상점_스와이프1", "모바일_상점_스와이프2");
+                        Swipe("모바일_상점_스와이프1", "모바일_상점_스와이프2");
                     }
+                    Touch("모바일_상점_이용권구매_클릭");
+                    //Imaging.GetScreen();
+                    //big = Imaging.bit;
+
                 }
                 else
                 {
                     buyCount = 0;
                     Touch("모바일_상점_클릭");
                     UStatus("이용권 구입완료. 상점메뉴 이동");
-                    Touch("모바일_선수영입_클릭");
+                    Touch("모바일_선수영입_클릭",2000);
                     UStatus("선수영입메뉴 이동");
                 }
+            }
+            else if (ImageMatch(big, "모바일_상점_구입하기"))
+            {
+                if (ImageMatch(big, "모바일_상점_이용권"))
+                {
+                    Touch("모바일_상점_구매수_클릭");
+                }
+                else
+                    Touch("모바일_상점_구매취소");
+            }
+            else if (ImageMatch(big, "모바일_상점_구매수"))
+            {
+                Touch("모바일_상점_구매수설정_클릭");
+                Touch("모바일_상점_구매수설정확인_클릭");
+                Touch("모바일_상점_구입_클릭", 500);
+                Touch("모바일_상점_구입_클릭", 500);
             }
             else if (ImageMatch(big, "모바일_상점_구입완료"))
             {
@@ -381,13 +429,6 @@ namespace Module.MobileMacro
 
         void Init()
         {
-            OcrApi.PathToEngine = Environment.CurrentDirectory + @"\tesseract.dll";
-            api = OcrApi.Create();
-            Languages[] lang = { Languages.English };
-            api.Init(lang, null, OcrEngineMode.OEM_CUBE_ONLY);
-            api.SetVariable("tessedit_char_whitelist", "0123456789");
-
-
             timer.Interval = 1000;
             timer.Tick += timer_Tick;
 
@@ -404,12 +445,22 @@ namespace Module.MobileMacro
             dictRange.Add("모바일_선수영입", range);
             dictRange.Add("모바일_이적시장", range);
             dictRange.Add("모바일_트레이드", range);
+
+
+            range = new Imaging.ImageRange(147, 129, 210, 47);
+            dictRange.Add("모바일_상점_구입하기", range);
             range = new Imaging.ImageRange(27, 172, 171, 235);
             dictRange.Add("모바일_상점_이용권", range);
             range = new Imaging.ImageRange(35, 125, 411, 51);
             dictRange.Add("모바일_상점_구입완료", range);
+            range = new Imaging.ImageRange(99, 291, 295, 43);
+            dictRange.Add("모바일_상점_구매수", range);
+
+
             range = new Imaging.ImageRange(207, 127, 277, 69);
             dictRange.Add("모바일_선수영입_일반선수", range);
+            range = new Imaging.ImageRange(175, 233, 138, 163);
+            dictRange.Add("모바일_선수영입_프리미엄선수", range);
             range = new Imaging.ImageRange(30, 320, 455, 75);
             dictRange.Add("모바일_선수영입_공간필요", range);
             range = new Imaging.ImageRange(0, 690, 484, 67);
@@ -520,13 +571,13 @@ namespace Module.MobileMacro
             dictPoint.Add("모바일_상점_스와이프1", new Point(265, 640));
             dictPoint.Add("모바일_상점_스와이프2", new Point(265, 135));
             dictPoint.Add("모바일_상점_이용권구매_클릭", new Point(50, 515));
-
-
+            dictPoint.Add("모바일_상점_구매취소", new Point(150, 660));
             dictPoint.Add("모바일_상점_구매수_클릭", new Point(240, 173));
             dictPoint.Add("모바일_상점_구매수설정_클릭", new Point(120, 325));
             dictPoint.Add("모바일_상점_구매수설정확인_클릭", new Point(280, 570));
             dictPoint.Add("모바일_상점_구입_클릭", new Point(275, 650));
             dictPoint.Add("모바일_상점_구입확인_클릭", new Point(275, 650));
+
         }
 
         #region 이벤트
@@ -534,8 +585,8 @@ namespace Module.MobileMacro
         {
             //this.Invoke(new MethodInvoker(delegate()
             //{
-                label8.Text = sw.Elapsed.ToString("hh\\:mm\\:ss");
-                label7.Text = totalProfit.ToString();
+                //label8.Text = sw.Elapsed.ToString("hh\\:mm\\:ss");
+                //label7.Text = totalProfit.ToString();
             //}));
         }
 
@@ -582,8 +633,6 @@ namespace Module.MobileMacro
                 btnRefresh.Enabled = false;
                 cboADBList.Enabled = false;
                 chkReceive.Enabled = false;
-                chkSell.Enabled = false;
-                chkTrade.Enabled = false;
                 txtSell.Enabled = false;
                 txtTrade.Enabled = false;
 
@@ -593,22 +642,20 @@ namespace Module.MobileMacro
                 t = new Thread(Macro, Int32.MaxValue);
                 t.Start();
                 sw.Start();
-                timer.Start();
+                //timer.Start();
             }
             else
             {
                 btnRefresh.Enabled = true;
                 cboADBList.Enabled = true;
                 chkReceive.Enabled = true;
-                chkSell.Enabled = true;
-                chkTrade.Enabled = true;
                 txtSell.Enabled = true;
                 txtTrade.Enabled = true;
                 
                 btnStart.Text = "시작";
                 t.Abort();
                 sw.Stop();
-                timer.Stop();
+                //timer.Stop();
             }
         }
 
@@ -692,7 +739,8 @@ namespace Module.MobileMacro
                     .Replace("n", "1")
                     .Replace("/?", "9")
                     .Replace("d", "0")
-                    .Replace("f1", "8");
+                    .Replace("f1", "8")
+                    .Replace("f", "6");
 
             return str;
         }
@@ -731,13 +779,20 @@ namespace Module.MobileMacro
             else
                 big = grayscale(big);
 
+            OcrApi.PathToEngine = Environment.CurrentDirectory + @"\CharRecog.dll";
+            OcrApi api = OcrApi.Create();
+            Languages[] lang = { Languages.English };
+            api.Init(lang, null, OcrEngineMode.OEM_CUBE_ONLY);
+            api.SetVariable("tessedit_char_whitelist", "0123456789");
+
             string plainText = api.GetTextFromImage(big);
             ////Console.WriteLine(plainText);
             ////this.Invoke(new MethodInvoker(delegate() { txtLog.AppendText(plainText + Environment.NewLine); }));
-            //api.Dispose();
-            //api = null;
-            //System.GC.Collect(0, GCCollectionMode.Forced);
-            //System.GC.WaitForPendingFinalizers();
+            api.Dispose();
+            api = null;
+            System.GC.Collect(0, GCCollectionMode.Forced);
+            System.GC.WaitForPendingFinalizers();
+
             return plainText;
         }
 

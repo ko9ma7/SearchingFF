@@ -214,6 +214,18 @@
   <ItemGroup>
     <None Include="Resources\모바일_이적시장_등록초과.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\엄모바일_선수영입_프리미엄선수.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\모바일_선수영입_프리미엄선수.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\모바일_상점_구입하기.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\모바일_상점_구매수.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

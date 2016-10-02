@@ -30,18 +30,15 @@
         {
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lbAuth = new System.Windows.Forms.Label();
             this.btnCapture = new System.Windows.Forms.Button();
             this.chkReceive = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.txtSell = new System.Windows.Forms.TextBox();
-            this.chkSell = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtTrade = new System.Windows.Forms.TextBox();
-            this.chkTrade = new System.Windows.Forms.CheckBox();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -80,18 +77,15 @@
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.label8);
-            this.panel3.Controls.Add(this.label7);
+            this.panel3.Controls.Add(this.lbAuth);
             this.panel3.Controls.Add(this.btnCapture);
             this.panel3.Controls.Add(this.chkReceive);
             this.panel3.Controls.Add(this.label6);
             this.panel3.Controls.Add(this.label5);
             this.panel3.Controls.Add(this.txtSell);
-            this.panel3.Controls.Add(this.chkSell);
             this.panel3.Controls.Add(this.label4);
             this.panel3.Controls.Add(this.label3);
             this.panel3.Controls.Add(this.txtTrade);
-            this.panel3.Controls.Add(this.chkTrade);
             this.panel3.Controls.Add(this.btnRefresh);
             this.panel3.Controls.Add(this.label2);
             this.panel3.Controls.Add(this.label1);
@@ -104,36 +98,29 @@
             this.panel3.Size = new System.Drawing.Size(293, 378);
             this.panel3.TabIndex = 0;
             // 
-            // label8
+            // lbAuth
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(20, 268);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(38, 12);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "label8";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(20, 286);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(38, 12);
-            this.label7.TabIndex = 15;
-            this.label7.Text = "label7";
+            this.lbAuth.AutoSize = true;
+            this.lbAuth.Location = new System.Drawing.Point(13, 139);
+            this.lbAuth.Name = "lbAuth";
+            this.lbAuth.Size = new System.Drawing.Size(0, 12);
+            this.lbAuth.TabIndex = 17;
             // 
             // btnCapture
             // 
-            this.btnCapture.Location = new System.Drawing.Point(211, 315);
+            this.btnCapture.Location = new System.Drawing.Point(211, 344);
             this.btnCapture.Name = "btnCapture";
             this.btnCapture.Size = new System.Drawing.Size(75, 23);
             this.btnCapture.TabIndex = 14;
             this.btnCapture.Text = "캡쳐";
             this.btnCapture.UseVisualStyleBackColor = true;
+            this.btnCapture.Visible = false;
             // 
             // chkReceive
             // 
             this.chkReceive.AutoSize = true;
+            this.chkReceive.Checked = true;
+            this.chkReceive.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkReceive.Location = new System.Drawing.Point(66, 104);
             this.chkReceive.Name = "chkReceive";
             this.chkReceive.Size = new System.Drawing.Size(48, 16);
@@ -153,7 +140,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(247, 75);
+            this.label5.Location = new System.Drawing.Point(199, 75);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(29, 12);
             this.label5.TabIndex = 11;
@@ -161,20 +148,11 @@
             // 
             // txtSell
             // 
-            this.txtSell.Location = new System.Drawing.Point(114, 70);
+            this.txtSell.Location = new System.Drawing.Point(66, 70);
             this.txtSell.Name = "txtSell";
             this.txtSell.Size = new System.Drawing.Size(127, 21);
             this.txtSell.TabIndex = 10;
-            // 
-            // chkSell
-            // 
-            this.chkSell.AutoSize = true;
-            this.chkSell.Location = new System.Drawing.Point(66, 73);
-            this.chkSell.Name = "chkSell";
-            this.chkSell.Size = new System.Drawing.Size(48, 16);
-            this.chkSell.TabIndex = 9;
-            this.chkSell.Text = "사용";
-            this.chkSell.UseVisualStyleBackColor = true;
+            this.txtSell.Text = "10000";
             // 
             // label4
             // 
@@ -188,7 +166,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(247, 43);
+            this.label3.Location = new System.Drawing.Point(199, 43);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(29, 12);
             this.label3.TabIndex = 7;
@@ -196,20 +174,11 @@
             // 
             // txtTrade
             // 
-            this.txtTrade.Location = new System.Drawing.Point(114, 39);
+            this.txtTrade.Location = new System.Drawing.Point(66, 39);
             this.txtTrade.Name = "txtTrade";
             this.txtTrade.Size = new System.Drawing.Size(127, 21);
             this.txtTrade.TabIndex = 6;
-            // 
-            // chkTrade
-            // 
-            this.chkTrade.AutoSize = true;
-            this.chkTrade.Location = new System.Drawing.Point(66, 42);
-            this.chkTrade.Name = "chkTrade";
-            this.chkTrade.Size = new System.Drawing.Size(48, 16);
-            this.chkTrade.TabIndex = 5;
-            this.chkTrade.Text = "사용";
-            this.chkTrade.UseVisualStyleBackColor = true;
+            this.txtTrade.Text = "20000";
             // 
             // btnRefresh
             // 
@@ -255,10 +224,11 @@
             this.btnFind.TabIndex = 1;
             this.btnFind.Text = "찾기";
             this.btnFind.UseVisualStyleBackColor = true;
+            this.btnFind.Visible = false;
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(211, 344);
+            this.btnStart.Location = new System.Drawing.Point(211, 100);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 23);
             this.btnStart.TabIndex = 0;
@@ -319,23 +289,20 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cboADBList;
         private System.Windows.Forms.Button btnFind;
-        private System.Windows.Forms.Button btnStart;
+        public System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.CheckBox chkReceive;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtSell;
-        private System.Windows.Forms.CheckBox chkSell;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtTrade;
-        private System.Windows.Forms.CheckBox chkTrade;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.RichTextBox txtLog;
         private System.Windows.Forms.Button btnCapture;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
+        public System.Windows.Forms.Label lbAuth;
     }
 }

@@ -36,6 +36,7 @@ namespace SearchFIFASales
         string pageNoUrl = "&n4pageno=";
         Dictionary<string, string> dictLeague = new Dictionary<string, string>();
         Dictionary<string, DateTime> dictAuth = new Dictionary<string, DateTime>();
+        Dictionary<string, DateTime> dictScoutAuth = new Dictionary<string, DateTime>();
         Dictionary<string, string> dictSeason = new Dictionary<string, string>();
         List<PlayerInfo> lstPlayers = new List<PlayerInfo>();
         string mainContent = "";
@@ -100,6 +101,7 @@ namespace SearchFIFASales
             foreach (DataRow dr in authDT.Rows)
             {
                 dictAuth.Add(dr["C_USER_HWID"].ToString(), Convert.ToDateTime(dr["EXPIRE_DATE"].ToString()));
+                dictScoutAuth.Add(dr["C_USER_HWID"].ToString(), Convert.ToDateTime(dr["EXPIRE_DATE_SCOUT"].ToString()));
             }
 
             DateTime serverTime = GetServerTime();
@@ -110,6 +112,15 @@ namespace SearchFIFASales
                 lbAuth.ForeColor = Color.Red;
                 lbAuth.Font = new Font("돋움", 9, FontStyle.Bold);
             }
+
+            if (!dictScoutAuth.ContainsKey(SimpleUID) || dictScoutAuth[SimpleUID] < serverTime)
+            {
+                mobileMacroPanel1.btnStart.Enabled = false;
+                mobileMacroPanel1.lbAuth.Text = "사용인증이 필요합니다. \n\n관리자에게 문의하세요. \n\n카카오톡 : searchfifa \n\n(HWID : " + SimpleUID + ")";
+                mobileMacroPanel1.lbAuth.ForeColor = Color.Red;
+                mobileMacroPanel1.lbAuth.Font = new Font("돋움", 9, FontStyle.Bold);
+            }
+
 
             _cookie = new CookieContainer();
             dictLeague.Add("잉글랜드 프리미어리그", "13");
@@ -169,50 +180,50 @@ namespace SearchFIFASales
                 new Thread(() => MainProcess()).Start();
             };
 
-            btnCapture.Click += (object sender, EventArgs e) =>
-            {
-                //Imaging.GetScreen().Save(Environment.CurrentDirectory + "\\test.png");
-                //Imaging.CropImage(Imaging.GetScreen(), new Point(400, 550), 150, 150).Save("C:\\test.png");
-                //MessageCtr.SendKey(new Point(112, 191));
-            };
+            //btnCapture.Click += (object sender, EventArgs e) =>
+            //{
+            //    //Imaging.GetScreen().Save(Environment.CurrentDirectory + "\\test.png");
+            //    //Imaging.CropImage(Imaging.GetScreen(), new Point(400, 550), 150, 150).Save("C:\\test.png");
+            //    //MessageCtr.SendKey(new Point(112, 191));
+            //};
 
-            btnFind.Click += (object sender, EventArgs e) =>
-            {
-                //OpenFileDialog dialog = new OpenFileDialog();
-                //DialogResult result = dialog.ShowDialog();
+            //btnFind.Click += (object sender, EventArgs e) =>
+            //{
+            //    //OpenFileDialog dialog = new OpenFileDialog();
+            //    //DialogResult result = dialog.ShowDialog();
 
-                //if (result == System.Windows.Forms.DialogResult.OK)
-                //{
+            //    //if (result == System.Windows.Forms.DialogResult.OK)
+            //    //{
 
-                    //string path = dialog.FileName;
-                    //Bitmap small = (Bitmap)Bitmap.FromFile(path);
-                    //Bitmap big = (Bitmap)Imaging.GetScreen();
+            //        //string path = dialog.FileName;
+            //        //Bitmap small = (Bitmap)Bitmap.FromFile(path);
+            //        //Bitmap big = (Bitmap)Imaging.GetScreen();
 
-                    //Module.Handling.Imaging.ImageRange range = dictRange["이적시장_즐겨찾기"];
+            //        //Module.Handling.Imaging.ImageRange range = dictRange["이적시장_즐겨찾기"];
                     
                     
-                    //MessageBox.Show(p.ToString());
-                    new Thread(() => TradeMacro()).Start();
-                //}
+            //        //MessageBox.Show(p.ToString());
+            //        new Thread(() => TradeMacro()).Start();
+            //    //}
 
-            };
+            //};
 
-            cboWindows.SelectedIndexChanged += cboWindows_SelectedIndexChanged;
+            //cboWindows.SelectedIndexChanged += cboWindows_SelectedIndexChanged;
             #endregion
         }
 
-        void cboWindows_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Window w = (Window)cboWindows.SelectedItem;
+        //void cboWindows_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    Window w = (Window)cboWindows.SelectedItem;
 
-            if (thumb != IntPtr.Zero)
-                DwmUnregisterThumbnail(thumb);
+        //    if (thumb != IntPtr.Zero)
+        //        DwmUnregisterThumbnail(thumb);
 
-            int i = DwmRegisterThumbnail(this.Handle, w.Handle, out thumb);
+        //    int i = DwmRegisterThumbnail(this.Handle, w.Handle, out thumb);
 
-            if (i == 0)
-                UpdateThumb();
-        }
+        //    if (i == 0)
+        //        UpdateThumb();
+        //}
 
         void InitMacro()
         {
@@ -222,7 +233,6 @@ namespace SearchFIFASales
             range = new Imaging.ImageRange(211 - 50, 125 - 50);
             dictRange.Add("이적시장_즐겨찾기_버튼", range);
 
-            GetWindows();
         }
 
         
@@ -450,22 +460,16 @@ namespace SearchFIFASales
 
 
         #region 매크로
-        void TradeMacro()
-        {
-            GoTrade();
-            GoFavorite();
-            TradeMacro();
-        }
 
 
-        void UpdateStatus(string msg)
-        {
-            this.Invoke(new MethodInvoker(delegate()
-                {
-                    txtLog.AppendText("[" + GetServerTime().ToString("MM-dd HH:mm:ss") + "] " + msg);
-                    txtLog.AppendText("\r\n");
-                }));
-        }
+        //void UpdateStatus(string msg)
+        //{
+        //    this.Invoke(new MethodInvoker(delegate()
+        //        {
+        //            txtLog.AppendText("[" + GetServerTime().ToString("MM-dd HH:mm:ss") + "] " + msg);
+        //            txtLog.AppendText("\r\n");
+        //        }));
+        //}
 
         void SendKey(Point targetPoint, Module.Handling.Imaging.ImageRange range)
         {
@@ -474,35 +478,6 @@ namespace SearchFIFASales
         }
 
         #region 강화장사
-
-        void GoTrade()
-        {
-            Imaging.GetScreen();
-            Bitmap big = Imaging.bit;
-            //Imaging.GetScreen().Save("C:\\test.png");
-            Bitmap small = global::SearchFIFASales.Properties.Resources.이적시장_버튼;
-            Module.Handling.Imaging.ImageRange range = dictRange["이적시장_버튼"];
-            Point targetPoint = Imaging.ImgMatch(big, small, range);
-            if (targetPoint != new Point(0, 0))
-            {
-                SendKey(targetPoint, range);
-                UpdateStatus("이적시장으로 이동");
-            }
-        }
-
-        void GoFavorite()
-        {
-            Imaging.GetScreen();
-            Bitmap big = Imaging.bit;
-            Bitmap small = global::SearchFIFASales.Properties.Resources.이적시장_즐겨찾기_버튼;
-            Module.Handling.Imaging.ImageRange range = dictRange["이적시장_즐겨찾기_버튼"];
-            Point targetPoint = Imaging.ImgMatch(big, small, range);
-            if (targetPoint != new Point(0, 0))
-            {
-                SendKey(targetPoint, range);
-                UpdateStatus("이적시장_즐겨찾기로 이동");
-            }
-        }
         #endregion
 
 
@@ -558,16 +533,6 @@ namespace SearchFIFASales
 
         private List<Window> windows;
 
-        private void GetWindows()
-        {
-            windows = new List<Window>();
-            EnumWindows(Callback, 0);
-
-            cboWindows.Items.Clear();
-            foreach (Window w in windows)
-                cboWindows.Items.Add(w);
-        }
-
         private bool Callback(IntPtr hwnd, int lParam)
         {
             if (this.Handle != hwnd && (GetWindowLongA(hwnd, GWL_STYLE) & TARGETWINDOW) == TARGETWINDOW)
@@ -588,29 +553,29 @@ namespace SearchFIFASales
 
         #region Update thumbnail properties
 
-        private void UpdateThumb()
-        {
-            if (thumb != IntPtr.Zero)
-            {
-                PSIZE size;
-                DwmQueryThumbnailSourceSize(thumb, out size);
+        //private void UpdateThumb()
+        //{
+        //    if (thumb != IntPtr.Zero)
+        //    {
+        //        PSIZE size;
+        //        DwmQueryThumbnailSourceSize(thumb, out size);
 
-                DWM_THUMBNAIL_PROPERTIES props = new DWM_THUMBNAIL_PROPERTIES();
+        //        DWM_THUMBNAIL_PROPERTIES props = new DWM_THUMBNAIL_PROPERTIES();
 
-                props.fVisible = true;
-                props.dwFlags = DWM_TNP_VISIBLE | DWM_TNP_RECTDESTINATION | DWM_TNP_OPACITY;
-                props.opacity = (byte)255;
-                props.rcDestination = new Rect(splitContainer2.Panel2.Left, splitContainer2.Panel2.Top, splitContainer2.Panel2.Left + 800, splitContainer2.Panel2.Top + 600);
+        //        props.fVisible = true;
+        //        props.dwFlags = DWM_TNP_VISIBLE | DWM_TNP_RECTDESTINATION | DWM_TNP_OPACITY;
+        //        props.opacity = (byte)255;
+        //        props.rcDestination = new Rect(splitContainer2.Panel2.Left, splitContainer2.Panel2.Top, splitContainer2.Panel2.Left + 800, splitContainer2.Panel2.Top + 600);
 
-                //if (size.x < image.Width)
-                //    props.rcDestination.Right = props.rcDestination.Left + size.x;
+        //        //if (size.x < image.Width)
+        //        //    props.rcDestination.Right = props.rcDestination.Left + size.x;
 
-                //if (size.y < image.Height)
-                //    props.rcDestination.Bottom = props.rcDestination.Top + size.y;
+        //        //if (size.y < image.Height)
+        //        //    props.rcDestination.Bottom = props.rcDestination.Top + size.y;
 
-                DwmUpdateThumbnailProperties(thumb, ref props);
-            }
-        }
+        //        DwmUpdateThumbnailProperties(thumb, ref props);
+        //    }
+        //}
         #endregion
 
         internal class Window
