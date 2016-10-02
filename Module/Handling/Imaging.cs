@@ -301,12 +301,12 @@ namespace Module.Handling
             return _img;
         }
 
-        private static SlimDX.Direct3D9.Direct3D _direct3D9 = new SlimDX.Direct3D9.Direct3D();
-        private static Dictionary<IntPtr, SlimDX.Direct3D9.Device> _direct3DDeviceCache = new Dictionary<IntPtr, SlimDX.Direct3D9.Device>();
-        public static Bitmap CaptureWindow(IntPtr hWnd)
-        {
-            return CaptureRegionDirect3D(hWnd, NativeMethods.GetAbsoluteClientRect(hWnd));
-        }
+        //private static SlimDX.Direct3D9.Direct3D _direct3D9 = new SlimDX.Direct3D9.Direct3D();
+        //private static Dictionary<IntPtr, SlimDX.Direct3D9.Device> _direct3DDeviceCache = new Dictionary<IntPtr, SlimDX.Direct3D9.Device>();
+        //public static Bitmap CaptureWindow(IntPtr hWnd)
+        //{
+        //    return CaptureRegionDirect3D(hWnd, NativeMethods.GetAbsoluteClientRect(hWnd));
+        //}
         [DllImport("user32")]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool ShowWindow(IntPtr hWnd, ShowWindowEnum flags);
@@ -335,64 +335,64 @@ namespace Module.Handling
         public const int LWA_ALPHA = 0x2;
         public const int LWA_COLORKEY = 0x1;
 
-        public static Bitmap CaptureRegionDirect3D(IntPtr handle, Rectangle region)
-        {
+        //public static Bitmap CaptureRegionDirect3D(IntPtr handle, Rectangle region)
+        //{
 
-            IntPtr hWnd = handle;
-            Bitmap bitmap = null;
-            Int32 winLong = GetWindowLong(hWnd, GWL_EXSTYLE);
-            SetWindowLong(hWnd, GWL_EXSTYLE, winLong | WS_EX_LAYERED);
-            SetLayeredWindowAttributes(hWnd, 0, 255, LWA_ALPHA);
-            ShowWindow(hWnd, ShowWindowEnum.ShowNormal);
+        //    IntPtr hWnd = handle;
+        //    Bitmap bitmap = null;
+        //    Int32 winLong = GetWindowLong(hWnd, GWL_EXSTYLE);
+        //    SetWindowLong(hWnd, GWL_EXSTYLE, winLong | WS_EX_LAYERED);
+        //    SetLayeredWindowAttributes(hWnd, 0, 255, LWA_ALPHA);
+        //    ShowWindow(hWnd, ShowWindowEnum.ShowNormal);
 
-            // We are only supporting the primary display adapter for Direct3D mode
-            SlimDX.Direct3D9.AdapterInformation adapterInfo = _direct3D9.Adapters.DefaultAdapter;
-            SlimDX.Direct3D9.Device device;
+        //    // We are only supporting the primary display adapter for Direct3D mode
+        //    SlimDX.Direct3D9.AdapterInformation adapterInfo = _direct3D9.Adapters.DefaultAdapter;
+        //    SlimDX.Direct3D9.Device device;
 
-            #region Get Direct3D Device
-            // Retrieve the existing Direct3D device if we already created one for the given handle
-            if (_direct3DDeviceCache.ContainsKey(hWnd))
-            {
-                device = _direct3DDeviceCache[hWnd];
-            }
-            // We need to create a new device
-            else
-            {
-                // Setup the device creation parameters
-                SlimDX.Direct3D9.PresentParameters parameters = new SlimDX.Direct3D9.PresentParameters();
-                parameters.BackBufferFormat = adapterInfo.CurrentDisplayMode.Format;
-                Rectangle clientRect = NativeMethods.GetAbsoluteClientRect(hWnd);
-                parameters.BackBufferHeight = clientRect.Height;
-                parameters.BackBufferWidth = clientRect.Width;
-                parameters.Multisample = SlimDX.Direct3D9.MultisampleType.None;
-                parameters.SwapEffect = SlimDX.Direct3D9.SwapEffect.Discard;
-                parameters.DeviceWindowHandle = hWnd;
-                parameters.PresentationInterval = SlimDX.Direct3D9.PresentInterval.Default;
-                parameters.FullScreenRefreshRateInHertz = 0;
+        //    #region Get Direct3D Device
+        //    // Retrieve the existing Direct3D device if we already created one for the given handle
+        //    if (_direct3DDeviceCache.ContainsKey(hWnd))
+        //    {
+        //        device = _direct3DDeviceCache[hWnd];
+        //    }
+        //    // We need to create a new device
+        //    else
+        //    {
+        //        // Setup the device creation parameters
+        //        SlimDX.Direct3D9.PresentParameters parameters = new SlimDX.Direct3D9.PresentParameters();
+        //        parameters.BackBufferFormat = adapterInfo.CurrentDisplayMode.Format;
+        //        Rectangle clientRect = NativeMethods.GetAbsoluteClientRect(hWnd);
+        //        parameters.BackBufferHeight = clientRect.Height;
+        //        parameters.BackBufferWidth = clientRect.Width;
+        //        parameters.Multisample = SlimDX.Direct3D9.MultisampleType.None;
+        //        parameters.SwapEffect = SlimDX.Direct3D9.SwapEffect.Discard;
+        //        parameters.DeviceWindowHandle = hWnd;
+        //        parameters.PresentationInterval = SlimDX.Direct3D9.PresentInterval.Default;
+        //        parameters.FullScreenRefreshRateInHertz = 0;
 
-                // Create the Direct3D device
-                device = new SlimDX.Direct3D9.Device(_direct3D9, adapterInfo.Adapter, SlimDX.Direct3D9.DeviceType.Hardware, hWnd, SlimDX.Direct3D9.CreateFlags.SoftwareVertexProcessing, parameters);
-                _direct3DDeviceCache.Add(hWnd, device);
-            }
-            #endregion
+        //        // Create the Direct3D device
+        //        device = new SlimDX.Direct3D9.Device(_direct3D9, adapterInfo.Adapter, SlimDX.Direct3D9.DeviceType.Hardware, hWnd, SlimDX.Direct3D9.CreateFlags.SoftwareVertexProcessing, parameters);
+        //        _direct3DDeviceCache.Add(hWnd, device);
+        //    }
+        //    #endregion
 
-            // Capture the screen and copy the region into a Bitmap
-            using (SlimDX.Direct3D9.Surface surface = SlimDX.Direct3D9.Surface.CreateOffscreenPlain(device, adapterInfo.CurrentDisplayMode.Width, adapterInfo.CurrentDisplayMode.Height, SlimDX.Direct3D9.Format.A8R8G8B8, SlimDX.Direct3D9.Pool.SystemMemory))
-            {
-                device.GetFrontBufferData(0, surface);
+        //    // Capture the screen and copy the region into a Bitmap
+        //    using (SlimDX.Direct3D9.Surface surface = SlimDX.Direct3D9.Surface.CreateOffscreenPlain(device, adapterInfo.CurrentDisplayMode.Width, adapterInfo.CurrentDisplayMode.Height, SlimDX.Direct3D9.Format.A8R8G8B8, SlimDX.Direct3D9.Pool.SystemMemory))
+        //    {
+        //        device.GetFrontBufferData(0, surface);
 
 
-                // Update: thanks digitalutopia1 for pointing out that SlimDX have fixed a bug
-                // where they previously expected a RECT type structure for their Rectangle
-                bitmap = new Bitmap(SlimDX.Direct3D9.Surface.ToStream(surface, SlimDX.Direct3D9.ImageFileFormat.Bmp, new Rectangle(region.Left, region.Top, region.Width, region.Height)));
-                // Previous SlimDX bug workaround: new Rectangle(region.Left, region.Top, region.Right, region.Bottom)));
+        //        // Update: thanks digitalutopia1 for pointing out that SlimDX have fixed a bug
+        //        // where they previously expected a RECT type structure for their Rectangle
+        //        bitmap = new Bitmap(SlimDX.Direct3D9.Surface.ToStream(surface, SlimDX.Direct3D9.ImageFileFormat.Bmp, new Rectangle(region.Left, region.Top, region.Width, region.Height)));
+        //        // Previous SlimDX bug workaround: new Rectangle(region.Left, region.Top, region.Right, region.Bottom)));
 
-            }
+        //    }
 
-            ShowWindow(hWnd, ShowWindowEnum.ShowNormalNoActivate);
-            SetWindowLong(hWnd, GWL_EXSTYLE, winLong);
-            return bitmap;
-        }
+        //    ShowWindow(hWnd, ShowWindowEnum.ShowNormalNoActivate);
+        //    SetWindowLong(hWnd, GWL_EXSTYLE, winLong);
+        //    return bitmap;
+        //}
 
         [StructLayout(LayoutKind.Sequential)]
         public struct RECT
