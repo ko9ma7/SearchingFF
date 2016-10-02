@@ -30,8 +30,6 @@ namespace Module.MobileMacro
         Dictionary<string, Bitmap> dictImage = new Dictionary<string, Bitmap>();
         Point PNull = new Point();
         int buyCount = 0;
-        Int64 profit = 0;
-        Int64 totalProfit = 0;
         Stopwatch sw = new Stopwatch();
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         public MobileMacroPanel()
@@ -250,27 +248,11 @@ namespace Module.MobileMacro
             }
             else if (ImageMatch(big, "모바일_이적시장_모두받기_받기"))
             {
-                string strProfit = "";
-                try
-                {
-                    strProfit = ParseOCR(GetOCR(big, dictRange["모바일_이적시장_금액확인"]));
-                    profit = Convert.ToInt64(strProfit);
-                    //Int64.TryParse(strProfit, out profit);
-                    UStatus(string.Format("판매대금 : {0}", profit.ToString()));
-                    totalProfit += profit;
-                }
-                catch (Exception)
-                {
-                    UStatus(string.Format("판매대금 계산 오류"));
-                    UStatus(strProfit);
-                }
-                finally
-                {
-                    Touch("모바일_이적시장_모두받기_받기_클릭", 5000);
-                    UStatus(string.Format("판매대금 수령 완료"));
-                    profit = 0;
-                    UStatus("판매 시작");
-                }
+
+                Touch("모바일_이적시장_모두받기_받기_클릭", 5000);
+                UStatus(string.Format("판매대금 수령 완료"));
+                UStatus("판매 시작");
+
             }
             else if (ImageMatch(big, "모바일_이적시장"))
             {
@@ -288,7 +270,7 @@ namespace Module.MobileMacro
                     UStatus("모든 선수 판매 등록 완료.");
                     Touch("모바일_상점_클릭");
                     UStatus("상점메뉴 이동");
-                    Touch("모바일_선수영입_클릭",2000);
+                    Touch("모바일_선수영입_클릭", 2000);
                     UStatus("선수영입메뉴 이동");
                 }
             }
@@ -309,7 +291,7 @@ namespace Module.MobileMacro
                             UStatus("10,000EP 이하의 선수로 판별. 판매 취소");
                             Touch("모바일_상점_클릭");
                             UStatus("상점메뉴 이동");
-                            Touch("모바일_선수영입_클릭",2000);
+                            Touch("모바일_선수영입_클릭", 2000);
                             UStatus("선수영입메뉴 이동");
                         }
                         else
@@ -324,7 +306,7 @@ namespace Module.MobileMacro
                                 UStatus("이적시장 등록초과");
                                 Touch("모바일_상점_클릭");
                                 UStatus("상점메뉴 이동");
-                                Touch("모바일_선수영입_클릭",2000);
+                                Touch("모바일_선수영입_클릭", 2000);
                                 UStatus("선수영입메뉴 이동");
                             }
                             Touch("모바일_이적시장_판매확인_클릭");
@@ -342,7 +324,7 @@ namespace Module.MobileMacro
                             UStatus("이적시장 등록초과");
                             Touch("모바일_상점_클릭");
                             UStatus("상점메뉴 이동");
-                            Touch("모바일_선수영입_클릭",2000);
+                            Touch("모바일_선수영입_클릭", 2000);
                             UStatus("선수영입메뉴 이동");
                         }
                         Touch("모바일_이적시장_판매확인_클릭");
@@ -360,7 +342,7 @@ namespace Module.MobileMacro
                         UStatus("이적시장 등록초과");
                         Touch("모바일_상점_클릭");
                         UStatus("상점메뉴 이동");
-                        Touch("모바일_선수영입_클릭",2000);
+                        Touch("모바일_선수영입_클릭", 2000);
                         UStatus("선수영입메뉴 이동");
                     }
                     Touch("모바일_이적시장_판매확인_클릭");
@@ -388,7 +370,7 @@ namespace Module.MobileMacro
                     buyCount = 0;
                     Touch("모바일_상점_클릭");
                     UStatus("이용권 구입완료. 상점메뉴 이동");
-                    Touch("모바일_선수영입_클릭",2000);
+                    Touch("모바일_선수영입_클릭", 2000);
                     UStatus("선수영입메뉴 이동");
                 }
             }
@@ -413,7 +395,6 @@ namespace Module.MobileMacro
                 Touch("모바일_상점_구입확인_클릭");
                 buyCount++;
                 UStatus("영입이용권 " + buyCount + "/10 구매완료");
-                totalProfit -= 500000;
             }
 
 
@@ -779,7 +760,7 @@ namespace Module.MobileMacro
             else
                 big = grayscale(big);
 
-            OcrApi.PathToEngine = Environment.CurrentDirectory + @"\CharRecog.dll";
+            OcrApi.PathToEngine = Environment.CurrentDirectory + @"\tesseract.dll";
             OcrApi api = OcrApi.Create();
             Languages[] lang = { Languages.English };
             api.Init(lang, null, OcrEngineMode.OEM_CUBE_ONLY);
