@@ -42,7 +42,7 @@ namespace Module.Handling
                 GetDisplaySize();
             }
         }
-        public Bitmap bmp { get; set; }
+        public Bitmap bmp;
 
         public Adb()
         {
@@ -116,24 +116,24 @@ namespace Module.Handling
                 displaySize = new Size(420, 700);
             }
         }
-        //public void Capture()
-        //{
-        //    try
-        //    {
-        //        adbProcess.StartInfo.Arguments = string.Format("-s {0} shell screencap", _device);
-        //        adbProcess.Start();
-        //        //adbProcess.StandardInput.WriteLine(string.Format("-s {0} shell screencap", _device));
-        //        //adbProcess.StandardInput.Close();
-        //        byte[] data;
-        //        using (MemoryStream memoryStream = new MemoryStream())
-        //        {
-        //            adbProcess.StandardOutput.BaseStream.CopyTo((Stream)memoryStream);
-        //            data = memoryStream.ToArray();
-        //        }
-        //        bmp = rawToBitmap(ReplaceByte(data), displaySize.Width, displaySize.Height);
-        //    }
-        //    catch { }
-        //}
+        public void Capture()
+        {
+            try
+            {
+                adbProcess.StartInfo.Arguments = string.Format("-s {0} shell screencap", _device);
+                adbProcess.Start();
+                //adbProcess.StandardInput.WriteLine(string.Format("-s {0} shell screencap", _device));
+                //adbProcess.StandardInput.Close();
+                byte[] data;
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    adbProcess.StandardOutput.BaseStream.CopyTo((Stream)memoryStream);
+                    data = memoryStream.ToArray();
+                }
+                bmp = rawToBitmap(ReplaceByte(data), displaySize.Width, displaySize.Height);
+            }
+            catch { }
+        }
         private Bitmap rawToBitmap(byte[] data, int width, int height)
         {
             GCHandle gcHandle = GCHandle.Alloc((object)data, GCHandleType.Pinned);

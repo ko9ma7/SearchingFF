@@ -5,7 +5,9 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
+using System.Security;
 using System.Text;
 
 namespace Module.Handling
@@ -24,6 +26,7 @@ namespace Module.Handling
             //return Print(GetHWND("fifazf"));
             //return Print(GetHWND("Nox"));
             bit = Print(hwnd);
+            bit = CropImage(bit, new Point(0, 35), bit.Width, bit.Height - 35);
         }
 
         public static IntPtr GetHWND(string procName)
@@ -111,12 +114,14 @@ namespace Module.Handling
             return matchings.Length > 0 ? matchings[0].Rectangle.Location : new Point();
         }
 
-        public static Rectangle searchBitmap(Bitmap smallBmp, Bitmap bigBmp, double tolerance, Point cropPoint = new Point(), int width = 0, int height = 0)
+        [HandleProcessCorruptedStateExceptionsAttribute]
+        [SecurityCritical]
+        public static Rectangle searchBitmap(Bitmap smallBmp, Bitmap bigBmp, double tolerance)
         {
             try
             {
-                if (cropPoint != new Point())
-                    bigBmp = CropImage(bigBmp, cropPoint, width, height);
+                //if (cropPoint != new Point())
+                //    bigBmp = CropImage(bigBmp, cropPoint, width, height);
 
                 //smallBmp = Imaging.ConvertFormat(smallBmp, PixelFormat.Format24bppRgb);
                 //bigBmp = width == 0 && height == 0 ? Imaging.ConvertFormat(bigBmp, PixelFormat.Format24bppRgb) : Imaging.ConvertFormat(CropImage(bigBmp, cropPoint, width, height), PixelFormat.Format24bppRgb);
@@ -225,7 +230,15 @@ namespace Module.Handling
 
                 return location;
             }
-            catch (Exception)
+            catch (System.AccessViolationException e)
+            {
+                return new Rectangle();
+            }
+            catch (InvalidOperationException e)
+            {
+                return new Rectangle();
+            }
+            catch (Exception e)
             {
                 return new Rectangle();
             }
@@ -233,12 +246,12 @@ namespace Module.Handling
         }
 
 
-        public static Point ImgMatch(Bitmap big, Bitmap small, ImageRange range)
+        public static Point ImgMatch(Bitmap big, Bitmap small)
         {
             //Point p = Imaging.ImageMatching(big, small, range.loc, range.width, range.height);
             //Stopwatch sw = new Stopwatch();
             //sw.Start();
-            Rectangle rc = Imaging.searchBitmap(small, big, 0.35, range.loc, range.width, range.height);
+            Rectangle rc = Imaging.searchBitmap(small, big, 0.28);
             //sw.Stop();
             //Console.WriteLine(sw.Elapsed);
             return rc.Location;

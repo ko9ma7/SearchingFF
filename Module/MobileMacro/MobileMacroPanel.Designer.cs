@@ -34,9 +34,6 @@
             this.btnCapture = new System.Windows.Forms.Button();
             this.chkReceive = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtSell = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtTrade = new System.Windows.Forms.TextBox();
             this.btnRefresh = new System.Windows.Forms.Button();
@@ -81,9 +78,6 @@
             this.panel3.Controls.Add(this.btnCapture);
             this.panel3.Controls.Add(this.chkReceive);
             this.panel3.Controls.Add(this.label6);
-            this.panel3.Controls.Add(this.label5);
-            this.panel3.Controls.Add(this.txtSell);
-            this.panel3.Controls.Add(this.label4);
             this.panel3.Controls.Add(this.label3);
             this.panel3.Controls.Add(this.txtTrade);
             this.panel3.Controls.Add(this.btnRefresh);
@@ -114,14 +108,13 @@
             this.btnCapture.TabIndex = 14;
             this.btnCapture.Text = "캡쳐";
             this.btnCapture.UseVisualStyleBackColor = true;
-            this.btnCapture.Visible = false;
             // 
             // chkReceive
             // 
             this.chkReceive.AutoSize = true;
             this.chkReceive.Checked = true;
             this.chkReceive.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkReceive.Location = new System.Drawing.Point(66, 104);
+            this.chkReceive.Location = new System.Drawing.Point(66, 73);
             this.chkReceive.Name = "chkReceive";
             this.chkReceive.Size = new System.Drawing.Size(48, 16);
             this.chkReceive.TabIndex = 13;
@@ -131,37 +124,11 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(7, 106);
+            this.label6.Location = new System.Drawing.Point(7, 75);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(53, 12);
             this.label6.TabIndex = 12;
             this.label6.Text = "대금수령";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(199, 75);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(29, 12);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "이상";
-            // 
-            // txtSell
-            // 
-            this.txtSell.Location = new System.Drawing.Point(66, 70);
-            this.txtSell.Name = "txtSell";
-            this.txtSell.Size = new System.Drawing.Size(127, 21);
-            this.txtSell.TabIndex = 10;
-            this.txtSell.Text = "10000";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(7, 75);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 12);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "판매등록";
             // 
             // label3
             // 
@@ -228,7 +195,7 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(211, 100);
+            this.btnStart.Location = new System.Drawing.Point(211, 69);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 23);
             this.btnStart.TabIndex = 0;
@@ -294,9 +261,6 @@
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.CheckBox chkReceive;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtSell;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtTrade;
         private System.Windows.Forms.Label label2;

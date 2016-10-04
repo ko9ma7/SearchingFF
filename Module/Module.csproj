@@ -23,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -46,6 +47,9 @@
     <Reference Include="AForge.Math, Version=2.2.5.0, Culture=neutral, PublicKeyToken=abba2e25397ee8c9, processorArchitecture=MSIL">
       <HintPath>..\packages\AForge.Math.2.2.5\lib\AForge.Math.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="LinqBridge">
+      <HintPath>..\SearchFIFASales\bin\Debug\LinqBridge.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=6.4.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -99,8 +103,6 @@
   <ItemGroup>
     <Folder Include="net45\" />
     <Folder Include="tessdata\" />
-    <Folder Include="x64\" />
-    <Folder Include="x86\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Mobile_player_scout_empty.png" />
@@ -151,7 +153,28 @@
     <None Include="Resources\Mobile_market_sellbutton.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\모바일_선수영입_일반선수.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\엄모바일_선수영입_프리미엄선수.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\모바일_트레이드_확인하기.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\모바일_메인화면.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\모바일_상점.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\모바일_상점_구매수.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\모바일_상점_구입완료.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\모바일_상점_구입하기.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\모바일_상점_이용권.png" />
@@ -163,34 +186,37 @@
     <None Include="Resources\모바일_선수영입_공간필요.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\모바일_이적시장_판매.png" />
+    <None Include="Resources\모바일_선수영입_이용권소진.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\모바일_이적시장_판매등록.png" />
+    <None Include="Resources\모바일_선수영입_프리미엄선수.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\모바일_이적시장.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\모바일_선수영입_이용권소진.png" />
+    <None Include="Resources\모바일_이적시장_등록초과.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\모바일_상점.png" />
+    <None Include="Resources\모바일_이적시장_모두받기.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\모바일_상점_구입완료.png" />
+    <None Include="Resources\모바일_이적시장_모두받기_받기.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\모바일_이적시장_판매.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\모바일_이적시장_판매대기.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\모바일_이적시장_판매등록.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\모바일_트레이드.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\모바일_트레이드_확인하기.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\모바일_트레이드_선수트레이드.png" />
+    <None Include="Resources\모바일_트레이드_재협상.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\모바일_트레이드_트레이드결과.png" />
@@ -199,31 +225,24 @@
     <None Include="Resources\모바일_트레이드_트레이드실행.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\모바일_이적시장_모두받기_받기.png" />
+    <None Include="Resources\모바일_트레이드_선수트레이드.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\모바일_이적시장_모두받기.png" />
+    <None Include="Resources\모바일_트레이드_계속진행.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\모바일_선수영입_일반선수.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\모바일_이적시장_등록초과.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\엄모바일_선수영입_프리미엄선수.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\모바일_상점_구입하기.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\모바일_상점_구매수.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\모바일_트레이드_재협상.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\모바일_선수영입_프리미엄선수.png" />
+    <Content Include="x64\liblept172.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x64\libtesseract304.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\liblept172.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\libtesseract304.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -145,9 +145,6 @@
   <data name="모바일_선수영입_이용권소진" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\모바일_선수영입_이용권소진.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="모바일_선수영입_일반선수" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\모바일_선수영입_일반선수.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="모바일_선수영입_프리미엄선수" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\모바일_선수영입_프리미엄선수.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -174,6 +171,9 @@
   </data>
   <data name="모바일_트레이드" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\모바일_트레이드.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="모바일_트레이드_계속진행" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\모바일_트레이드_계속진행.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="모바일_트레이드_선수트레이드" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\모바일_트레이드_선수트레이드.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

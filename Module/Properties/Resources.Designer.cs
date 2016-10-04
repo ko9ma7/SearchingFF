@@ -153,16 +153,6 @@ namespace Module.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap 모바일_선수영입_일반선수 {
-            get {
-                object obj = ResourceManager.GetObject("모바일_선수영입_일반선수", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
-        /// </summary>
         internal static System.Drawing.Bitmap 모바일_선수영입_프리미엄선수 {
             get {
                 object obj = ResourceManager.GetObject("모바일_선수영입_프리미엄선수", resourceCulture);
@@ -246,6 +236,16 @@ namespace Module.Properties {
         internal static System.Drawing.Bitmap 모바일_트레이드 {
             get {
                 object obj = ResourceManager.GetObject("모바일_트레이드", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap 모바일_트레이드_계속진행 {
+            get {
+                object obj = ResourceManager.GetObject("모바일_트레이드_계속진행", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

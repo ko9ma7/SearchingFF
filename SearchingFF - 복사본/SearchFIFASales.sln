@@ -29,6 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{AF31F4
 		Images\모바일_이적시장_판매대기.png = Images\모바일_이적시장_판매대기.png
 		Images\모바일_이적시장_판매등록.png = Images\모바일_이적시장_판매등록.png
 		Images\모바일_트레이드.png = Images\모바일_트레이드.png
+		Images\모바일_트레이드_계속진행.png = Images\모바일_트레이드_계속진행.png
 		Images\모바일_트레이드_선수트레이드.png = Images\모바일_트레이드_선수트레이드.png
 		Images\모바일_트레이드_재협상.png = Images\모바일_트레이드_재협상.png
 		Images\모바일_트레이드_트레이드결과.png = Images\모바일_트레이드_트레이드결과.png

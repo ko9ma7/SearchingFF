@@ -61,7 +61,7 @@ namespace Module.MobileMacro
             Bitmap big = Imaging.bit;
             //mAdb.Capture();
             //Bitmap big = mAdb.GetBitmap();
-            Thread.Sleep(500);
+            //Thread.Sleep(500);
             //big.Save("C:\\testest.png");
             if (ImageMatch(big, "모바일_선수영입"))
             {
@@ -135,6 +135,10 @@ namespace Module.MobileMacro
                     if (chkReceive.Checked)
                         Touch("모바일_이적시장_판매목록_클릭", 600);
                 }
+            }
+            else if (ImageMatch(big, "모바일_트레이드_계속진행"))
+            {
+                Touch("모바일_트레이드_계속진행취소_클릭");
             }
             else if (ImageMatch(big, "모바일_트레이드_확인하기"))
             {
@@ -227,7 +231,7 @@ namespace Module.MobileMacro
 
                 Touch("모바일_트레이드_선수1_클릭");
                 Touch("모바일_트레이드_트레이드실행2_클릭");
-                UStatus("트레이드 완료");
+                //UStatus("트레이드 완료");
             }
             else if (ImageMatch(big, "모바일_트레이드_재협상"))
             {
@@ -580,6 +584,7 @@ namespace Module.MobileMacro
             dictPoint.Add("모바일_트레이드_완료_클릭", new Point(30, 25));
             dictPoint.Add("모바일_트레이드_초기화_클릭", new Point(80, 170));
             dictPoint.Add("모바일_트레이드_재협상취소_클릭", new Point(110, 340));
+            dictPoint.Add("모바일_트레이드_계속진행취소_클릭", new Point(68, 285));
             
 
 
@@ -663,7 +668,6 @@ namespace Module.MobileMacro
                 btnRefresh.Enabled = false;
                 cboADBList.Enabled = false;
                 chkReceive.Enabled = false;
-                txtSell.Enabled = false;
                 txtTrade.Enabled = false;
 
                 Imaging.GetHWND();
@@ -679,7 +683,6 @@ namespace Module.MobileMacro
                 btnRefresh.Enabled = true;
                 cboADBList.Enabled = true;
                 chkReceive.Enabled = true;
-                txtSell.Enabled = true;
                 txtTrade.Enabled = true;
                 
                 btnStart.Text = "시작";
@@ -809,6 +812,8 @@ namespace Module.MobileMacro
 
         private string GetOCR(Bitmap big, Imaging.ImageRange range, bool flag = true)
         {
+            
+            
             Point p = new Point();
             int width = 0;
             int height = 0;
@@ -826,6 +831,9 @@ namespace Module.MobileMacro
             else
                 big = grayscale(big);
 
+            //tessnet2.Tesseract api = new tessnet2.Tesseract();
+            
+            //api.Init()
             OcrApi.PathToEngine = Environment.CurrentDirectory + @"\tesseract.dll";
             OcrApi api = OcrApi.Create();
             Languages[] lang = { Languages.English };
@@ -841,6 +849,7 @@ namespace Module.MobileMacro
             System.GC.WaitForPendingFinalizers();
 
             return plainText;
+            //return "";
         }
 
         //private void Monitoring()
