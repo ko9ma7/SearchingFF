@@ -59,14 +59,8 @@ namespace Module.MobileMacro
         {            
             Imaging.GetScreen();
             Bitmap big = Imaging.bit;
-            if (ImageMatch(big, "모바일_메인화면"))
-            {
-                Touch("모바일_상점_클릭");
-                UStatus("상점메뉴 이동");
-                Touch("모바일_선수영입_클릭",4000);
-                UStatus("선수영입메뉴 이동");
-            }
-            else if (ImageMatch(big, "모바일_선수영입"))
+            
+            if (ImageMatch(big, "모바일_선수영입"))
             {
                 if (ImageMatch(big, "모바일_선수영입_이용권소진"))
                 {
@@ -75,31 +69,16 @@ namespace Module.MobileMacro
                     Touch("모바일_단품_클릭");
                     UStatus("단품메뉴 이동");
                 }
+                else if (ImageMatch(big, "모바일_선수영입_프리미엄선수"))
+                {
+                    Touch("모바일_선수영입_일반선수_클릭", 1000);
+                    Touch("모바일_선수영입_일반선수_클릭", 1000);
+                    Touch("모바일_선수영입_일반선수_클릭", 1000);
+                }
                 else
                 {
-
-                    if (ImageMatch(big, "모바일_선수영입_프리미엄선수"))
-                    {
-                        Touch("모바일_선수영입_일반선수_클릭", 0);
-                        Touch("모바일_선수영입_일반선수_클릭", 0);
-                        Touch("모바일_선수영입_일반선수_클릭", 0);
-                    }
-                    else
-                    {
-                        Touch("모바일_선수영입_영입_클릭", 4500);
-                    }
-                    //UStatus("선수영입 완료");
+                    Touch("모바일_선수영입_영입_클릭", 4500);
                 }
-
-            }
-            else if (ImageMatch(big, "모바일_선수영입_공간필요"))
-            {
-                Touch("모바일_선수영입_공간필요닫기_클릭");
-                UStatus("선수 자리 부족");
-                Touch("모바일_구단관리_클릭");
-                UStatus("구단관리메뉴 이동");
-                Touch("모바일_트레이드_클릭");
-                UStatus("트레이드메뉴 이동");
 
             }
             else if (ImageMatch(big, "모바일_트레이드"))
@@ -408,6 +387,23 @@ namespace Module.MobileMacro
                 buyCount++;
                 UStatus("영입이용권 " + buyCount + "/10 구매완료");
             }
+            else if (ImageMatch(big, "모바일_선수영입_공간필요"))
+            {
+                Touch("모바일_선수영입_공간필요닫기_클릭");
+                UStatus("선수 자리 부족");
+                Touch("모바일_구단관리_클릭");
+                UStatus("구단관리메뉴 이동");
+                Touch("모바일_트레이드_클릭");
+                UStatus("트레이드메뉴 이동");
+
+            }
+            if (ImageMatch(big, "모바일_메인화면"))
+            {
+                Touch("모바일_상점_클릭");
+                UStatus("상점메뉴 이동");
+                Touch("모바일_선수영입_클릭");
+                UStatus("선수영입메뉴 이동");
+            }
 
 
             //GetOCR(big, new Point(170, 436), 201, 36);
@@ -452,7 +448,7 @@ namespace Module.MobileMacro
 
             range = new Imaging.ImageRange(207, 127, 277, 69);
             dictRange.Add("모바일_선수영입_일반선수", range);
-            range = new Imaging.ImageRange(175, 233, 138, 163);
+            range = new Imaging.ImageRange(70, 645, 350, 70);
             dictRange.Add("모바일_선수영입_프리미엄선수", range);
             range = new Imaging.ImageRange(30, 320, 455, 75);
             dictRange.Add("모바일_선수영입_공간필요", range);
