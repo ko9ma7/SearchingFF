@@ -38,7 +38,7 @@ namespace SearchFIFASales
 
             if (revision > programRevision)
             {
-                MessageBox.Show("새로운 업데이트가 있습니다. \nUpdate.exe를 실행해주세요.", "업데이트 알림", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("새로운 업데이트가 있습니다. \nUpdate.exe를 꼭 관리자권한으로 실행해주세요.", "업데이트 알림", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 #else

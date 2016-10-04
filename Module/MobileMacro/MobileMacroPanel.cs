@@ -63,7 +63,7 @@ namespace Module.MobileMacro
             {
                 Touch("모바일_상점_클릭");
                 UStatus("상점메뉴 이동");
-                Touch("모바일_선수영입_클릭",2000);
+                Touch("모바일_선수영입_클릭",4000);
                 UStatus("선수영입메뉴 이동");
             }
             else if (ImageMatch(big, "모바일_선수영입"))
@@ -77,12 +77,17 @@ namespace Module.MobileMacro
                 }
                 else
                 {
+
                     if (ImageMatch(big, "모바일_선수영입_프리미엄선수"))
                     {
-                        Touch("모바일_선수영입_일반선수_클릭");
+                        Touch("모바일_선수영입_일반선수_클릭", 0);
+                        Touch("모바일_선수영입_일반선수_클릭", 0);
+                        Touch("모바일_선수영입_일반선수_클릭", 0);
                     }
                     else
+                    {
                         Touch("모바일_선수영입_영입_클릭", 4500);
+                    }
                     //UStatus("선수영입 완료");
                 }
 
@@ -111,7 +116,7 @@ namespace Module.MobileMacro
 
                         if (flag)
                         {
-                            Touch("모바일_트레이드_재료선수" + i.ToString() + "_클릭");
+                            Touch("모바일_트레이드_재료선수" + i.ToString() + "_클릭", 0);
                         }
                         else
                         {
@@ -154,86 +159,93 @@ namespace Module.MobileMacro
             }
             else if (ImageMatch(big, "모바일_트레이드_선수트레이드"))
             {
-
-                string one1 = ParseOCR(GetOCR(big, dictRange["모바일_트레이드_선수1가격_1"], false));
-                string one2 = ParseOCR(GetOCR(big, dictRange["모바일_트레이드_선수1가격_2"], false));
-                string two1 = ParseOCR(GetOCR(big, dictRange["모바일_트레이드_선수2가격_1"], false));
-                string two2 = ParseOCR(GetOCR(big, dictRange["모바일_트레이드_선수2가격_2"], false));
-                string three1 = ParseOCR(GetOCR(big, dictRange["모바일_트레이드_선수3가격_1"], false));
-                string three2 = ParseOCR(GetOCR(big, dictRange["모바일_트레이드_선수3가격_2"], false));
-
-
-
-                one1 = one1 == string.Empty ? "0" : one1;
-                one2 = one2 == string.Empty ? "0" : one2;
-                two1 = two1 == string.Empty ? "0" : two1;
-                two2 = two2 == string.Empty ? "0" : two2;
-                three1 = three1 == string.Empty ? "0" : three1;
-                three2 = three2 == string.Empty ? "0" : three2;
-                Int64 one = 0;
-                Int64 two = 0;
-                Int64 three = 0;
-                Int64 one11 = 0;
-                Int64 one22 = 0;
-                Int64 two11 = 0;
-                Int64 two22 = 0;
-                Int64 three11 = 0;
-                Int64 three22 = 0;
-                try
+                if (ImageMatch(big, "모바일_트레이드_재협상"))
                 {
-                    Int64.TryParse(one1, out one11);
-                    Int64.TryParse(one2, out one22);
-                    Int64.TryParse(two1, out two11);
-                    Int64.TryParse(two2, out two22);
-                    Int64.TryParse(three1, out three11);
-                    Int64.TryParse(three2, out three22);
-
-                    UStatus("트레이드 결과 : ");
-                    one = one11 + one22;
-                    UStatus(string.Format("1번선수 EP합계 : {0}", one.ToString()));
-                    two = two11 + two22;
-                    UStatus(string.Format("2번선수 EP합계 : {0}", two.ToString()));
-                    three = three11 + three22;
-                    UStatus(string.Format("3번선수 EP합계 : {0}", three.ToString()));
+                    Touch("모바일_트레이드_재협상취소_클릭");
                 }
-                catch (Exception)
+                else
                 {
-                    UStatus(one1 + "+" + one2);
-                    UStatus(two1 + "+" + two2);
-                    UStatus(three1 + "+" + three2);
-                }
-                finally
-                {
-                    Dictionary<string, Int64> dictPrice = new Dictionary<string, long>();
-                    dictPrice.Add("one", one);
-                    dictPrice.Add("two", two);
-                    dictPrice.Add("three", three);
 
-                    foreach (KeyValuePair<string, Int64> item in dictPrice.OrderByDescending(k => k.Value))
+                    string one1 = ParseOCR(GetOCR(big, dictRange["모바일_트레이드_선수1가격_1"], false));
+                    string one2 = ParseOCR(GetOCR(big, dictRange["모바일_트레이드_선수1가격_2"], false));
+                    string two1 = ParseOCR(GetOCR(big, dictRange["모바일_트레이드_선수2가격_1"], false));
+                    string two2 = ParseOCR(GetOCR(big, dictRange["모바일_트레이드_선수2가격_2"], false));
+                    string three1 = ParseOCR(GetOCR(big, dictRange["모바일_트레이드_선수3가격_1"], false));
+                    string three2 = ParseOCR(GetOCR(big, dictRange["모바일_트레이드_선수3가격_2"], false));
+
+
+
+                    one1 = one1 == string.Empty ? "0" : one1;
+                    one2 = one2 == string.Empty ? "0" : one2;
+                    two1 = two1 == string.Empty ? "0" : two1;
+                    two2 = two2 == string.Empty ? "0" : two2;
+                    three1 = three1 == string.Empty ? "0" : three1;
+                    three2 = three2 == string.Empty ? "0" : three2;
+                    Int64 one = 0;
+                    Int64 two = 0;
+                    Int64 three = 0;
+                    Int64 one11 = 0;
+                    Int64 one22 = 0;
+                    Int64 two11 = 0;
+                    Int64 two22 = 0;
+                    Int64 three11 = 0;
+                    Int64 three22 = 0;
+                    try
                     {
-                        switch (item.Key)
-                        {
-                            case "one":
-                                Touch("모바일_트레이드_선수1_클릭");
-                                UStatus("1번선수 선택");
-                                break;
-                            case "two":
-                                Touch("모바일_트레이드_선수2_클릭");
-                                UStatus("2번선수 선택");
-                                break;
-                            case "three":
-                                Touch("모바일_트레이드_선수3_클릭");
-                                UStatus("3번선수 선택");
-                                break;
-                            default:
-                                Touch("모바일_트레이드_선수1_클릭");
-                                UStatus("1번선수 선택");
-                                break;
-                        }
-                        break;
-                    }
+                        Int64.TryParse(one1, out one11);
+                        Int64.TryParse(one2, out one22);
+                        Int64.TryParse(two1, out two11);
+                        Int64.TryParse(two2, out two22);
+                        Int64.TryParse(three1, out three11);
+                        Int64.TryParse(three2, out three22);
 
-                    Touch("모바일_트레이드_트레이드실행2_클릭");
+                        UStatus("트레이드 결과 : ");
+                        one = one11 + one22;
+                        UStatus(string.Format("1번선수 EP합계 : {0}", one.ToString()));
+                        two = two11 + two22;
+                        UStatus(string.Format("2번선수 EP합계 : {0}", two.ToString()));
+                        three = three11 + three22;
+                        UStatus(string.Format("3번선수 EP합계 : {0}", three.ToString()));
+                    }
+                    catch (Exception)
+                    {
+                        UStatus(one1 + "+" + one2);
+                        UStatus(two1 + "+" + two2);
+                        UStatus(three1 + "+" + three2);
+                    }
+                    finally
+                    {
+                        Dictionary<string, Int64> dictPrice = new Dictionary<string, long>();
+                        dictPrice.Add("one", one);
+                        dictPrice.Add("two", two);
+                        dictPrice.Add("three", three);
+
+                        foreach (KeyValuePair<string, Int64> item in dictPrice.OrderByDescending(k => k.Value))
+                        {
+                            switch (item.Key)
+                            {
+                                case "one":
+                                    Touch("모바일_트레이드_선수1_클릭");
+                                    UStatus("1번선수 선택");
+                                    break;
+                                case "two":
+                                    Touch("모바일_트레이드_선수2_클릭");
+                                    UStatus("2번선수 선택");
+                                    break;
+                                case "three":
+                                    Touch("모바일_트레이드_선수3_클릭");
+                                    UStatus("3번선수 선택");
+                                    break;
+                                default:
+                                    Touch("모바일_트레이드_선수1_클릭");
+                                    UStatus("1번선수 선택");
+                                    break;
+                            }
+                            break;
+                        }
+
+                        Touch("모바일_트레이드_트레이드실행2_클릭");
+                    }
                 }
 
             }
@@ -483,6 +495,8 @@ namespace Module.MobileMacro
             dictRange.Add("모바일_트레이드_선수3가격_2", range);
             range = new Imaging.ImageRange(163, 63, 165, 41);
             dictRange.Add("모바일_트레이드_트레이드결과", range);
+            range = new Imaging.ImageRange(100, 590, 295, 238);
+            dictRange.Add("모바일_트레이드_재협상", range);
             
 
 
@@ -527,13 +541,14 @@ namespace Module.MobileMacro
             dictPoint.Add("모바일_트레이드_재료선수7_클릭", new Point(222, 665));
             dictPoint.Add("모바일_트레이드_재료선수8_클릭", new Point(222, 710));
             dictPoint.Add("모바일_트레이드_트레이드실행_클릭", new Point(300, 280));
-            dictPoint.Add("모바일_트레이드_확인하기_클릭", new Point(155, 745));
+            dictPoint.Add("모바일_트레이드_확인하기_클릭", new Point(395, 745));
             dictPoint.Add("모바일_트레이드_선수1_클릭", new Point(160, 300));
             dictPoint.Add("모바일_트레이드_선수2_클릭", new Point(160, 420));
             dictPoint.Add("모바일_트레이드_선수3_클릭", new Point(160, 525));
             dictPoint.Add("모바일_트레이드_트레이드실행2_클릭", new Point(300, 755));
             dictPoint.Add("모바일_트레이드_완료_클릭", new Point(34, 46));
             dictPoint.Add("모바일_트레이드_초기화_클릭", new Point(120, 285));
+            dictPoint.Add("모바일_트레이드_재협상취소_클릭", new Point(165, 580));
             
 
 
@@ -732,6 +747,18 @@ namespace Module.MobileMacro
                 txtLog.AppendText("[" + GetServerTime().ToString("MM-dd HH:mm:ss") + "] " + msg);
                 txtLog.AppendText("\r\n");
                 txtLog.ScrollToCaret();
+
+                string[] tempStr = txtLog.Text.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+                if (tempStr.Length > 100)
+                {
+                    StringBuilder sb = new StringBuilder();
+
+                    for (int i = tempStr.Length - 99; i < tempStr.Length; i++)
+                    {
+                        sb.AppendLine(tempStr[i]);
+                    }
+                    txtLog.Text = sb.ToString();
+                }
             }));
         }
 

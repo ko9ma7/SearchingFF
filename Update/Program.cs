@@ -1,5 +1,4 @@
-﻿using MCF.Classes.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
@@ -9,6 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Update.Data;
 
 namespace Update
 {
@@ -16,7 +16,6 @@ namespace Update
     {
         static string retVal = "";
         static List<FileInfo> fileList = new List<FileInfo>();
-        static string mainUrl = "http://blog.naver.com";
         private static CookieContainer _cookie;
         public static CookieContainer Cookie
         {
