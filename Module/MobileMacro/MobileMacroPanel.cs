@@ -1164,7 +1164,7 @@ namespace Module.MobileMacro
             var doc = new MODI.Document();
             doc.Create(tmpFile + ".png");
 
-            Regex reg = new Regex(@"[0-9]+");
+            //Regex reg = new Regex(@"[^\d]+");
             try
             {
                 doc.OCR(MODI.MiLANGUAGES.miLANG_ENGLISH, true, true);
@@ -1200,8 +1200,8 @@ namespace Module.MobileMacro
             }
 
             Int32 tryCheck = 0;
-            Match m = reg.Match(text.Replace(" ", "").Replace(",", "").Replace(".", "").Trim());
-            Int32.TryParse(m.Value, out tryCheck);
+            text = Regex.Replace(text.Replace(" ", "").Replace(",", "").Replace(".", "").Trim(), @"[^\d]", "");
+            Int32.TryParse(text, out tryCheck);
             if (tryCheck == 0 || tryCheck < 1000)
             {
                     try
@@ -1242,14 +1242,14 @@ namespace Module.MobileMacro
                     }
             }
 
-            m = reg.Match(text.Replace(" ", "").Replace(",", "").Replace(".", "").Trim());
+            text = Regex.Replace(text.Replace(" ", "").Replace(",", "").Replace(".", "").Trim(), @"[^\d]", "");
             doc.Close();
             doc = null;
             bmp.Dispose();
             bmp = null;
             System.GC.Collect(0, GCCollectionMode.Forced);
             System.GC.WaitForPendingFinalizers();
-            return m.Value;
+            return text;
             //return "";
         }
 
