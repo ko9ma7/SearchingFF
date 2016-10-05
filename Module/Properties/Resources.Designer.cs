@@ -73,6 +73,26 @@ namespace Module.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap 모바일_메인화면_감독선택 {
+            get {
+                object obj = ResourceManager.GetObject("모바일_메인화면_감독선택", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap 모바일_메인화면_게임종료 {
+            get {
+                object obj = ResourceManager.GetObject("모바일_메인화면_게임종료", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap 모바일_상점 {
             get {
                 object obj = ResourceManager.GetObject("모바일_상점", resourceCulture);
@@ -116,6 +136,16 @@ namespace Module.Properties {
         internal static System.Drawing.Bitmap 모바일_상점_이용권 {
             get {
                 object obj = ResourceManager.GetObject("모바일_상점_이용권", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap 모바일_상점_이용권선택 {
+            get {
+                object obj = ResourceManager.GetObject("모바일_상점_이용권선택", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

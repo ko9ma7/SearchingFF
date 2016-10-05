@@ -52,6 +52,12 @@ namespace Module.Handling
             adbProcess.StartInfo.CreateNoWindow = true;
         }
 
+        public void Escape()
+        {
+            string comm = string.Format("-s {0} shell input keyevent KEYCODE_BACK", _device);
+            Command(comm);
+        }
+
         public void Touch(Point p)
         {
             string comm = string.Format("-s {0} shell input tap {1} {2}", _device, p.X, p.Y);

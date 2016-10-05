@@ -48,15 +48,9 @@
       <HintPath>..\packages\AForge.Math.2.2.5\lib\AForge.Math.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="LinqBridge">
-      <HintPath>..\SearchFIFASales\bin\Debug\LinqBridge.dll</HintPath>
-    </Reference>
     <Reference Include="MySql.Data, Version=6.4.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\MySql.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="Patagames.Ocr">
-      <HintPath>net45\Patagames.Ocr.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -100,10 +94,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="net45\" />
-    <Folder Include="tessdata\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\Mobile_player_scout_empty.png" />
   </ItemGroup>
@@ -168,9 +159,6 @@
     <None Include="Resources\모바일_상점.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\모바일_상점_구매수.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\모바일_상점_구입완료.png" />
   </ItemGroup>
   <ItemGroup>
@@ -231,18 +219,10 @@
     <None Include="Resources\모바일_트레이드_계속진행.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="x64\liblept172.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="x64\libtesseract304.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="x86\liblept172.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="x86\libtesseract304.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <None Include="Resources\모바일_상점_이용권선택.png" />
+    <None Include="Resources\모바일_상점_구매수.png" />
+    <None Include="Resources\모바일_메인화면_게임종료.png" />
+    <None Include="Resources\모바일_메인화면_감독선택.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

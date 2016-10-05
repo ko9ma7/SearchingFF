@@ -34,10 +34,7 @@
             this.btnCapture = new System.Windows.Forms.Button();
             this.chkReceive = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtTrade = new System.Windows.Forms.TextBox();
             this.btnRefresh = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cboADBList = new System.Windows.Forms.ComboBox();
             this.btnFind = new System.Windows.Forms.Button();
@@ -45,6 +42,9 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.txtLog = new System.Windows.Forms.RichTextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cboSupervisor = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -74,14 +74,14 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.cboSupervisor);
+            this.panel3.Controls.Add(this.label2);
+            this.panel3.Controls.Add(this.label4);
             this.panel3.Controls.Add(this.lbAuth);
             this.panel3.Controls.Add(this.btnCapture);
             this.panel3.Controls.Add(this.chkReceive);
             this.panel3.Controls.Add(this.label6);
-            this.panel3.Controls.Add(this.label3);
-            this.panel3.Controls.Add(this.txtTrade);
             this.panel3.Controls.Add(this.btnRefresh);
-            this.panel3.Controls.Add(this.label2);
             this.panel3.Controls.Add(this.label1);
             this.panel3.Controls.Add(this.cboADBList);
             this.panel3.Controls.Add(this.btnFind);
@@ -108,6 +108,7 @@
             this.btnCapture.TabIndex = 14;
             this.btnCapture.Text = "캡쳐";
             this.btnCapture.UseVisualStyleBackColor = true;
+            this.btnCapture.Visible = false;
             // 
             // chkReceive
             // 
@@ -130,23 +131,6 @@
             this.label6.TabIndex = 12;
             this.label6.Text = "대금수령";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(199, 43);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(29, 12);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "이하";
-            // 
-            // txtTrade
-            // 
-            this.txtTrade.Location = new System.Drawing.Point(66, 39);
-            this.txtTrade.Name = "txtTrade";
-            this.txtTrade.Size = new System.Drawing.Size(127, 21);
-            this.txtTrade.TabIndex = 6;
-            this.txtTrade.Text = "20000";
-            // 
             // btnRefresh
             // 
             this.btnRefresh.Location = new System.Drawing.Point(211, 7);
@@ -155,15 +139,6 @@
             this.btnRefresh.TabIndex = 4;
             this.btnRefresh.Text = "새로고침";
             this.btnRefresh.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 44);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 12);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "트레이드";
             // 
             // label1
             // 
@@ -230,6 +205,36 @@
             this.txtLog.TabIndex = 1;
             this.txtLog.Text = "";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(7, 100);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(61, 12);
+            this.label4.TabIndex = 18;
+            this.label4.Text = "러닝타임 :";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(7, 45);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(53, 12);
+            this.label2.TabIndex = 19;
+            this.label2.Text = "감독설정";
+            // 
+            // cboSupervisor
+            // 
+            this.cboSupervisor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSupervisor.FormattingEnabled = true;
+            this.cboSupervisor.Items.AddRange(new object[] {
+            "1번감독",
+            "2번감독"});
+            this.cboSupervisor.Location = new System.Drawing.Point(66, 40);
+            this.cboSupervisor.Name = "cboSupervisor";
+            this.cboSupervisor.Size = new System.Drawing.Size(139, 20);
+            this.cboSupervisor.TabIndex = 20;
+            // 
             // MobileMacroPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -261,12 +266,12 @@
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.CheckBox chkReceive;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtTrade;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.RichTextBox txtLog;
         private System.Windows.Forms.Button btnCapture;
         public System.Windows.Forms.Label lbAuth;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cboSupervisor;
+        private System.Windows.Forms.Label label2;
     }
 }

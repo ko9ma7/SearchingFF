@@ -12,11 +12,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{AF31F434-5D55-437F-8126-3216C5DF4B1C}"
 	ProjectSection(SolutionItems) = preProject
 		Images\모바일_메인화면.png = Images\모바일_메인화면.png
+		Images\모바일_메인화면_감독선택.png = Images\모바일_메인화면_감독선택.png
+		Images\모바일_메인화면_게임종료.png = Images\모바일_메인화면_게임종료.png
 		Images\모바일_상점.png = Images\모바일_상점.png
 		Images\모바일_상점_구매수.png = Images\모바일_상점_구매수.png
 		Images\모바일_상점_구입완료.png = Images\모바일_상점_구입완료.png
 		Images\모바일_상점_구입하기.png = Images\모바일_상점_구입하기.png
 		Images\모바일_상점_이용권.png = Images\모바일_상점_이용권.png
+		Images\모바일_상점_이용권선택.png = Images\모바일_상점_이용권선택.png
 		Images\모바일_선수영입.png = Images\모바일_선수영입.png
 		Images\모바일_선수영입_공간필요.png = Images\모바일_선수영입_공간필요.png
 		Images\모바일_선수영입_이용권소진.png = Images\모바일_선수영입_이용권소진.png

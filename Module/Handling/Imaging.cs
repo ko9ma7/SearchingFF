@@ -14,19 +14,21 @@ namespace Module.Handling
 {
     public static class Imaging
     {
-        public static Bitmap bit;
+        //public static Bitmap bit;
         public static IntPtr hwnd = IntPtr.Zero;
 
         public static void GetHWND()
         {
             hwnd = GetHWND("Nox");
         }
-        public static void GetScreen()
+        public static Bitmap GetScreen()
         {
             //return Print(GetHWND("fifazf"));
             //return Print(GetHWND("Nox"));
-            bit = Print(hwnd);
+            Bitmap bit = Print(hwnd);
             bit = CropImage(bit, new Point(0, 35), bit.Width, bit.Height - 35);
+
+            return bit;
         }
 
         public static IntPtr GetHWND(string procName)
@@ -82,7 +84,7 @@ namespace Module.Handling
             }
             catch (Exception)
             {
-                return new Bitmap(0 , 0);
+                return new Bitmap(10, 10);
             }
 
         }
@@ -251,7 +253,7 @@ namespace Module.Handling
             //Point p = Imaging.ImageMatching(big, small, range.loc, range.width, range.height);
             //Stopwatch sw = new Stopwatch();
             //sw.Start();
-            Rectangle rc = Imaging.searchBitmap(small, big, 0.28);
+            Rectangle rc = Imaging.searchBitmap(small, big, 0.2);
             //sw.Stop();
             //Console.WriteLine(sw.Elapsed);
             return rc.Location;
