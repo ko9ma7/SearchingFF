@@ -17,6 +17,9 @@ using System.Resources;
 using System.Globalization;
 using System.Collections;
 using MCF.Classes.Data;
+using MODI;
+using System.Drawing.Imaging;
+using System.Text.RegularExpressions;
 
 
 namespace Module.MobileMacro
@@ -33,8 +36,8 @@ namespace Module.MobileMacro
         Stopwatch sw = new Stopwatch();
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         bool runFlag = false;
-        MacroStatus status = MacroStatus.Main;
-        int errorCount = 70;
+        MacroStatus status = MacroStatus.TradeMarket;
+        int errorCount = 0;
 
         private enum MacroStatus
         {
@@ -154,7 +157,11 @@ namespace Module.MobileMacro
             //dictRange.Add("모바일_이적시장_등록초과", range);
             //range = new Imaging.ImageRange(25, 675, 433, 81);
             //dictRange.Add("모바일_이적시장_판매대기", range);
-            range = new Imaging.ImageRange(130, 215, 160, 25);
+            //range = new Imaging.ImageRange(255, 220, 64, 20); // 리스트화면 가격
+            //range = new Imaging.ImageRange(174, 218, 110, 18); // 등록화면 가격
+            //range = new Imaging.ImageRange(131, 215, 159, 27); // 등록화면 가격
+            //range = new Imaging.ImageRange(230, 290, 55, 18); // 등록화면 하한가
+            range = new Imaging.ImageRange(207, 220, 75, 18); // 등록화면 하한가
             dictRange.Add("모바일_이적시장_판매가격", range);
             //range = new Imaging.ImageRange(355, 300, 105, 37);
             //dictRange.Add("모바일_이적시장_모두받기", range);
@@ -590,8 +597,22 @@ namespace Module.MobileMacro
 
             if (ImageMatch(big, "모바일_이적시장_판매등록"))
             {
-                Touch("모바일_이적시장_판매2_클릭");
-                Touch("모바일_이적시장_판매확인_클릭");
+                string ocr = GetOCR(big, dictRange["모바일_이적시장_판매가격"], true).Replace(".", "").Replace(",", "").Replace(" ","").Trim();
+                int intOCR = 0;
+                Int32.TryParse(ocr, out intOCR);
+                Console.WriteLine(ocr);
+                if (intOCR > 30000 || intOCR < 1000)
+                {
+                    Touch("모바일_이적시장_판매2_클릭");
+                    Touch("모바일_이적시장_판매확인_클릭");
+                    UStatus("선수 가격 : " + intOCR + " EP 등록완료.");
+                }
+                else
+                {
+                    Touch("모바일_이적시장_취소_클릭");
+                    UStatus("모든 선수 판매 등록 완료.");
+                    MobileGo_Scout();
+                }
                 flag = true;
             }
 
@@ -872,27 +893,27 @@ namespace Module.MobileMacro
                     switch (status)
                     {
                         case MacroStatus.Main:
-                            t = new Thread(MainMacro, Int32.MaxValue);
+                            t = new Thread(MainMacro);
                             t.Start();
                             break;
                         case MacroStatus.Trade:
-                            t = new Thread(TradeMacro, Int32.MaxValue);
+                            t = new Thread(TradeMacro);
                             t.Start();
                             break;
                         case MacroStatus.Scout:
-                            t = new Thread(ScoutMacro, Int32.MaxValue);
+                            t = new Thread(ScoutMacro);
                             t.Start();
                             break;
                         case MacroStatus.Shop:
-                            t = new Thread(ShopMacro, Int32.MaxValue);
+                            t = new Thread(ShopMacro);
                             t.Start();
                             break;
                         case MacroStatus.TradeMarket:
-                            t = new Thread(TradeMarketMacro, Int32.MaxValue);
+                            t = new Thread(TradeMarketMacro);
                             t.Start();
                             break;
                         default:
-                            t = new Thread(MainMacro, Int32.MaxValue);
+                            t = new Thread(MainMacro);
                             t.Start();
                             break;
                     }
@@ -910,7 +931,7 @@ namespace Module.MobileMacro
             mAdb.device = cboADBList.Text;
             mAdb.Capture();
             
-            Clipboard.SetImage((Image)mAdb.GetBitmap());
+            Clipboard.SetImage((System.Drawing.Image)mAdb.GetBitmap());
         }
 
         void btnRefresh_Click(object sender, EventArgs e)
@@ -1091,48 +1112,162 @@ namespace Module.MobileMacro
             return nowTIme;
         }
 
-        //private string GetOCR(Bitmap big, Imaging.ImageRange range, bool flag = true)
-        //{
-            
-            
-        //    Point p = new Point();
-        //    int width = 0;
-        //    int height = 0;
+        private string GetOCR(Bitmap big, Imaging.ImageRange range, bool flag = true)
+        {
+            Point p = new Point();
+            int width = 0;
+            int height = 0;
 
-        //    p.X = range.loc.X;
-        //    p.Y = range.loc.Y;
-        //    width = range.width;
-        //    height = range.height;
+            p.X = range.loc.X;
+            p.Y = range.loc.Y;
+            width = range.width;
+            height = range.height;
 
-        //    big = Imaging.CropImage(big, p, width, height);
-        //    big = Imaging.ConvertFormat(big, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
-        //    if (!flag)
-        //        big = Imaging.MakeGrayscale3(big);
-        //        //;
-        //    else
-        //        big = grayscale(big);
+            big = Imaging.CropImage(big, p, width, height);
+            big = Imaging.ConvertFormat(big, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            //if (!flag)
+            //big = Imaging.MakeGrayscale3(big);
+            ////;
+            //else
+            //big = grayscale(big);
 
-        //    //tessnet2.Tesseract api = new tessnet2.Tesseract();
-            
-        //    //api.Init()
-        //    OcrApi.PathToEngine = Environment.CurrentDirectory + @"\tesseract.dll";
-        //    OcrApi api = OcrApi.Create();
-        //    Languages[] lang = { Languages.English };
-        //    api.Init(lang, null, OcrEngineMode.OEM_TESSERACT_CUBE_COMBINED);
-        //    api.SetVariable("tessedit_char_whitelist", "0123456789");
+            //big.Save(Environment.CurrentDirectory + "\\test.png");
+            ////tessnet2.Tesseract api = new tessnet2.Tesseract();
 
-        //    string plainText = api.GetTextFromImage(big);
-        //    ////Console.WriteLine(plainText);
-        //    ////this.Invoke(new MethodInvoker(delegate() { txtLog.AppendText(plainText + Environment.NewLine); }));
-        //    api.Dispose();
-        //    api = null;
-        //    System.GC.Collect(0, GCCollectionMode.Forced);
-        //    System.GC.WaitForPendingFinalizers();
+            ////api.Init()
+            //OcrApi.PathToEngine = Environment.CurrentDirectory + @"\tesseract.dll";
+            //OcrApi api = OcrApi.Create();
+            //Languages[] lang = { Languages.English };
+            //api.Init(lang, null, OcrEngineMode.OEM_TESSERACT_CUBE_COMBINED);
+            //api.SetVariable("tessedit_char_whitelist", "0123456789");
 
-        //    return plainText;
-        //    //return "";
-        //}
+            //string plainText = api.GetTextFromImage(big);
+            //////Console.WriteLine(plainText);
+            //////this.Invoke(new MethodInvoker(delegate() { txtLog.AppendText(plainText + Environment.NewLine); }));
+            //api.Dispose();
+            //api = null;
+            //System.GC.Collect(0, GCCollectionMode.Forced);
+            //System.GC.WaitForPendingFinalizers();
 
+            //return plainText;
+            var tmpFile = Path.GetTempFileName();
+            string text = "";
+            var bmp = new Bitmap(Math.Max(big.Width, 1024), Math.Max(big.Height, 768));
+            var gfxResize = Graphics.FromImage(bmp);
+            gfxResize.DrawImage(big, new Rectangle(0, 0, big.Width, big.Height));
+            bmp.Save(tmpFile + ".png", ImageFormat.Png);
+
+            //EncoderParameter myEncoderParameter = new EncoderParameter(myEncoder, 100L); // 0(최저화질 고압축) ~ 100L(최고화질 저압축)
+            //myEncoderParameters.Param[0] = myEncoderParameter;
+            //bmp.Save(tmpFile + ".jpg", jpgEncoder, myEncoderParameters);
+
+            var doc = new MODI.Document();
+            doc.Create(tmpFile + ".png");
+
+            Regex reg = new Regex(@"[0-9]+");
+            try
+            {
+                doc.OCR(MODI.MiLANGUAGES.miLANG_ENGLISH, true, true);
+                var img = (MODI.Image)doc.Images[0];
+                var layout = img.Layout;
+                text = layout.Text;
+                File.Delete(tmpFile);
+                File.Delete(tmpFile + ".png");
+            }
+            catch (Exception e)
+            {
+                try
+                {
+                    doc.OCR(MODI.MiLANGUAGES.miLANG_ENGLISH, false, false);
+                    var img = (MODI.Image)doc.Images[0];
+                    var layout = img.Layout;
+                    text = layout.Text;
+                }
+                catch (Exception)
+                {
+                }
+                finally
+                {
+                    File.Delete(tmpFile);
+                    File.Delete(tmpFile + ".png");
+                }
+
+            }
+            finally
+            {
+                File.Delete(tmpFile);
+                File.Delete(tmpFile + ".png");
+            }
+
+            Int32 tryCheck = 0;
+            Match m = reg.Match(text.Replace(" ", "").Replace(",", "").Replace(".", "").Trim());
+            Int32.TryParse(m.Value, out tryCheck);
+            if (tryCheck == 0 || tryCheck < 1000)
+            {
+                    try
+                    {
+                        
+                        EncoderParameters myEncoderParameters = new EncoderParameters(1);
+                        System.Drawing.Imaging.Encoder myEncoder = System.Drawing.Imaging.Encoder.Quality;
+                        ImageCodecInfo jpgEncoder = GetEncoder(ImageFormat.Jpeg);
+
+                        tmpFile = Path.GetTempFileName();
+                        text = "";
+                        bmp = new Bitmap(Math.Max(big.Width, 1024), Math.Max(big.Height, 768));
+                        gfxResize = Graphics.FromImage(bmp);
+                        gfxResize.DrawImage(big, new Rectangle(0, 0, big.Width, big.Height));
+
+                        EncoderParameter myEncoderParameter = new EncoderParameter(myEncoder, 100L); // 0(최저화질 고압축) ~ 100L(최고화질 저압축)
+                        myEncoderParameters.Param[0] = myEncoderParameter;
+                        bmp.Save(tmpFile + ".jpg", jpgEncoder, myEncoderParameters);
+
+                        doc = new MODI.Document();
+                        doc.Create(tmpFile + ".jpg");
+                        doc.OCR(MODI.MiLANGUAGES.miLANG_ENGLISH, true, true);
+                        var img = (MODI.Image)doc.Images[0];
+                        var layout = img.Layout;
+                        text = layout.Text;
+                    }
+                    catch (Exception)
+                    {
+                        doc.OCR(MODI.MiLANGUAGES.miLANG_ENGLISH, false, false);
+                        var img = (MODI.Image)doc.Images[0];
+                        var layout = img.Layout;
+                        text = layout.Text;
+                    }
+                    finally
+                    {
+                        File.Delete(tmpFile);
+                        File.Delete(tmpFile + ".jpg");
+                    }
+            }
+
+            m = reg.Match(text.Replace(" ", "").Replace(",", "").Replace(".", "").Trim());
+            doc.Close();
+            doc = null;
+            bmp.Dispose();
+            bmp = null;
+            System.GC.Collect(0, GCCollectionMode.Forced);
+            System.GC.WaitForPendingFinalizers();
+            return m.Value;
+            //return "";
+        }
+
+        // Image format에 대한 Codec 정보를 가져온다.
+        private ImageCodecInfo GetEncoder(ImageFormat format)
+        {
+
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.FormatID == format.Guid)
+                {
+                    return codec;
+                }
+            }
+            return null;
+        }
         //private void Monitoring()
         //{
         //    while (true)
