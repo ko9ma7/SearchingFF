@@ -253,7 +253,7 @@ namespace Module.Handling
             //Point p = Imaging.ImageMatching(big, small, range.loc, range.width, range.height);
             //Stopwatch sw = new Stopwatch();
             //sw.Start();
-            Rectangle rc = Imaging.searchBitmap(small, big, 0.2);
+            Rectangle rc = Imaging.searchBitmap(small, big, 0.28);
             //sw.Stop();
             //Console.WriteLine(sw.Elapsed);
             return rc.Location;
