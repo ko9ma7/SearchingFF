@@ -153,6 +153,36 @@ namespace Module.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap 모바일_선수단_방출 {
+            get {
+                object obj = ResourceManager.GetObject("모바일_선수단_방출", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap 모바일_선수단_소속정렬 {
+            get {
+                object obj = ResourceManager.GetObject("모바일_선수단_소속정렬", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap 모바일_선수방출_방출 {
+            get {
+                object obj = ResourceManager.GetObject("모바일_선수방출_방출", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap 모바일_선수영입 {
             get {
                 object obj = ResourceManager.GetObject("모바일_선수영입", resourceCulture);
@@ -326,6 +356,16 @@ namespace Module.Properties {
         internal static System.Drawing.Bitmap 모바일_트레이드_확인하기 {
             get {
                 object obj = ResourceManager.GetObject("모바일_트레이드_확인하기", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap 모바일_팀관리 {
+            get {
+                object obj = ResourceManager.GetObject("모바일_팀관리", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

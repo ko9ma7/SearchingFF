@@ -17,9 +17,10 @@ using System.Resources;
 using System.Globalization;
 using System.Collections;
 using MCF.Classes.Data;
-using MODI;
+//using MODI;
 using System.Drawing.Imaging;
 using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
 
 
 namespace Module.MobileMacro
@@ -36,12 +37,12 @@ namespace Module.MobileMacro
         Stopwatch sw = new Stopwatch();
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         bool runFlag = false;
-        MacroStatus status = MacroStatus.TradeMarket;
+        MacroStatus status = MacroStatus.Release;
         int errorCount = 0;
 
         private enum MacroStatus
         {
-            Main, Trade, Scout, Shop, TradeMarket
+            Main, Trade, Scout, Shop, TradeMarket, Release
         }
 
         public MobileMacroPanel()
@@ -180,6 +181,7 @@ namespace Module.MobileMacro
             dictPoint.Add("모바일_단품_클릭", new Point(163, 337));
             dictPoint.Add("모바일_선수영입_클릭", new Point(260, 275));
             dictPoint.Add("모바일_구단관리_클릭", new Point(83, 460));
+            dictPoint.Add("모바일_팀관리_클릭", new Point(65, 340));
             dictPoint.Add("모바일_트레이드_클릭", new Point(260, 335));
             dictPoint.Add("모바일_이적시장_클릭", new Point(135, 460));
             dictPoint.Add("모바일_판매_클릭", new Point(160, 400));
@@ -233,6 +235,17 @@ namespace Module.MobileMacro
             dictPoint.Add("모바일_상점_구입_클릭", new Point(225, 395));
             dictPoint.Add("모바일_상점_구입확인_클릭", new Point(225, 395));
 
+            dictPoint.Add("모바일_선수단_클릭", new Point(162, 68));
+            dictPoint.Add("모바일_선수단_소속정렬_클릭", new Point(298, 232));
+            dictPoint.Add("모바일_선수단_선수1_클릭", new Point(222, 255));
+            dictPoint.Add("모바일_선수단_선수2_클릭", new Point(222, 285));
+            dictPoint.Add("모바일_선수단_선수3_클릭", new Point(222, 310));
+            dictPoint.Add("모바일_선수단_선수4_클릭", new Point(222, 340));
+            dictPoint.Add("모바일_선수단_선수5_클릭", new Point(222, 370));
+            dictPoint.Add("모바일_선수단_선수6_클릭", new Point(222, 400));
+            dictPoint.Add("모바일_선수단_선수7_클릭", new Point(222, 430));
+            dictPoint.Add("모바일_선수단_방출_클릭", new Point(110, 205));
+            dictPoint.Add("모바일_선수방출_방출_클릭", new Point(225, 400));
         }
 
         #region 매크로
@@ -274,6 +287,15 @@ namespace Module.MobileMacro
             Touch("모바일_단품_클릭");
             UStatus("단품메뉴 이동");
             status = MacroStatus.Shop;
+        }
+
+        private void MobileGo_Release()
+        {
+            Touch("모바일_구단관리_클릭");
+            UStatus("구단관리메뉴 이동");
+            Touch("모바일_팀관리_클릭");
+            UStatus("팀관리메뉴 이동");
+            status = MacroStatus.Release;
         }
 
 
@@ -348,7 +370,7 @@ namespace Module.MobileMacro
         private bool MobileTrade(bool flag = false)
         {
             Bitmap big = Imaging.GetScreen();
-
+            
 
             if (ImageMatch(big, "모바일_트레이드"))
             {
@@ -611,7 +633,7 @@ namespace Module.MobileMacro
                 {
                     Touch("모바일_이적시장_취소_클릭");
                     UStatus("모든 선수 판매 등록 완료.");
-                    MobileGo_Scout();
+                    MobileGo_Release();
                 }
                 flag = true;
             }
@@ -788,6 +810,80 @@ namespace Module.MobileMacro
             return flag;
         }
 
+        private bool MobileRelease(bool flag = false)
+        {
+            Bitmap big = Imaging.GetScreen();
+
+
+            if (ImageMatch(big, "모바일_팀관리"))
+            {
+                Touch("모바일_선수단_클릭");
+                if (!ImageMatch(big, "모바일_선수단_소속정렬"))
+                    Touch("모바일_선수단_소속정렬_클릭");
+                else
+                {
+                    for (int i = 1; i < 8; i++)
+                    {
+                        Touch("모바일_선수단_선수" + i.ToString() + "_클릭");
+                    }
+                    Thread.Sleep(500);
+                    big = Imaging.GetScreen();
+                    big.Save("C:\\test.png");
+                    if (ImageMatch(big, "모바일_선수단_방출"))
+                    {
+                        Touch("모바일_선수단_방출_클릭");
+                    }
+                    else
+                    {
+                        for (int i = 7; i > 0; i--)
+                        {
+                            Touch("모바일_선수단_선수" + i.ToString() + "_클릭");
+                            Thread.Sleep(500);
+                            big = Imaging.GetScreen();
+                            if (ImageMatch(big, "모바일_선수단_방출"))
+                            {
+                                Touch("모바일_선수단_방출_클릭");
+                                UStatus("더 이상 방출 할 수 있는 선수가 없습니다.");
+                                MobileGo_Scout();
+                                break;
+                            }
+                            else if (i == 1)
+                            {
+                                UStatus("더 이상 방출 할 수 있는 선수가 없습니다.");
+                                MobileGo_Scout();
+                            }
+                        }
+                    }
+                }
+                flag = true;
+            }
+
+            big.Dispose();
+            big = null;
+            System.GC.Collect(0, GCCollectionMode.Forced);
+            System.GC.WaitForPendingFinalizers();
+            return flag;
+        }
+
+        private bool MobileRelease_Confirm(bool flag = false)
+        {
+            Bitmap big = Imaging.GetScreen();
+
+
+            if (ImageMatch(big, "모바일_선수방출_방출"))
+            {
+                Touch("모바일_선수방출_방출_클릭");
+                UStatus("방출완료");
+                flag = true;
+            }
+
+            big.Dispose();
+            big = null;
+            System.GC.Collect(0, GCCollectionMode.Forced);
+            System.GC.WaitForPendingFinalizers();
+            return flag;
+        }
+
 
         private void MainMacro()
         {
@@ -802,6 +898,18 @@ namespace Module.MobileMacro
 
         }
 
+        private void ReleaseMacro()
+        {
+            runFlag = true;
+            if (MobileRelease())
+                errorCount = 0;
+            else if (MobileRelease_Confirm())
+                errorCount = 0;
+            else
+                errorCount++;
+
+            runFlag = false;
+        }
         private void ScoutMacro()
         {
             runFlag = true;
@@ -910,6 +1018,10 @@ namespace Module.MobileMacro
                             break;
                         case MacroStatus.TradeMarket:
                             t = new Thread(TradeMarketMacro);
+                            t.Start();
+                            break;
+                        case MacroStatus.Release:
+                            t = new Thread(ReleaseMacro);
                             t.Start();
                             break;
                         default:

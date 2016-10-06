@@ -20,9 +20,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{AF31F4
 		Images\모바일_상점_구입하기.png = Images\모바일_상점_구입하기.png
 		Images\모바일_상점_이용권.png = Images\모바일_상점_이용권.png
 		Images\모바일_상점_이용권선택.png = Images\모바일_상점_이용권선택.png
+		Images\모바일_선수단_방출.png = Images\모바일_선수단_방출.png
+		Images\모바일_선수단_소속정렬.png = Images\모바일_선수단_소속정렬.png
+		Images\모바일_선수방출_방출.png = Images\모바일_선수방출_방출.png
 		Images\모바일_선수영입.png = Images\모바일_선수영입.png
 		Images\모바일_선수영입_공간필요.png = Images\모바일_선수영입_공간필요.png
 		Images\모바일_선수영입_이용권소진.png = Images\모바일_선수영입_이용권소진.png
+		Images\모바일_선수영입_일반선수.png = Images\모바일_선수영입_일반선수.png
 		Images\모바일_선수영입_프리미엄선수.png = Images\모바일_선수영입_프리미엄선수.png
 		Images\모바일_이적시장.png = Images\모바일_이적시장.png
 		Images\모바일_이적시장_등록초과.png = Images\모바일_이적시장_등록초과.png
@@ -38,6 +42,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{AF31F4
 		Images\모바일_트레이드_트레이드결과.png = Images\모바일_트레이드_트레이드결과.png
 		Images\모바일_트레이드_트레이드실행.png = Images\모바일_트레이드_트레이드실행.png
 		Images\모바일_트레이드_확인하기.png = Images\모바일_트레이드_확인하기.png
+		Images\모바일_팀관리.png = Images\모바일_팀관리.png
 	EndProjectSection
 EndProject
 Global
